@@ -22,6 +22,7 @@ from standard import views as standardview
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', include('users.urls')),
+    url(r'^api/', include('api.urls')),
     path('',standardview.BasicViews.index, name="index"),
 ]
 
