@@ -18,16 +18,11 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.urls import path
 from standard import views as standardview
-from users import views as userview
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', include('users.urls')),
     path('',standardview.BasicViews.index, name="index"),
-    path('user_account/', userview.UserAccount.as_view(), name="user_account"),
-    path('signup/',userview.UserAccount.signup,name="signup"),
-    path('logout_user/',userview.UserAccount.logout_user,name="logout_user"),
-    path('login_user/',userview.UserAccount.login_user,name="login_user"),
 ]
 
 if settings.DEBUG:
