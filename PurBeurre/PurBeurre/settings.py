@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'users.apps.UsersConfig',
     'standard.apps.StandardConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
