@@ -4,5 +4,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('search/',views.CallAPI.search, name="search"),
+    path('search/',views.CallAPI.search_and_stock, name="search_and_stock"),
 ]
