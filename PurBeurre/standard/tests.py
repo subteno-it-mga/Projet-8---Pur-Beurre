@@ -24,37 +24,43 @@ class bcolors:
 
 class TestBasicViews(TestCase):
 
-    def test_index(self):
+    def test_home_page_status_code(self):
         '''
-            Test if the http response for index is fine (code 200).
+        Check if the returned status code of the page is 200
+        '''
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 200)
+        
+    
+    def test_view_url_by_name(self):
+        '''
+        Check if the url returned is good
         '''
         response = self.client.get(reverse('index'))
-
-        if response:
-            self.assertEqual(response.status_code, 200)
-            print(bcolors.OKGREEN + "TEST_BASIC_VIEW_INDEX = OK",bcolors.ENDC)
-        else:
-            print(bcolors.WARNING + "TEST_BASIC_VIEW_INDEX = FAIL  LINE = ",FRAMEINFO.lineno,bcolors.ENDC)
-
-        try:
-            self.client.get(reverse('indexNoReverseMatchError'))
-        except NoReverseMatch:
-            print(bcolors.OKGREEN + "TEST_BASIC_VIEW_REVERSE_INDEX = OK",bcolors.ENDC)
+        self.assertEquals(response.status_code, 200)
+    
+    def test_view_uses_correct_template(self):
+        '''
+        Test if we use the correct template and it returns a 200 status_code
+        '''
+        response = self.client.get(reverse('index'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'standard/index.html')
         
+    def test_home_page_contains_correct_html(self):
+        '''
+        Test if the html page contains the h1 title (only present in the index page)
+        '''
+        response = self.client.get('/')
+        self.assertContains(response, '<h1 class="text-uppercase text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
 
-    # def test_favorite(self):
-    #     '''
-    #         Test if the http response for favorite page is fine (code 200).
-    #     '''
+    def test_home_page_does_not_contain_incorrect_html(self):
+        '''
+        Test if the page doesn't contain bad html
+        '''
+        response = self.client.get('/')
+        self.assertNotContains(response, 'That\'s incorrect html')
 
-    #     if self.client.get(reverse('favorite')):
-    #         self.assertEqual(self.client.get(reverse('favorite')).status_code, 200)
-    #         print(bcolors.OKGREEN + "TEST_FAVORITE = OK" + bcolors.ENDC)
-
-    #     else:
-    #         print(bcolors.WARNING + "TEST_FAVORITE = FAIL",FRAMEINFO.lineno,bcolors.ENDC)
-
-    #     try:
-    #         self.client.get(reverse('favoriteNoReverseMatchError'))
-    #     except NoReverseMatch:
-    #         print(bcolors.OKGREEN + "TEST_FAVORITE = OK" + bcolors.ENDC)
+# @register.filter(name='add_attr')
+# def test_add_attr(self):
+#     test_attr = add_attr("product","form-control")

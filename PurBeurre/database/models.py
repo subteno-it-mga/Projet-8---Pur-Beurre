@@ -8,7 +8,8 @@ class Product(models.Model):
     fat = models.FloatField()
     sugar = models.FloatField()
     salt = models.FloatField()
-    barcode = models.BigIntegerField ()
+    barcode = models.BigIntegerField()
+    image = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name

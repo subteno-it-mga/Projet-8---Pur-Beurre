@@ -15,6 +15,8 @@ from django.conf import settings
 from django.views import View
 from database.models import Product, Category
 
+from django.shortcuts import redirect
+
 class DatabaseManager(View):
 
     @staticmethod
@@ -27,68 +29,50 @@ class DatabaseManager(View):
                     categ.save()
 
         
-
     @staticmethod
-    def create_entries(informations, categories):
-        # name = informations[0]["product_name"]
-        # # product_img = json_result["products"][0]["image_front_url"]
-        # salt = informations[0]["nutriments"]["salt"]
-        # sugar = informations[0]["nutriments"]["sugars"]
-        # fat = informations[0]["nutriments"]["fat"]
-        # nutriscore = informations[0]["nutrition_grades"]
-        # barcode = informations[0]["code"]        
-        # DatabaseManager.create_categories(categories)
+    def create_entries(informations):
+
+        print("-------------We are creating products-------------")
 
         for product in informations:
-            description = "Message générique"
-            name = product["product_name"]
-            salt = product["nutriments"]["salt"]
-            sugar = product["nutriments"]["sugars"]
-            fat = product["nutriments"]["fat"]
-            nutriscore = product["nutrition_grades"]
-            barcode = product["code"]
-            categories = product["categories"]
-            c = Product(name=name, salt= salt, sugar=sugar, fat=fat, nutriscore=nutriscore, barcode=barcode, description=description)
-            c.save()
-            d = Category(name=categories, product=c)
-            d.save()
-
-            # for category in categories:
-            #     result = [x.strip() for x in category["categories"].split(',')]
-            #     import pdb; pdb.set_trace()
-            #     for category_list in result:
-                    
-            # import pdb; pdb.set_trace()
-            # c.categories.name = "Petit-déjeuners"
-            # c.save()
-            # d = Category.objects.filter(name="Petit-déjeuners")
-
-            # e = Product.objects.filter(name="Nutella")
-            # import pdb; pdb.set_trace()
-            # e.categories.add(d)
-            # e.save()
-            # for category in categories:
-            #     result = [x.strip() for x in categories.split(',')]
-            #     import pdb; pdb.set_trace()
-            #     c.categories.add(result)
-            #     c.save()
-            # c.save()
-            # for category in categories:
-            #     result = [x.strip() for x in category["categories"].split(',')]
-            #     for product_category in result:
-            #         categ = Category.objects.get(name=product_category)
-            #         if not categ:
-            #             c.categories.add(categ)
-            #         else:
-            #             c.categories.add(categ)
-
-
-    def delete_entries(self, request, entries):
-        pass
+            try:
+                description = product["generic_name"]
+                name = product["product_name"]
+                salt = product["nutriments"]["salt"]
+                sugar = product["nutriments"]["sugars"]
+                fat = product["nutriments"]["fat"]
+                nutriscore = product["nutrition_grades"]
+                barcode = product["code"]
+                image = product["image_front_url"]
+            except KeyError:
+                description = "Pas de description"
+                name = "Pas de nom"
+                salt = 0.0
+                fat = 0.0
+                sugar = 0.0
+                nutriscore = "Pas de nutriscore"
+                barcode = 100000
+                image = "No image"
+            else:
+                categories = [x.strip() for x in product["categories"].split(',')]
+                c = Product(name=name, salt= salt, sugar=sugar, fat=fat, nutriscore=nutriscore, barcode=barcode, description=description, image=image)
+                c.save()
+                for category in categories:
+                    d = Category(name=category, product=c)
+                    d.save()
+    @staticmethod
+    def delete_entries(request):
+        Product.objects.all().delete()
+        context = {
+            'confirmation':'Les données ont bien été supprimées.'
+        }
+        return render(request,'standard/index.html', context)
 
     def register_favorite(self, request, product):
         pass
 
     @staticmethod
-    def display_informations(self, request):
-        pass
+    def display_informations(request):
+        print("-------------We are retrieving all objects-------------")
+        my_product = Product.objects.all()
+        return my_product

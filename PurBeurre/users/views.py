@@ -11,6 +11,7 @@ import json
 from django.http import JsonResponse
 from django.contrib.auth import logout
 from django.conf import settings
+from django.urls import reverse
 
 from django.views import View
 
@@ -44,6 +45,8 @@ class UserAccount(View):
         if user is not None and user.is_active:
             login(request,user)
             return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+        else:
+            return render(request, 'standard/index.html', {'login_message':'The user doesn\'t exist','anchor':'account'})
         return render(request, 'standard/index.html')
     
     @staticmethod

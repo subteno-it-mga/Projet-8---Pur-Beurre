@@ -47,7 +47,7 @@ class CallAPI(View):
         # product_fat = json_result["products"][0]["nutriments"]["fat"]
         # product_nutriscore = json_result["products"][0]["nutrition_grades"]
         # product_barcode = json_result["products"][0]["code"]
-        product_categories = json_result["products"]
+        # product_categories = json_result["products"]
 
 
         # for entry in result_test_categ:
@@ -56,16 +56,18 @@ class CallAPI(View):
 
         product = json_result["products"]
 
-        DatabaseManager.create_entries(product, product_categories)
 
-        context = {
+        # context = {
 
-            # 'product_title': product_title,
-            # 'product_img' : product_img,
-            # 'product_salt': product_salt,
-            # 'product_fat': product_fat,
-            # 'product_nutriscore': product_nutriscore,
-            'products' : product, 
-        }
-        return render(request, 'standard/product.html',context)
+        #     # 'product_title': product_title,
+        #     # 'product_img' : product_img,
+        #     # 'product_salt': product_salt,
+        #     # 'product_fat': product_fat,
+        #     # 'product_nutriscore': product_nutriscore,
+        #     'products' : product, 
+        # }
+        DatabaseManager.create_entries(product)
+        informations_displayed = DatabaseManager.display_informations(request)
+        print("------------All informations will be displayed------------")
+        return render(request, 'standard/product.html',{'products':informations_displayed})
 
