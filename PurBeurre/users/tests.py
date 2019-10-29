@@ -61,24 +61,6 @@ class TestUserAccount(TestCase):
                 self.assertFalse(form.is_valid())
                 print(bcolors.OKGREEN,"TEST_USER_WRONG_SIGNUP_INFORMATION OK, CASE :",test_user_creation["info"],bcolors.ENDC)
 
-    # def test_user_login(self):
-    #     test_form_data = {"username":"martin","password1":"thisisatest","password2":"thisisatest"}
-    #     test_temp_auth = UserCreationForm(data=test_form_data)
-
-    #     test_temp_auth.save()
-
-    #     test_user = authenticate(username="martin",password="thisisatest")
-    #     self.assertTrue(test_user)
-
-        # test_user_dict= {"username":"martin","password":"thisisatest"}
-        # self.factory = RequestFactory()
-        # request = self.factory.post('login_user',test_user_dict)
-
-        # response = my_view(request)
-        # self.assertEqual(response.status_code, 200)
-
-        # self.assertTrue(post(login(request,test_user)))
-
     def test_user_login(self):
         test_c = Client()
         test_form_data = {"username":"martin","password1":"thisisatest","password2":"thisisatest"}

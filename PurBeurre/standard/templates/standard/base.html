@@ -5,8 +5,8 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Pur Beurre ! Une appli pour bien manger ;)">
+  <meta name="author" content="Martin Gaucher">
   
   {% load static %}
 
@@ -48,6 +48,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="/favorite">Mes favoris</a>
             </li>
+            {% if confirmation %}
+            <li class="nav-item">
+                <a class="nav-link" href="#">Base de donnée vide</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/database/delete_entries/">Purger la base de données</a>
+            </li>
+            {% endif %}
           {% else %}
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#account">Se connecter</a>
@@ -90,6 +99,13 @@
     
         <!-- Custom scripts for this template -->
         <script src="{% static 'standard/js/creative.min.js' %}"></script>
+        {% if anchor %}
+          <script type='text/javascript'>
+            $(document).ready(function(){
+                window.location = '#{{ anchor }}'
+            });
+          </script>
+        {% endif %}
     
     </body>
     

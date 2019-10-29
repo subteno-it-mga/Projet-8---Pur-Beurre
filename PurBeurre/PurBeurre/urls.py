@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', include('users.urls')),
     url(r'^api/', include('api.urls')),
+    url(r'^database/', include('database.urls')),
     path('',standardview.BasicViews.index, name="index"),
 ]
 

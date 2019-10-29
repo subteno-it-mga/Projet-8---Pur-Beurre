@@ -13,11 +13,14 @@ from django.contrib.auth import logout
 from django.conf import settings
 
 from django.views import View
+from database.views import DatabaseManager
 
 class CallAPI(View):
 
+
     @staticmethod
-    def search(request):
+    def search_and_stock(request):
+
         term = request.POST.get('search_term')
 
         list_term = term.split(" ")
@@ -40,19 +43,31 @@ class CallAPI(View):
         # product_title = json_result["products"][0]["product_name"]
         # product_img = json_result["products"][0]["image_front_url"]
         # product_salt = json_result["products"][0]["nutriments"]["salt"]
+        # product_sugar = json_result["products"][0]["nutriments"]["sugars"]
         # product_fat = json_result["products"][0]["nutriments"]["fat"]
         # product_nutriscore = json_result["products"][0]["nutrition_grades"]
+        # product_barcode = json_result["products"][0]["code"]
+        # product_categories = json_result["products"]
+
+
+        # for entry in result_test_categ:
+        #     c = Category(name=entry)
+        #     c.save()
 
         product = json_result["products"]
 
-        context = {
 
-            # 'product_title': product_title,
-            # 'product_img' : product_img,
-            # 'product_salt': product_salt,
-            # 'product_fat': product_fat,
-            # 'product_nutriscore': product_nutriscore,
-            'products':product, 
-        }
+        # context = {
 
-        return render(request, 'standard/product.html',context)
+        #     # 'product_title': product_title,
+        #     # 'product_img' : product_img,
+        #     # 'product_salt': product_salt,
+        #     # 'product_fat': product_fat,
+        #     # 'product_nutriscore': product_nutriscore,
+        #     'products' : product, 
+        # }
+        DatabaseManager.create_entries(product)
+        informations_displayed = DatabaseManager.display_informations(request)
+        print("------------All informations will be displayed------------")
+        return render(request, 'standard/product.html',{'products':informations_displayed})
+

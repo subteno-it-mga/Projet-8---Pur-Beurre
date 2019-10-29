@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'standard.apps.StandardConfig',
     'api.apps.ApiConfig',
+    'database.apps.DatabaseConfig',
 ]
 
 MIDDLEWARE = [
