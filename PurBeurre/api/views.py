@@ -71,3 +71,12 @@ class CallAPI(View):
         print("------------All informations will be displayed------------")
         return render(request, 'standard/product.html',{'products':informations_displayed})
 
+    @staticmethod
+    def search_subsitute(request):
+
+        product = request.POST.get('product_barcode')
+        product_categories = DatabaseManager.search_categories(product)
+
+        import pdb; pdb.set_trace()
+
+        return render(request, 'standard/index.html', {'retrieve_categ':product_categories})

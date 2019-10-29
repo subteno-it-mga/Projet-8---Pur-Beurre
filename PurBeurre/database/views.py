@@ -76,3 +76,15 @@ class DatabaseManager(View):
         print("-------------We are retrieving all objects-------------")
         my_product = Product.objects.all()
         return my_product
+    
+    @staticmethod
+    def search_categories(barcode):
+        try:
+            the_product = Product.objects.filter(barcode=barcode)
+            product_categories = the_product.categories_set.all()
+            return product_categories
+        except:
+            message_information = "Ce produit n'est pas ou plus présent dans la base."
+            return message_information
+
+
