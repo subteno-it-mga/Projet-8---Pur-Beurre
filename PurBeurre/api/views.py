@@ -76,7 +76,8 @@ class CallAPI(View):
 
         product = request.POST.get('product_barcode')
         product_categories = DatabaseManager.search_categories(product)
-
+        for category in product_categories:
+            print(category)
+            
         import pdb; pdb.set_trace()
-
         return render(request, 'standard/index.html', {'retrieve_categ':product_categories})
