@@ -16,8 +16,13 @@ from django.urls import reverse
 from django.views import View
 
 class UserAccount(View):
-
+    '''
+    Thsi class manage the user : signin, sinup, logout, delete, add to favorite...
+    '''
     def post(self, request):
+        '''
+        Method post to retrieve all informations from the signup form.
+        '''
         form = UserCreationForm(request.POST)
 
         if form.is_valid():
@@ -38,6 +43,9 @@ class UserAccount(View):
 
     @staticmethod
     def login_user(request):
+        '''
+        Check login and password to login.
+        '''
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
@@ -51,9 +59,15 @@ class UserAccount(View):
     
     @staticmethod
     def logout_user(request):
+        '''
+        Logout the user if he's connnected.
+        '''
         logout(request)
         return HttpResponseRedirect(settings.LOGOUT_REDIRECT_URL)
 
     @staticmethod
     def signup(request):
+        '''
+        Return a page when the user created an account.
+        '''
         return render(request, 'standard/signup.html')

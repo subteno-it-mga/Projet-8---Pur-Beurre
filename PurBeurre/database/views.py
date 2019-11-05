@@ -13,14 +13,19 @@ from django.contrib.auth import logout
 from django.conf import settings
 
 from django.views import View
-from database.models import Product, Category
+from database.models import Product, Category, SubstituteProduct, SubstituteCategory
 
 from django.shortcuts import redirect
 
 class DatabaseManager(View):
-
+    '''
+    This class contains all methods wich work with database
+    '''
     @staticmethod
     def create_categories(list_of_categories):
+        '''
+        Read the string of the categories obtained from the api
+        '''
         for category in list_of_categories:
             result = [x.strip() for x in category["categories"].split(',')]
             for categories in result:
@@ -28,10 +33,12 @@ class DatabaseManager(View):
                     categ = Category(name=categories)
                     categ.save()
 
-        
     @staticmethod
     def create_entries(informations):
-
+        '''
+        Creat entries for the products from the json file obtained from the
+        OpenFoodFact API.
+        '''
         print("-------------We are creating products-------------")
 
         for product in informations:
@@ -54,15 +61,25 @@ class DatabaseManager(View):
                 barcode = 100000
                 image = "No image"
             else:
-                categories = [x.strip() for x in product["categories"].split(',')]
-                c = Product(name=name, salt= salt, sugar=sugar, fat=fat, nutriscore=nutriscore, barcode=barcode, description=description, image=image)
-                c.save()
-                for category in categories:
-                    d = Category(name=category, product=c)
-                    d.save()
+                if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name=="":
+                    pass
+                else:
+                    categories = [x.strip() for x in product["categories"].split(',')]
+                    c = Product(name=name, salt= salt, sugar=sugar, fat=fat, nutriscore=nutriscore, barcode=barcode, description=description, image=image)
+                    c.save()
+                    print(c)
+                    for category in categories:
+                        if not Category.objects.filter(name=category):
+                            d = Category(name=category, product=c)
+                            d.save()
+
     @staticmethod
     def delete_entries(request):
+        '''
+        Erase all database entries. ONLY FOR THE ADMIN.
+        '''
         Product.objects.all().delete()
+        SubstituteProduct.objects.all().delete()
         context = {
             'confirmation':'Les données ont bien été supprimées.'
         }
@@ -73,12 +90,27 @@ class DatabaseManager(View):
 
     @staticmethod
     def display_informations(request):
+        '''
+        Display all products on page to choose a product to compare.
+        '''
         print("-------------We are retrieving all objects-------------")
         my_product = Product.objects.all()
         return my_product
     
     @staticmethod
+    def display_subsitute(request):
+        '''
+        This function returns all products found to substitute.
+        '''
+        print("---------------Display substitutes found----------------")
+        substitute = SubstituteProduct.objects.all()
+        return substitute
+    
+    @staticmethod
     def search_categories(barcode):
+        '''
+        Search Categories in the database to retrive them in the api.
+        '''
         try:
             product_categories = Category.objects.filter(product__barcode=barcode)
             return product_categories
@@ -86,4 +118,22 @@ class DatabaseManager(View):
             message_information = "Ce produit n'est pas ou plus présent dans la base."
             return message_information
 
+    @staticmethod
+    def substitute_products(data_dict):
+        '''
+        Add all subsitute in the database.
+        '''
+        d = SubstituteProduct(name=data_dict['product'], salt=data_dict['salt'], sugar=data_dict['sugar'],
+            fat=data_dict['fat'], nutriscore=data_dict['nutriscore'], barcode=data_dict['barcode'],
+                description=data_dict['description'], image=data_dict['image'])
+        d.save()
+    
+    # @staticmethod
+    # def compare_substitute(request):
+    #     all_products = SubstituteProduct.objects.all()
 
+    #     for product in all_products:
+    #         print(product.name)
+            
+            
+            

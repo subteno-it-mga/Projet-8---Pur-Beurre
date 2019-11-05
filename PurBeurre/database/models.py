@@ -6,6 +6,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     nutriscore = models.CharField(max_length=200)
+    category_test = models.CharField(max_length=200)
     fat = models.FloatField()
     sugar = models.FloatField()
     salt = models.FloatField()
@@ -29,11 +30,11 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'categories'
 
-class SubsituteProduct(models.Model):
+class SubstituteProduct(models.Model):
 
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
-    nutriscore = models.CharField(max_length=200)
+    nutriscore = models.IntegerField()
     fat = models.FloatField()
     sugar = models.FloatField()
     salt = models.FloatField()
@@ -46,10 +47,11 @@ class SubsituteProduct(models.Model):
     class Meta:
         verbose_name_plural = 'Substitute products'
 
-class SubsituteCategory(models.Model):
+
+class SubstituteCategory(models.Model):
 
     name = models.CharField(max_length=200)
-    product_subsitute = models.ForeignKey(SubsituteProduct, on_delete=models.CASCADE)
+    product_subsitute = models.ForeignKey(SubstituteProduct, on_delete=models.CASCADE)
 
 
     def __str__(self):
