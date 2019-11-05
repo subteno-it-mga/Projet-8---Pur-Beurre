@@ -9,6 +9,84 @@
         <h1>Voici la liste des produits que vous nous proposons:</h1>
     </section>
         <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Votre produit substitué :</h2>
+                    <div class="col-lg-12 card" style="padding:15px;margin:10px;">
+                            <div class="row">
+                            <div class="col-lg-4">
+                                <h3> {{ original.name }} </h3>
+                                {% if original.image %}
+                                    <img class="img img-fluid" src="{{ original.image }}"/>
+                                {% else %}
+                                    <img class="img img-fluid">Pas d'image disponible.</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="row">
+                                <div class="col-lg-9">
+                                <h4>Caractérisques</h4>
+                                    <div class="row">
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product salt -->
+                                            {% if original.description %}
+                                                <p class="alert alert-warning">Courte description : {{ original.description }}</p>
+                                            {% else %}
+                                                <p class="alert alert-warning">Pas de description disponible</p>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product salt -->
+                                            {% if original.salt == 0.0 %}
+                                                <p class="alert alert-secondary">Pas de sel</p>
+                                            {% else %}
+                                                <p class="alert alert-secondary">Sel : {{ original.salt }}</p>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product fat -->
+                                            {% if original.fat == 0.0 %}
+                                                <p class="alert alert-dark">Pas de matière grasse</p>
+                                            {% else %}
+                                                <p class="alert alert-dark">Matière grasse : {{ original.fat }}</p>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product sugar -->
+                                            {% if original.sugar == 0.0 %}
+                                                <p class="alert alert-info">Pas de sucre</p>
+                                            {% else %}
+                                                <p class="alert alert-info">Sucre : {{ original.sugar }}</p>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product nutriscore -->
+                                            {% if original.nutriscore == "1" %}
+                                                <p class="alert alert-success">Nutriscore : A</p>
+                                            {% elif original.nutriscore == "2" %}
+                                                <p class="alert alert-info">Nutriscore : B</p>
+                                            {% elif original.nutriscore == "3" %}
+                                                <p class="alert alert-warning">Nutriscore : C</p>
+                                            {% elif original.nutriscore == "4" %}
+                                                <p class="alert alert-primary">Nutriscore : D</p>
+                                            {% elif original.nutriscore == "5" %}
+                                                <p class="alert alert-danger">Nutriscore : E</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <h2 class="alert alert-danger">Meilleur produit basé sur le nutriscore:</h2>
             <div class="row">
                 {% for product in substitute|dictsort:"nutriscore"|slice:":10" %}
@@ -16,7 +94,7 @@
                     <div class="row">
                     <div class="col-lg-4">
                         <h3> {{ product.name }} </h3>
-                        {% if product.image %} 
+                        {% if product.image %}
                             <img class="img img-fluid" src="{{ product.image }}"/>
                         {% else %}
                             <img class="img img-fluid">Pas d'image disponible.</p>
@@ -90,271 +168,253 @@
                 {% endfor %}
             </div>
         </div>
+
+        <div class="container">
+                <h2 class="alert alert-danger">Meilleur produit basé sur le taux de sucres:</h2>
+                <div class="row">
+                    {% for product in substitute|dictsort:"sugar"|slice:":10" %}
+                    <div class="col-lg-12 card" style="padding:15px;margin:10px;">
+                        <div class="row">
+                        <div class="col-lg-4">
+                            <h3> {{ product.name }} </h3>
+                            {% if product.image %} 
+                                <img class="img img-fluid" src="{{ product.image }}"/>
+                            {% else %}
+                                <img class="img img-fluid">Pas d'image disponible.</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                            <div class="col-lg-9">
+                            <h4>Caractérisques</h4>
+                                <div class="row">
+    
+                                    <div class="col-lg-12">
+                                        <!-- Display product salt -->
+                                        {% if product.description %}
+                                            <p class="alert alert-warning">Courte description : {{ product.description }}</p>
+                                        {% else %}
+                                            <p class="alert alert-warning">Pas de description disponible</p>
+                                        {% endif %}
+                                    </div>
+    
+                                    <div class="col-lg-12">
+                                        <!-- Display product salt -->
+                                        {% if product.salt == 0.0 %}
+                                            <p class="alert alert-secondary">Pas de sel</p>
+                                        {% else %}
+                                            <p class="alert alert-secondary">Sel : {{ product.salt }}</p>
+                                        {% endif %}
+                                    </div>
+    
+                                    <div class="col-lg-12">
+                                        <!-- Display product fat -->
+                                        {% if product.fat == 0.0 %}
+                                            <p class="alert alert-dark">Pas de matière grasse</p>
+                                        {% else %}
+                                            <p class="alert alert-dark">Matière grasse : {{ product.fat }}</p>
+                                        {% endif %}
+                                    </div>
+    
+                                    <div class="col-lg-12">
+                                        <!-- Display product sugar -->
+                                        {% if product.sugar == 0.0 %}
+                                            <p class="alert alert-info">Pas de sucre</p>
+                                        {% else %}
+                                            <p class="alert alert-info">Sucre : {{ product.sugar }}</p>
+                                        {% endif %}
+                                    </div>
+    
+                                    <div class="col-lg-12">
+                                        <!-- Display product nutriscore -->
+                                        {% if product.nutriscore == 1 %}
+                                            <p class="alert alert-success">Nutriscore : A</p>
+                                        {% elif product.nutriscore == 2 %}
+                                            <p class="alert alert-info">Nutriscore : B</p>
+                                        {% elif product.nutriscore == 3 %}
+                                            <p class="alert alert-warning">Nutriscore : C</p>
+                                        {% elif product.nutriscore == 4 %}
+                                            <p class="alert alert-primary">Nutriscore : D</p>
+                                        {% elif product.nutriscore == 5 %}
+                                            <p class="alert alert-danger">Nutriscore : E</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-lg-3">
+                                <button class="btn btn-primary">Ajouter aux favoris</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="container">
+                    <h2 class="alert alert-danger">Meilleur produit basé sur le taux de sel:</h2>
+                    <div class="row">
+                        {% for product in substitute|dictsort:"salt"|slice:":10" %}
+                        <div class="col-lg-12 card" style="padding:15px;margin:10px;">
+                            <div class="row">
+                            <div class="col-lg-4">
+                                <h3> {{ product.name }} </h3>
+                                {% if product.image %} 
+                                    <img class="img img-fluid" src="{{ product.image }}"/>
+                                {% else %}
+                                    <img class="img img-fluid">Pas d'image disponible.</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="row">
+                                <div class="col-lg-9">
+                                <h4>Caractérisques</h4>
+                                    <div class="row">
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product salt -->
+                                            {% if product.description %}
+                                                <p class="alert alert-warning">Courte description : {{ product.description }}</p>
+                                            {% else %}
+                                                <p class="alert alert-warning">Pas de description disponible</p>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product salt -->
+                                            {% if product.salt == 0.0 %}
+                                                <p class="alert alert-secondary">Pas de sel</p>
+                                            {% else %}
+                                                <p class="alert alert-secondary">Sel : {{ product.salt }}</p>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product fat -->
+                                            {% if product.fat == 0.0 %}
+                                                <p class="alert alert-dark">Pas de matière grasse</p>
+                                            {% else %}
+                                                <p class="alert alert-dark">Matière grasse : {{ product.fat }}</p>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product sugar -->
+                                            {% if product.sugar == 0.0 %}
+                                                <p class="alert alert-info">Pas de sucre</p>
+                                            {% else %}
+                                                <p class="alert alert-info">Sucre : {{ product.sugar }}</p>
+                                            {% endif %}
+                                        </div>
+        
+                                        <div class="col-lg-12">
+                                            <!-- Display product nutriscore -->
+                                            {% if product.nutriscore == 1 %}
+                                                <p class="alert alert-success">Nutriscore : A</p>
+                                            {% elif product.nutriscore == 2 %}
+                                                <p class="alert alert-info">Nutriscore : B</p>
+                                            {% elif product.nutriscore == 3 %}
+                                                <p class="alert alert-warning">Nutriscore : C</p>
+                                            {% elif product.nutriscore == 4 %}
+                                                <p class="alert alert-primary">Nutriscore : D</p>
+                                            {% elif product.nutriscore == 5 %}
+                                                <p class="alert alert-danger">Nutriscore : E</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-3">
+                                    <button class="btn btn-primary">Ajouter aux favoris</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="container">
+                        <h2 class="alert alert-danger">Meilleur produit basé sur le taux de matière grasse:</h2>
+                        <div class="row">
+                            {% for product in substitute|dictsort:"fat"|slice:":10" %}
+                            <div class="col-lg-12 card" style="padding:15px;margin:10px;">
+                                <div class="row">
+                                <div class="col-lg-4">
+                                    <h3> {{ product.name }} </h3>
+                                    {% if product.image %} 
+                                        <img class="img img-fluid" src="{{ product.image }}"/>
+                                    {% else %}
+                                        <img class="img img-fluid">Pas d'image disponible.</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="row">
+                                    <div class="col-lg-9">
+                                    <h4>Caractérisques</h4>
+                                        <div class="row">
+            
+                                            <div class="col-lg-12">
+                                                <!-- Display product salt -->
+                                                {% if product.description %}
+                                                    <p class="alert alert-warning">Courte description : {{ product.description }}</p>
+                                                {% else %}
+                                                    <p class="alert alert-warning">Pas de description disponible</p>
+                                                {% endif %}
+                                            </div>
+            
+                                            <div class="col-lg-12">
+                                                <!-- Display product salt -->
+                                                {% if product.salt == 0.0 %}
+                                                    <p class="alert alert-secondary">Pas de sel</p>
+                                                {% else %}
+                                                    <p class="alert alert-secondary">Sel : {{ product.salt }}</p>
+                                                {% endif %}
+                                            </div>
+            
+                                            <div class="col-lg-12">
+                                                <!-- Display product fat -->
+                                                {% if product.fat == 0.0 %}
+                                                    <p class="alert alert-dark">Pas de matière grasse</p>
+                                                {% else %}
+                                                    <p class="alert alert-dark">Matière grasse : {{ product.fat }}</p>
+                                                {% endif %}
+                                            </div>
+            
+                                            <div class="col-lg-12">
+                                                <!-- Display product sugar -->
+                                                {% if product.sugar == 0.0 %}
+                                                    <p class="alert alert-info">Pas de sucre</p>
+                                                {% else %}
+                                                    <p class="alert alert-info">Sucre : {{ product.sugar }}</p>
+                                                {% endif %}
+                                            </div>
+            
+                                            <div class="col-lg-12">
+                                                <!-- Display product nutriscore -->
+                                                {% if product.nutriscore == 1 %}
+                                                    <p class="alert alert-success">Nutriscore : A</p>
+                                                {% elif product.nutriscore == 2 %}
+                                                    <p class="alert alert-info">Nutriscore : B</p>
+                                                {% elif product.nutriscore == 3 %}
+                                                    <p class="alert alert-warning">Nutriscore : C</p>
+                                                {% elif product.nutriscore == 4 %}
+                                                    <p class="alert alert-primary">Nutriscore : D</p>
+                                                {% elif product.nutriscore == 5 %}
+                                                    <p class="alert alert-danger">Nutriscore : E</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="col-lg-3">
+                                        <button class="btn btn-primary">Ajouter aux favoris</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
 </div>
-
-        <!-- <div class="container-fluid h-100">
-                <span>Voici la liste des produits que nous pouvons sexe: </span>
-        <div class="container">
-          <div class="row h-100 align-items-center justify-content-center text-center" style="margin-top:20em;">
-            <h2>Meilleur Nutriscore pour votre produit :</h2>
-            {% for product in substitute|dictsort:"nutriscore"|slice:":6" %}
-              <div class="col-lg-4 col-md-4">
-                    <h2>{{ product.name }}</h2>
-                    <div class="row">
-                        <div class="card box-shadow col-lg-4 col-sm-12">
-                            
-                            {% if product.image %} 
-                                <img class="img-fluid" src="{{ product.image }}"/>
-                            {% else %}
-                                <p>Pas d'image disponible.</p>
-                            {% endif %}
-                        </div>
-
-                        <div class="col-lg-8 col-sm-12 text-left">
-                            <h3>Caractérisques</h3>
-                            <ul>
-                                <li>
-                                    Courte description : {{ product.description }}
-                                </li>
-                                <li>
-                                    {% if product.salt == 0.0 %}
-                                    Pas de sel
-                                    {% else %}
-                                    Sel : {{ product.salt }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if product.fat == 0.0 %}
-                                    Pas de matière grasse
-                                    {% else %}
-                                    Matière grasse : {{ product.fat }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if product.sugar == 0.0 %}
-                                    Pas de sucre
-                                    {% else %}
-                                    Sucre : {{ product.sugar }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    Nutriscore : 
-                                    {% if product.nutriscore == 1 %}
-                                        A
-                                    {% elif product.nutriscore == 2 %}
-                                        B
-                                    {% elif product.nutriscore == 3 %}
-                                        C
-                                    {% elif product.nutriscore == 4 %}
-                                        D
-                                    {% elif product.nutriscore == 5 %}
-                                        E
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-              </div>
-              {% endfor %}
-          </div>
-        </div>
-
-            <div class="container">
-          <div class="row h-100 align-items-center justify-content-center text-center" style="margin-top:20em;">
-            <h2>Les produits les moins sucrés : </h2>
-            {% for product in substitute|dictsort:"sugar"|slice:":6" %}
-              <div class="col-lg-4 col-md-4">
-                    <h2>{{ product.name }}</h2>
-                    <div class="row">
-                        <div class="card box-shadow col-lg-4 col-sm-12">
-                            
-                            {% if product.image %} 
-                                <img class="img-fluid" src="{{ product.image }}"/>
-                            {% else %}
-                                <p>Pas d'image disponible.</p>
-                            {% endif %}
-                        </div>
-
-                        <div class="col-lg-8 col-sm-12 text-left">
-                            <h3>Caractérisques</h3>
-                            <ul>
-                                <li>
-                                    Courte description : {{ product.description }}
-                                </li>
-                                <li>
-                                    {% if product.salt == 0.0 %}
-                                    Pas de sel
-                                    {% else %}
-                                    Sel : {{ product.salt }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if product.fat == 0.0 %}
-                                    Pas de matière grasse
-                                    {% else %}
-                                    Matière grasse : {{ product.fat }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if product.sugar == 0.0 %}
-                                    Pas de sucre
-                                    {% else %}
-                                    Sucre : {{ product.sugar }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    Nutriscore : 
-                                    {% if product.nutriscore == 1 %}
-                                        A
-                                    {% elif product.nutriscore == 2 %}
-                                        B
-                                    {% elif product.nutriscore == 3 %}
-                                        C
-                                    {% elif product.nutriscore == 4 %}
-                                        D
-                                    {% elif product.nutriscore == 5 %}
-                                        E
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-              </div>
-              {% endfor %}
-          </div>
-        </div>
-        <div class="container">
-          <div class="row h-100 align-items-center justify-content-center text-center" style="margin-top:20em;">
-            <h2>Les produits les moins salés : </h2>
-            {% for product in substitute|dictsort:"salt"|slice:":6" %}
-              <div class="col-lg-4 col-md-4">
-                    <h2>{{ product.name }}</h2>
-                    <div class="row">
-                        <div class="card box-shadow col-lg-4 col-sm-12">
-                            
-                            {% if product.image %} 
-                                <img class="img-fluid" src="{{ product.image }}"/>
-                            {% else %}
-                                <p>Pas d'image disponible.</p>
-                            {% endif %}
-                        </div>
-
-                        <div class="col-lg-8 col-sm-12 text-left">
-                            <h3>Caractérisques</h3>
-                            <ul>
-                                <li>
-                                    Courte description : {{ product.description }}
-                                </li>
-                                <li>
-                                    {% if product.salt == 0.0 %}
-                                    Pas de sel
-                                    {% else %}
-                                    Sel : {{ product.salt }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if product.fat == 0.0 %}
-                                    Pas de matière grasse
-                                    {% else %}
-                                    Matière grasse : {{ product.fat }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if product.sugar == 0.0 %}
-                                    Pas de sucre
-                                    {% else %}
-                                    Sucre : {{ product.sugar }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    Nutriscore : 
-                                    {% if product.nutriscore == 1 %}
-                                        A
-                                    {% elif product.nutriscore == 2 %}
-                                        B
-                                    {% elif product.nutriscore == 3 %}
-                                        C
-                                    {% elif product.nutriscore == 4 %}
-                                        D
-                                    {% elif product.nutriscore == 5 %}
-                                        E
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-              </div>
-              {% endfor %}
-          </div>
-        </div>
-
-            <div class="container">
-          <div class="row h-100 align-items-center justify-content-center text-center" style="margin-top:20em;">
-            <h2>Les produits les moins gras: </h2>
-            {% for product in substitute|dictsort:"fat"|slice:":6" %}
-              <div class="col-lg-4 col-md-4">
-                    <h2>{{ product.name }}</h2>
-                    <div class="row">
-                        <div class="card box-shadow col-lg-4 col-sm-12">
-                            
-                            {% if product.image %} 
-                                <img class="img-fluid" src="{{ product.image }}"/>
-                            {% else %}
-                                <p>Pas d'image disponible.</p>
-                            {% endif %}
-                        </div>
-
-                        <div class="col-lg-8 col-sm-12 text-left">
-                            <h3>Caractérisques</h3>
-                            <ul>
-                                <li>
-                                    Courte description : {{ product.description }}
-                                </li>
-                                <li>
-                                    {% if product.salt == 0.0 %}
-                                    Pas de sel
-                                    {% else %}
-                                    Sel : {{ product.salt }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if product.fat == 0.0 %}
-                                    Pas de matière grasse
-                                    {% else %}
-                                    Matière grasse : {{ product.fat }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if product.sugar == 0.0 %}
-                                    Pas de sucre
-                                    {% else %}
-                                    Sucre : {{ product.sugar }}
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    Nutriscore : 
-                                    {% if product.nutriscore == 1 %}
-                                        A
-                                    {% elif product.nutriscore == 2 %}
-                                        B
-                                    {% elif product.nutriscore == 3 %}
-                                        C
-                                    {% elif product.nutriscore == 4 %}
-                                        D
-                                    {% elif product.nutriscore == 5 %}
-                                        E
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-              </div>
-              {% endfor %}
-          </div>
-        </div>
-
-              
-          </div>
-        </div> -->
     
 {% endblock %}

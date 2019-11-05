@@ -13,7 +13,10 @@ from django.contrib.auth import logout
 from django.conf import settings
 
 from django.views import View
+
 from database.models import Product, Category, SubstituteProduct, SubstituteCategory
+
+
 
 from django.shortcuts import redirect
 
@@ -21,6 +24,27 @@ class DatabaseManager(View):
     '''
     This class contains all methods wich work with database
     '''
+    @staticmethod
+    def change_nutriscore(nutriscore):
+        '''
+        Change nutriscore for database entries.
+        '''
+        if nutriscore == "a":
+            nutriscore = 1
+        elif nutriscore == "b":
+            nutriscore = 2
+        elif nutriscore == "c":
+            nutriscore = 3
+        elif nutriscore == "d":
+            nutriscore = 4
+        elif nutriscore == "e":
+            nutriscore = 5
+        else:
+            message_nutriscore = "Pas de Nutriscore ?"
+            return message_nutriscore
+        
+        return nutriscore
+
     @staticmethod
     def create_categories(list_of_categories):
         '''
@@ -51,6 +75,7 @@ class DatabaseManager(View):
                 nutriscore = product["nutrition_grades"]
                 barcode = product["code"]
                 image = product["image_front_url"]
+                category_test = product["compared_to_category"]
             except KeyError:
                 description = "Pas de description"
                 name = "Pas de nom"
@@ -64,14 +89,12 @@ class DatabaseManager(View):
                 if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name=="":
                     pass
                 else:
-                    categories = [x.strip() for x in product["categories"].split(',')]
-                    c = Product(name=name, salt= salt, sugar=sugar, fat=fat, nutriscore=nutriscore, barcode=barcode, description=description, image=image)
+                    nutriscore_modified = DatabaseManager.change_nutriscore(nutriscore)
+                    c = Product(name=name, salt= salt, sugar=sugar, fat=fat, nutriscore=nutriscore_modified,
+                        barcode=barcode, description=description, image=image, category_test=category_test)
                     c.save()
                     print(c)
-                    for category in categories:
-                        if not Category.objects.filter(name=category):
-                            d = Category(name=category, product=c)
-                            d.save()
+
 
     @staticmethod
     def delete_entries(request):
@@ -112,8 +135,8 @@ class DatabaseManager(View):
         Search Categories in the database to retrive them in the api.
         '''
         try:
-            product_categories = Category.objects.filter(product__barcode=barcode)
-            return product_categories
+            product_categories = Product.objects.get(barcode=barcode)
+            return product_categories.category_test
         except:
             message_information = "Ce produit n'est pas ou plus présent dans la base."
             return message_information
@@ -127,13 +150,6 @@ class DatabaseManager(View):
             fat=data_dict['fat'], nutriscore=data_dict['nutriscore'], barcode=data_dict['barcode'],
                 description=data_dict['description'], image=data_dict['image'])
         d.save()
-    
-    # @staticmethod
-    # def compare_substitute(request):
-    #     all_products = SubstituteProduct.objects.all()
-
-    #     for product in all_products:
-    #         print(product.name)
             
             
             
