@@ -3,6 +3,8 @@ from django.http import HttpResponse
 
 from django.views import View
 from django.contrib.auth.forms import UserCreationForm
+
+from database.models import Product, SubstituteProduct, Favorite
  
 class BasicViews(View):
     '''
@@ -18,8 +20,11 @@ class BasicViews(View):
 
 
     @staticmethod
-    def favorite(request):
+    def display_favorite(request):
         '''
         TO DO : Display the favorite products saved by users.
         '''
-        return render(request,'standard/favorite.html')
+        actual_user = request.user
+        retrieve_favorite = Favorite.objects.filter(user_associated=actual_user)
+        
+        return render(request,'standard/favorite.html', {'product':retrieve_favorite})

@@ -17,7 +17,7 @@ from database.views import DatabaseManager
 
 from unidecode import unidecode
 
-from database.models import Product, Category, SubstituteProduct, SubstituteCategory
+from database.models import Product, SubstituteProduct
 
 class CallAPI(View):
     '''
@@ -87,8 +87,6 @@ class CallAPI(View):
         print("------------Add Products with the same category------------")
 
         category_clean = unidecode(product_category)
-        # url = "https://fr.openfoodfacts.org/category/%s.json" %(category_clean)
-        # url = "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_1=categories&tag_contains_1=contains&tag_1=%s&sort_by=unique_scans_n&page_size=100&action=display&json=1" %(category_clean)
         url ="https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=%s&page_size=100&axis_x=energy&axis_y=products_n&action=display&json=1" %(category_clean)
         result = urlopen(url)
         json_result = json.load(result)

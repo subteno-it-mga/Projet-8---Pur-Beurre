@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^users/', include('users.urls')),
     url(r'^api/', include('api.urls')),
     url(r'^database/', include('database.urls')),
+    url(r'^standard/', include('standard.urls')),
     path('',standardview.BasicViews.index, name="index"),
 ]
 

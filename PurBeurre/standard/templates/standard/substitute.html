@@ -159,7 +159,10 @@
                             </div>
                         </div> 
                         <div class="col-lg-3">
-                            <button class="btn btn-primary">Ajouter aux favoris</button>
+                            <form action="{% url 'add_favorite' %}" method="POST">
+                                {% csrf_token %}
+                                <button name="product_name" value="{{ product.name }}" value class="btn btn-primary">Ajouter aux favoris</button>
+                            </form>
                         </div>
                     </div>
                     </div>

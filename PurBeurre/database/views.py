@@ -14,7 +14,7 @@ from django.conf import settings
 
 from django.views import View
 
-from database.models import Product, Category, SubstituteProduct, SubstituteCategory
+from database.models import Product, SubstituteProduct, Favorite
 
 
 
@@ -103,10 +103,9 @@ class DatabaseManager(View):
         '''
         Product.objects.all().delete()
         SubstituteProduct.objects.all().delete()
-        context = {
-            'confirmation':'Les données ont bien été supprimées.'
-        }
-        return render(request,'standard/index.html', context)
+        Favorite.objects.all().delete()
+
+        return HttpResponseRedirect('/')
 
     def register_favorite(self, request, product):
         pass
@@ -150,6 +149,16 @@ class DatabaseManager(View):
             fat=data_dict['fat'], nutriscore=data_dict['nutriscore'], barcode=data_dict['barcode'],
                 description=data_dict['description'], image=data_dict['image'])
         d.save()
+    
+    @staticmethod
+    def add_favorite(request):
+
+        product_name = request.POST.get('product_name')
+        actual_user = request.user
+        save_favorite = Favorite(product_name=product_name, user_associated=actual_user)
+        save_favorite.save()
+
+        return render(request, 'standard/index.html')
             
             
             
