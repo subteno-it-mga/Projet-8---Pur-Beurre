@@ -98,7 +98,7 @@ class CallAPI(View):
                 name = product["product_name"]
                 salt = product["nutriments"]["salt"]
                 sugar = product["nutriments"]["sugars"]
-                fat =  product["nutriments"]["fat"]
+                fat = product["nutriments"]["fat"]
                 nutriscore = product["nutrition_grades"]
                 barcode = product["code"]
                 image = product["image_front_url"]

@@ -1,5 +1,5 @@
 from django.test import TestCase
-from database.models import Product, Category
+from database.models import Product
 from django.urls import reverse
 
 class ProductTestCase(TestCase):
