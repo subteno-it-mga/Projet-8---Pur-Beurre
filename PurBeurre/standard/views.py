@@ -27,4 +27,4 @@ class BasicViews(View):
         actual_user = request.user
         retrieve_favorite = Favorite.objects.filter(user_associate=actual_user)
 
-        return render(request,'standard/favorite.html', {'product':retrieve_favorite})
+        return render(request, 'standard/favorite.html', {'product': retrieve_favorite})
