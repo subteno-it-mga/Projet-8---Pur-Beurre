@@ -83,6 +83,7 @@ class CallAPI(View):
         '''
         product = request.POST.get('product_barcode')
         product_end = request.POST.get('product_barcode')
+        original_product = Product.objects.get(barcode=product_end)
         product_category = DatabaseManager.search_categories(product)
         print("------------Add Products with the same category------------")
 
@@ -102,6 +103,7 @@ class CallAPI(View):
                 nutriscore = product["nutrition_grades"]
                 barcode = product["code"]
                 image = product["image_front_url"]
+                category = product["compared_to_category"]
 
             except KeyError:
                 description = "Pas de description"
@@ -127,11 +129,12 @@ class CallAPI(View):
                     'image': image,
                     'nutriscore': nutriscore_db,
                     'barcode':barcode,
+                    'category':category,
+                    'original':original_product,
 
                 }
                 DatabaseManager.substitute_products(data_dictionnary)
 
-        substitute = DatabaseManager.display_subsitute(request)
-        original_product = Product.objects.get(barcode=product_end)
+        substitute = DatabaseManager.display_subsitute(request, original_product)
 
         return render(request, 'standard/substitute.html', {'substitute':substitute, 'original':original_product})

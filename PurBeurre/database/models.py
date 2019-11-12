@@ -41,7 +41,6 @@ class SubstituteProduct(models.Model):
 class Favorite(models.Model):
 
     product_name = models.CharField(max_length=200)
-    category = models.CharField(max_length=200)
     barcode = models.BigIntegerField()
     product_associate = models.ForeignKey(SubstituteProduct, on_delete=models.CASCADE)
     user_associate = models.ForeignKey(User, on_delete=models.CASCADE)

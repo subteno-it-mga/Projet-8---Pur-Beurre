@@ -22,9 +22,9 @@ class BasicViews(View):
     @staticmethod
     def display_favorite(request):
         '''
-        TO DO : Display the favorite products saved by users.
+        Display the favorite products from the substitute saved by users.
         '''
         actual_user = request.user
-        retrieve_favorite = Favorite.objects.filter(user_associated=actual_user)
-        
+        retrieve_favorite = Favorite.objects.filter(user_associate=actual_user)
+
         return render(request,'standard/favorite.html', {'product':retrieve_favorite})

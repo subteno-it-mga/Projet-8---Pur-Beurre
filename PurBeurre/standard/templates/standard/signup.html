@@ -18,7 +18,7 @@
             <div class="col-lg-8 align-self-baseline">
               <p class="text-white-75 font-weight-light mb-5">Votre compte a bien été créé. Vous pouvez maintenant vous régalez avec cette application en cherchant des produits adaptés à vos envies :) !</p>
 
-              <h2>Vous allez être redirigé automatiquement dans 5 secondes ou vous pouvez <a href='/'>cliquez ici</a></h2>
+              <h2>Vous allez être redirigé automatiquement dans 30 secondes ou vous pouvez <a href="{% url 'index' %}">cliquez ici</a></h2>
             </div>
           </div>
         </div>
@@ -29,6 +29,6 @@
              $('#timerSignup').html = "5"
           }
       
-          setTimeout(redirect, 3000);
+          setTimeout(redirect, 30000);
       </script>
 {% endblock %}

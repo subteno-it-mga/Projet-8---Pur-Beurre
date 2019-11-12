@@ -24,7 +24,6 @@ class UserAccount(View):
         Method post to retrieve all informations from the signup form.
         '''
         form = UserCreationForm(request.POST)
-
         if form.is_valid():
             form.save()
 
@@ -35,7 +34,7 @@ class UserAccount(View):
 
             messages.add_message(request, messages.INFO, form.cleaned_data['username'])
 
-            return HttpResponseRedirect('standard/signup.html')
+            return HttpResponseRedirect(reverse('signup'))
 
         else:
             form = UserCreationForm()
