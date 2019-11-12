@@ -41,36 +41,31 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <form method="POST" action="api/search/" class="form-inline my-2 my-lg-0">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" placeholder="Chercher un produit" name="search_term">
+            <button class="btn btn-primary" type="submit">Chercher</button>
+          </form>
           {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link">Bienvenue {{ user.username }}</a>
+                <a title="Bienvenue {{ user.username }}" class="nav-link"><i class="fas fa-user-circle fa-3x"></i></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/favorite">Mes favoris</a>
+                <a title="Afficher les favoris" class="nav-link" href="{% url 'display_favorite' %}"><i class="fas fa-carrot fa-3x"></i></a>
             </li>
-            {% if confirmation %}
-            <li class="nav-item">
-                <a class="nav-link" href="#">Base de donnée vide</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="/database/delete_entries/">Purger la base de données</a>
-            </li>
-            {% endif %}
+              {% if user.username == "admin" %}
+                <li class="nav-item">
+                    <a title="Purger la base de donnée" class="nav-link" href="{% url 'delete_entries' %}"><i class="fas fa-air-freshener fa-3x"></i></a>
+                </li>
+              {% endif %}
           {% else %}
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#account">Se connecter</a>
+                <a title="Se connecter" class="nav-link js-scroll-trigger" href="#account"><i class="fas fa-users fa-3x"></i></a>
             </li>
           {% endif %}
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#search">Rechercher</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-            </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout_user' %}">Se déconnecter</a>
+              <a title="Se déconnecter" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
           </li>
           {% endif %}
         </ul>

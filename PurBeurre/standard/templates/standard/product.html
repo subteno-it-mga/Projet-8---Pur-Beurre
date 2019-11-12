@@ -3,7 +3,7 @@
 {% block content %}
 
   <!-- Product Page -->
-        <div class="container-fluid h-100">
+        <div class="container-fluid h-100" id="product">
                 <span>Cliquez sur comparer pour trouver un ou des produits similaires.</span>
           <div class="row h-100 align-items-center justify-content-center text-center" style="margin-top:20em;">
             {% for product in products %}
@@ -51,11 +51,11 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- <form action="/compare/" method="POST" style="margin:auto; margin-top:15px;">
+                        <form action="{% url 'search_subsitute' %}" method="POST" style="margin:auto; margin-top:15px;">
                             {% csrf_token %}
-                            <input name="product_id" type="hidden" value="{{ product.barcode }}"/>
+                            <input name="product_barcode" type="hidden" value="{{ product.barcode }}"/>
                             <button class="btn btn-primary">COMPARER</button>
-                        </form> -->
+                        </form>
                         
                     </div>
               </div>
