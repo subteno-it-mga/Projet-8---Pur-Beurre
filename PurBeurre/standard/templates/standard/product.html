@@ -51,7 +51,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <form action="{% url 'search_subsitute' %}" method="POST" style="margin:auto; margin-top:15px;">
+                        <form action="{% url 'search_substitute' %}" method="POST" style="margin:auto; margin-top:15px;">
                             {% csrf_token %}
                             <input name="product_barcode" type="hidden" value="{{ product.barcode }}"/>
                             <button class="btn btn-primary">COMPARER</button>

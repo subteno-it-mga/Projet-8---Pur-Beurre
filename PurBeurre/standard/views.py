@@ -18,7 +18,6 @@ class BasicViews(View):
         form = UserCreationForm
         return render(request, 'standard/index.html', {'form': form})
 
-
     @staticmethod
     def display_favorite(request):
         '''

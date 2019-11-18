@@ -50,12 +50,12 @@ class UserAccount(View):
         user = authenticate(username=username, password=password)
 
         if user is not None and user.is_active:
-            login(request,user)
+            login(request, user)
             return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
         else:
             return render(request, 'standard/index.html', {'login_message':'The user doesn\'t exist','anchor':'account'})
         return render(request, 'standard/index.html')
-    
+
     @staticmethod
     def logout_user(request):
         '''

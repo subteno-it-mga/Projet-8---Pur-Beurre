@@ -13,37 +13,17 @@ from django.contrib.auth import logout
 from django.conf import settings
 
 from django.views import View
-from database.views import DatabaseManager
 
 from unidecode import unidecode
 
 from database.models import Product, SubstituteProduct
+from api.main import *
+
 
 class CallAPI(View):
     '''
-    This class is calling the api Open Food Fact.
+    This class returning the views related to API CALL.
     '''
-    @staticmethod
-    def change_nutriscore(nutriscore):
-        '''
-        change he nutriscore in the database entry to sort it in the template
-        '''
-        if nutriscore == "a":
-            nutriscore = 1
-        elif nutriscore == "b":
-            nutriscore = 2
-        elif nutriscore == "c":
-            nutriscore = 3
-        elif nutriscore == "d":
-            nutriscore = 4
-        elif nutriscore == "e":
-            nutriscore = 5
-        else:
-            message_nutriscore = "Pas de Nutriscore ?"
-            return message_nutriscore
-        
-        return nutriscore
-
     @staticmethod
     def search_and_stock(request):
         '''
@@ -51,89 +31,24 @@ class CallAPI(View):
         '''
         term = request.POST.get('search_term')
 
-        list_term = term.split(" ")
-        final_term_list = []
-
-        for item in list_term:
-            
-            if list_term[len(list_term) - 1] == item:
-                final_term_list.append(item)
-            else:
-                new_item = "".join(item + '%20')
-                final_term_list.append(new_item)
-
-        final_term_string = ''.join(final_term_list)
-
-        url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&action=process&json=1&page_size=10"%(final_term_string)
-        result = urlopen(url)
-        json_result = json.load(result)
-
-        product = json_result["products"]
-
-        DatabaseManager.create_entries(product)
-        informations_displayed = DatabaseManager.display_informations(request)
-        print("------------All informations will be displayed------------")
-        return render(request, 'standard/product.html', {'products': informations_displayed})
+        # TODO : call a CallAPIClass object to call functions with informations from api/main.py
+        informations_displayed = CallAPIClass
+        final_information = informations_displayed.treat_input_term(CallAPIClass, term)
+        return render(request, 'standard/product.html', {'products': final_information})
 
     @staticmethod
-    def search_subsitute(request):
+    def search_substitute(request):
         '''
         This search subsitutes from the category of the product.
         '''
         product = request.POST.get('product_barcode')
         product_end = request.POST.get('product_barcode')
         original_product = Product.objects.get(barcode=product_end)
-        product_category = DatabaseManager.search_categories(product)
+        product_category = DatabaseManagerClass.search_categories(DatabaseManagerClass, product)
+        retrieve_substitute = CallAPIClass.retrieve_substitute(CallAPIClass, product_category, original_product)
+        
         print("------------Add Products with the same category------------")
 
-        category_clean = unidecode(product_category)
-        url = "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=%s&page_size=100&axis_x=energy&axis_y=products_n&action=display&json=1" %(category_clean)
-        result = urlopen(url)
-        json_result = json.load(result)
-        categ_product = json_result['products']
-
-        for product in categ_product:
-            try:
-                description = product["generic_name"]
-                name = product["product_name"]
-                salt = product["nutriments"]["salt"]
-                sugar = product["nutriments"]["sugars"]
-                fat =  product["nutriments"]["fat"]
-                nutriscore = product["nutrition_grades"]
-                barcode = product["code"]
-                image = product["image_front_url"]
-                category = product["compared_to_category"]
-
-            except KeyError:
-                description = "Pas de description"
-                name = "Pas de nom"
-                salt = 0.0
-                fat = 0.0
-                sugar = 0.0
-                nutriscore = "Pas de nutriscore"
-                barcode = 100000
-                image = "No image"
-
-            if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name == "":
-                pass
-            else:
-                nutriscore_db = CallAPI.change_nutriscore(nutriscore)
-
-                data_dictionnary = {
-                    'product': name,
-                    'salt': salt,
-                    'sugar': sugar,
-                    'fat': fat,
-                    'description': description,
-                    'image': image,
-                    'nutriscore': nutriscore_db,
-                    'barcode': barcode,
-                    'category': category,
-                    'original': original_product,
-
-                }
-                DatabaseManager.substitute_products(data_dictionnary)
-
-        substitute = DatabaseManager.display_subsitute(request, original_product)
+        substitute = DatabaseManagerClass.display_substitutes(DatabaseManagerClass, original_product)
 
         return render(request, 'standard/substitute.html', {'substitute': substitute, 'original': original_product})
