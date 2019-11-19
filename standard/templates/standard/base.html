@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Pur Beurre ! Une appli pour bien manger ;)">
+  <meta name="author" content="Martin Gaucher">
+  
+  {% load static %}
+
+  <title>Pur Beurre</title>
+  <link rel="icon" href=" {% static 'standard/img/favicon.png' %} " />
+  <!-- Font Awesome Icons -->
+  <link href="{% static 'standard/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- Plugin CSS -->
+  <link href="{% static 'standard/vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="{% static 'standard/css/creative.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="/">
+        <img class="img img-fluid" style="max-height:100px;" src=" {% static 'standard/img/logo_pur_beurre.png' %} "/>
+        Pur Beurre
+      </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <form method="POST" action="api/search/" class="form-inline my-2 my-lg-0">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" placeholder="Chercher un produit" name="search_term">
+            <button class="btn btn-primary" type="submit">Chercher</button>
+          </form>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a title="Bienvenue {{ user.username }}" class="nav-link"><i class="fas fa-user-circle fa-3x"></i></a>
+            </li>
+            <li class="nav-item">
+                <a title="Afficher les favoris" class="nav-link" href="{% url 'display_favorite' %}"><i class="fas fa-carrot fa-3x"></i></a>
+            </li>
+              {% if user.username == "admin" %}
+                <li class="nav-item">
+                    <a title="Purger la base de donnée" class="nav-link" href="{% url 'delete_entries' %}"><i class="fas fa-air-freshener fa-3x"></i></a>
+                </li>
+              {% endif %}
+          {% else %}
+            <li class="nav-item">
+                <a title="Se connecter" class="nav-link js-scroll-trigger" href="#account"><i class="fas fa-users fa-3x"></i></a>
+            </li>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+              <a title="Se déconnecter" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% block content %}{% endblock %}
+    <!-- Footer -->
+<!-- <footer class="bg-light py-5">
+        <div class="container">
+            <div class="small text-center text-muted">
+            <p>Copyright &copy; 2019 - Pur Beurre (société fictive) - Martin Gaucher pour Open Class Rooms</p>
+            <a href="#">Ici, vous pouvez déguster les mentions légales.</a>
+            </div>
+            
+        </div>
+        </footer> -->
+    
+        <!-- Bootstrap core JavaScript -->
+        <script src="{% static 'standard/vendor/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'standard/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    
+        <!-- Plugin JavaScript -->
+        <script src="{% static 'standard/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+        <script src="{% static 'standard/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    
+        <!-- Custom scripts for this template -->
+        <script src="{% static 'standard/js/creative.min.js' %}"></script>
+        {% if anchor %}
+          <script type='text/javascript'>
+            $(document).ready(function(){
+                window.location = '#{{ anchor }}'
+            });
+          </script>
+        {% endif %}
+    
+    </body>
+    
+    </html>
