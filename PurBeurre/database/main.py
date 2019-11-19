@@ -119,10 +119,10 @@ class DatabaseManagerClass:
         try:
             product_categories = Product.objects.get(barcode=barcode)
             return product_categories.category
-        except :
+        except Product.DoesNotExist:
             message_information = "Ce produit n'est pas ou plus présent dans la base."
             return message_information
-    
+
     def substitute_products(self, data_dict):
         '''
         Add all substitute in the database.

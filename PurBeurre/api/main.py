@@ -23,7 +23,7 @@ class CallAPIClass:
     '''
     This object contains all methods to access and treat all informations received by the OpenFF API.
     '''
-    def __call_api_for_product(self, product):
+    def call_api_for_product(self, product):
         '''
         Private method to call the OpenFF API, retrieve products and return the json dictionnary.
         '''
@@ -34,7 +34,7 @@ class CallAPIClass:
 
         return product_dict
 
-    def __call_api_for_category(self, category):
+    def call_api_for_category(self, category):
         '''
         Private method to call the OpenFF API, retrieve category and return the json dictionnary.
         '''
@@ -64,7 +64,7 @@ class CallAPIClass:
 
         final_term_string = ''.join(final_term_list)
 
-        product = self.__call_api_for_product(self, final_term_string)
+        product = self.call_api_for_product(self, final_term_string)
 
         DatabaseManagerClass.create_entries(self, product)
 
@@ -77,8 +77,7 @@ class CallAPIClass:
         '''
         This function call the OpenFF API and store it in database.
         '''
-        # TODO Call private method to retrieve category from a product _call_api_for_category
-        categ_product = self.__call_api_for_category(self, product_category)
+        categ_product = self.call_api_for_category(self, product_category)
         # Loop and search for products into this json dictionnary
         for product in categ_product:
             try:

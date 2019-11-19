@@ -47,7 +47,17 @@
                                     {% endif %}
                                 </li>
                                 <li>
-                                    Nutriscore : {{ product.nutriscore|upper }}
+                                    {% if product.nutriscore == "1" %}
+                                    Nutriscore : A
+                                    {% elif product.nutriscore == "2" %}
+                                    Nutriscore : B
+                                    {% elif product.nutriscore == "3" %}
+                                    Nutriscore : C
+                                    {% elif product.nutriscore == "4" %}
+                                    Nutriscore : D
+                                    {% elif product.nutriscore == "5" %}
+                                    Nutriscore : E
+                                    {% endif %}
                                 </li>
                             </ul>
                         </div>

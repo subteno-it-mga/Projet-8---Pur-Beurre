@@ -30,8 +30,7 @@ class TestBasicViews(TestCase):
         '''
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
-        
-    
+
     def test_view_url_by_name(self):
         '''
         Check if the url returned is good
@@ -60,7 +59,3 @@ class TestBasicViews(TestCase):
         '''
         response = self.client.get('/')
         self.assertNotContains(response, 'That\'s incorrect html')
-
-# @register.filter(name='add_attr')
-# def test_add_attr(self):
-#     test_attr = add_attr("product","form-control")

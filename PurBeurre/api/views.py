@@ -17,7 +17,8 @@ from django.views import View
 from unidecode import unidecode
 
 from database.models import Product, SubstituteProduct
-from api.main import *
+from api.main import CallAPIClass
+from database.main import DatabaseManagerClass
 
 
 class CallAPI(View):
@@ -45,7 +46,7 @@ class CallAPI(View):
         product_end = request.POST.get('product_barcode')
         original_product = Product.objects.get(barcode=product_end)
         product_category = DatabaseManagerClass.search_categories(DatabaseManagerClass, product)
-        retrieve_substitute = CallAPIClass.retrieve_substitute(CallAPIClass, product_category, original_product)
+        CallAPIClass.retrieve_substitute(CallAPIClass, product_category, original_product)
         
         print("------------Add Products with the same category------------")
 
