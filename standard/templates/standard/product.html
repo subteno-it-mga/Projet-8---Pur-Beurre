@@ -1,0 +1,80 @@
+{% extends 'standard/base.html' %}
+
+{% block content %}
+
+  <!-- Product Page -->
+        <div class="container-fluid h-100" id="product">
+                <span>Cliquez sur comparer pour trouver un ou des produits similaires.</span>
+          <div class="row h-100 align-items-center justify-content-center text-center" style="margin-top:20em;">
+            {% for product in products %}
+              <div class="col-lg-4 col-md-4">
+                    <h2>{{ product.name }}</h2>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-12">
+                            
+                            {% if product.image %} 
+                                <img class="img-fluid" src="{{ product.image }}"/>
+                            {% else %}
+                                <p>Pas d'image disponible.</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-lg-8 col-sm-12 text-left">
+                            <h3>Caractérisques</h3>
+                            <ul>
+                                <li>
+                                    Courte description : {{ product.description }}
+                                </li>
+                                <li>
+                                    {% if product.salt == 0.0 %}
+                                    Pas de sel
+                                    {% else %}
+                                    Sel : {{ product.salt }}
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    {% if product.fat == 0.0 %}
+                                    Pas de matière grasse
+                                    {% else %}
+                                    Matière grasse : {{ product.fat }}
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    {% if product.sugar == 0.0 %}
+                                    Pas de sucre
+                                    {% else %}
+                                    Sucre : {{ product.sugar }}
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    {% if product.nutriscore == "1" %}
+                                    Nutriscore : A
+                                    {% elif product.nutriscore == "2" %}
+                                    Nutriscore : B
+                                    {% elif product.nutriscore == "3" %}
+                                    Nutriscore : C
+                                    {% elif product.nutriscore == "4" %}
+                                    Nutriscore : D
+                                    {% elif product.nutriscore == "5" %}
+                                    Nutriscore : E
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                        <form action="{% url 'search_substitute' %}" method="POST" style="margin:auto; margin-top:15px;">
+                            {% csrf_token %}
+                            <input name="product_barcode" type="hidden" value="{{ product.barcode }}"/>
+                            <button class="btn btn-primary">COMPARER</button>
+                        </form>
+                        
+                    </div>
+              </div>
+              {% endfor %}
+          </div>
+          
+
+              
+          </div>
+        </div>
+    
+{% endblock %}
