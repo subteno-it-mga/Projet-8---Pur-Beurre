@@ -32,9 +32,7 @@ class CallAPI(View):
         '''
         term = request.POST.get('search_term')
 
-        # TODO : call a CallAPIClass object to call functions with informations from api/main.py
-        informations_displayed = CallAPIClass
-        final_information = informations_displayed.treat_input_term(CallAPIClass, term)
+        final_information = CallAPIClass.treat_input_term(CallAPIClass, term)
         return render(request, 'standard/product.html', {'products': final_information})
 
     @staticmethod

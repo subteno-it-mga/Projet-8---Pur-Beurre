@@ -17,7 +17,7 @@ from django.views import View
 from unidecode import unidecode
 
 from database.models import Product, SubstituteProduct
-from database.main import *
+from database.main import DatabaseManagerClass
 
 class CallAPIClass:
     '''
@@ -119,5 +119,3 @@ class CallAPIClass:
                     'original': original_product,
                 }
                 DatabaseManagerClass.substitute_products(DatabaseManagerClass, data_dictionnary)
-
-    
