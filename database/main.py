@@ -15,7 +15,7 @@ from django.conf import settings
 from django.views import View
 
 from database.models import Product, SubstituteProduct, Favorite
-from api.main import *
+# from api.main import *
 
 
 class DatabaseManagerClass:
@@ -74,7 +74,7 @@ class DatabaseManagerClass:
                 if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name == "":
                     pass
                 else:
-                    if Product.objects.filter(barcode=barcode) == '':
+                    if Product.objects.filter(barcode=barcode):
                         pass
                     else:
                         nutriscore_modified = DatabaseManagerClass.change_nutriscore(self, nutriscore)

@@ -17,7 +17,8 @@ from django.views import View
 from database.models import Product, SubstituteProduct, Favorite
 from database.main import DatabaseManagerClass
 
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 from django.shortcuts import redirect
 
@@ -38,14 +39,19 @@ class DatabaseManager(View):
         return HttpResponseRedirect('/')
 
     @staticmethod
+    @csrf_exempt
     def add_favorite(request):
         '''
         Add a substitute product in the database depend of the user.
         '''
-        product_request = request.POST.get('product_barcode')
+        barcode = request.POST.get('barcode')
         user = request.user
-
         add_favorite = DatabaseManagerClass()
-        add_favorite.add_favorite_database(product_request, user)
+        add_favorite.add_favorite_database(int(barcode), user)
 
-        return render(request, 'standard/index.html')
+        message = "bien ajouté aux favoris"
+
+        data = {
+            'message': message,
+        }
+        return JsonResponse(data)

@@ -41,8 +41,7 @@ class CallAPI(View):
         This search subsitutes from the category of the product.
         '''
         product = request.POST.get('product_barcode')
-        product_end = request.POST.get('product_barcode')
-        original_product = Product.objects.get(barcode=product_end)
+        original_product = Product.objects.get(barcode=product)
         product_category = DatabaseManagerClass.search_categories(DatabaseManagerClass, product)
         CallAPIClass.retrieve_substitute(CallAPIClass, product_category, original_product)
         

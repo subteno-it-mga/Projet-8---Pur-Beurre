@@ -6,7 +6,7 @@ import json
 from urllib.request import urlopen
 from unidecode import unidecode
 from api.main import *
-from database.main import CallAPIClass, DatabaseManagerClass
+from database.main import *
 from database.models import Product
 
 class TestCallAPICall(TestCase):
