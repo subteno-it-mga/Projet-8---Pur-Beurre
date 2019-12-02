@@ -87,7 +87,7 @@
                   </div>
                   <div class="tab-pane fade show col-lg-6 mx-auto" id="signup" role="tabpanel" aria-labelledby="signup-id">
                       {% load add_attr %}
-                      <form method="post" action="/users/user_account/">
+                      <form method="post" action="{% url "user_account" %}">
                           {% csrf_token %}
                           <!-- {{ form.as_p }} -->
                           {% for field in form %}

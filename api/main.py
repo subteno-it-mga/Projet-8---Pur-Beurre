@@ -70,10 +70,10 @@ class CallAPIClass:
 
         if not check_existing_search:
             DatabaseManagerClass.create_entries(self, product, final_term_string)
-            print("-----------------On entre les produits en base car non existants--------------------------")
+            print("-----------------We create products in Database--------------------------")
         else:
             DatabaseManagerClass.display_informations(self, final_term_string)
-            print("-----------------On affiche les produits car ils existent en base--------------------------")
+            print("-----------------Directly display the products because they already are in base--------------------------")
 
         informations_displayed = DatabaseManagerClass.display_informations(self, final_term_string)
         print("------------All informations will be displayed------------")
