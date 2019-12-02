@@ -1,0 +1,3 @@
+[report]
+omit = *migrations*, *tests.py*, *wsgi.py*, *templatetags*
+exclude_lines = pragma : no-cover
