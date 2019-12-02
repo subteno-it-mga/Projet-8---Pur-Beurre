@@ -16,7 +16,7 @@
         </div>
         <div class="col-lg-8 align-self-baseline">
           <p class="text-white-75 font-weight-light mb-5">Si vous chercher la pâte à tartiner de vos rêves et qui ne vous fera pas grossir, rechercher par exemple "Noutello" ou quelque chose du genre, puis nous vous proposerons un produit de substitution ;)</p>
-            <form method="POST" action="api/search/" class="form-inline my-2 my-lg-0">
+            <form method="POST" action="{% url 'search_and_stock' %}" class="form-inline my-2 my-lg-0">
               {% csrf_token %}
               <input name="search_term" class="form-control mr-sm-2" style="width:75%;" placeholder="Chercher un produit"/>
               <button type="submit" class="btn btn-primary">Chercher</button>
@@ -67,7 +67,7 @@
                 </ul>
               <div class="tab-content col-12" id="myTabContent">
                   <div class="tab-pane fade show active col-lg-6 mx-auto" id="signin" role="tabpanel" aria-labelledby="signin-id">
-                      <form method="post" role="form" action="/users/login_user/">
+                      <form method="post" role="form" action="{% url 'login_user' %}">
                         {% csrf_token %}
                         {% if login_message %}
                         <div class="alert alert-danger">

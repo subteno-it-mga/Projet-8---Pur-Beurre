@@ -42,7 +42,16 @@ class DatabaseManagerClass:
 
         return nutriscore
 
-    def create_entries(self, informations):
+    def check_search(self, search):
+        '''
+        Check if the search is in database or not.
+        '''
+        if Product.objects.filter(search=search.lower()):
+            return Product.objects.filter(search=search)
+        else:
+            return False
+
+    def create_entries(self, informations, final_term_string):
         '''
         Create the entries in database for the searched product.
         '''
@@ -59,6 +68,7 @@ class DatabaseManagerClass:
                 barcode = product["code"]
                 image = product["image_front_url"]
                 category = product["compared_to_category"]
+                search = final_term_string.lower()
 
             except KeyError:
                 description = "Pas de description"
@@ -69,6 +79,7 @@ class DatabaseManagerClass:
                 nutriscore = "Pas de nutriscore"
                 barcode = 100000
                 image = "No image"
+                search = "Pas de recherche"
 
             else:
                 if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name == "":
@@ -87,7 +98,8 @@ class DatabaseManagerClass:
                             barcode=barcode,
                             description=description,
                             image=image,
-                            category=category)
+                            category=category,
+                            search=search)
         print("---------------All products are correctly in base------------")
 
     def delete_all_entries(self):
@@ -98,11 +110,11 @@ class DatabaseManagerClass:
         SubstituteProduct.objects.all().delete()
         Favorite.objects.all().delete()
 
-    def display_informations(self, ):
+    def display_informations(self, search):
         '''
         Search all original products in Database.
         '''
-        return Product.objects.all()
+        return Product.objects.filter(search=search.lower())
 
     def display_substitutes(self, original_product):
         '''

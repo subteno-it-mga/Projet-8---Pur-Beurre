@@ -66,9 +66,16 @@ class CallAPIClass:
 
         product = self.call_api_for_product(self, final_term_string)
 
-        DatabaseManagerClass.create_entries(self, product)
+        check_existing_search = DatabaseManagerClass.check_search(self, final_term_string)
 
-        informations_displayed = DatabaseManagerClass.display_informations(self)
+        if not check_existing_search:
+            DatabaseManagerClass.create_entries(self, product, final_term_string)
+            print("-----------------On entre les produits en base car non existants--------------------------")
+        else:
+            DatabaseManagerClass.display_informations(self, final_term_string)
+            print("-----------------On affiche les produits car ils existent en base--------------------------")
+
+        informations_displayed = DatabaseManagerClass.display_informations(self, final_term_string)
         print("------------All informations will be displayed------------")
 
         return informations_displayed
