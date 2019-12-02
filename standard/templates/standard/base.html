@@ -41,7 +41,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          <form method="POST" action="api/search/" class="form-inline my-2 my-lg-0">
+          <form method="POST" action="{% url 'search_and_stock' %}" class="form-inline my-2 my-lg-0">
             {% csrf_token %}
             <input class="form-control mr-sm-2" placeholder="Chercher un produit" name="search_term">
             <button class="btn btn-primary" type="submit">Chercher</button>
