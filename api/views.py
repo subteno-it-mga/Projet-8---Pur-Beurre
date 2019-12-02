@@ -16,7 +16,7 @@ from django.views import View
 
 from unidecode import unidecode
 
-from database.models import Product, SubstituteProduct
+from database.models import Product, SubstituteProduct, Favorite
 from api.main import CallAPIClass
 from database.main import DatabaseManagerClass
 
@@ -47,6 +47,6 @@ class CallAPI(View):
         
         print("------------Add Products with the same category------------")
 
-        substitute = DatabaseManagerClass.display_substitutes(DatabaseManagerClass, original_product)
-
-        return render(request, 'standard/substitute.html', {'substitute': substitute, 'original': original_product})
+        substitutes = DatabaseManagerClass.display_substitutes(DatabaseManagerClass, original_product)
+        favorites = Favorite.objects.all()
+        return render(request, 'standard/substitute.html', {'substitutes': substitutes, 'favorites': favorites, 'original': original_product})

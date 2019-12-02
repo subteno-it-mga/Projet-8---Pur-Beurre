@@ -12,6 +12,7 @@ class Product(models.Model):
     salt = models.FloatField()
     barcode = models.BigIntegerField()
     image = models.CharField(max_length=200)
+    search = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -31,6 +32,7 @@ class SubstituteProduct(models.Model):
     barcode = models.BigIntegerField()
     image = models.CharField(max_length=200)
     original = models.ForeignKey(Product, on_delete=models.CASCADE)
+    in_favorite = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -42,7 +44,7 @@ class Favorite(models.Model):
 
     product_name = models.CharField(max_length=200)
     barcode = models.BigIntegerField()
-    product_associate = models.ForeignKey(SubstituteProduct, on_delete=models.CASCADE)
+    product_associate = models.ForeignKey(Product, on_delete=models.CASCADE)
     user_associate = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):

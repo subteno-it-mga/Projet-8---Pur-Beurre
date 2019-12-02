@@ -157,9 +157,9 @@ class DatabaseManagerClass:
         Add a substitute product in the database depends of the user.
         '''
         product_associate = SubstituteProduct.objects.get(barcode=favorite)
-
+        SubstituteProduct.objects.filter(barcode=favorite).update(in_favorite=True)
         Favorite.objects.create(
-            product_associate=product_associate,
+            product_associate=product_associate.original,
             user_associate=user,
             product_name=product_associate.name,
             barcode=product_associate.barcode)

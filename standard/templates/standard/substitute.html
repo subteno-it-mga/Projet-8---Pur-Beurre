@@ -36,7 +36,7 @@
                 <h1>Voici la liste des produits que vous nous proposons:</h1>
             </section>
             <div class="row">
-                {% for product in substitute|dictsort:"nutriscore"|slice:":10" %}
+                {% for product in substitutes|dictsort:"nutriscore"|slice:":10" %}
                 <div class="col-lg-12 product-template">
                     <div class="container">
                         <div class="row">
@@ -79,7 +79,11 @@
                                             <li class="list-group-item"><span class="product-char">Matière Grasse: </span>{{ product.fat|floatformat:2 }}</li>
                                             <li class="list-group-item find-off"><a href="https://fr.openfoodfacts.org/produit/{{ product.barcode }}" target="_blank">Retrouver sur openfoodfacts</a></li>
                                         </ul>
-                                            <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
+                                        {% if product.in_favorite %}
+                                            <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i> Déjà ajouté à la base de donnée.</button>
+                                        {% else %}
+                                        <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
