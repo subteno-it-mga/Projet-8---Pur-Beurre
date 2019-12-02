@@ -51,7 +51,7 @@ class TestBasicViews(TestCase):
         Test if the html page contains the h1 title (only present in the index page)
         '''
         response = self.client.get('/')
-        self.assertContains(response, '<h1 class="text-uppercase text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
+        self.assertContains(response, '<h1 class="text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
 
     def test_home_page_does_not_contain_incorrect_html(self):
         '''

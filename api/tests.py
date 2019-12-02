@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 import httpretty
 import requests
@@ -6,13 +6,20 @@ import json
 from urllib.request import urlopen
 from unidecode import unidecode
 from api.main import *
-from database.main import CallAPIClass, DatabaseManagerClass
+from database.main import *
 from database.models import Product
+from .views import CallAPI
+from django.urls import reverse
+client = Client()
 
 class TestCallAPICall(TestCase):
     '''
     This is the tests for the two API CALLS and functions in this app
     '''
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
     @httpretty.activate
     def test_call_api_for_product(self):
         '''
@@ -138,8 +145,10 @@ class TestCallAPICall(TestCase):
         '''
         This function test the api call and the retrieve of category and then enter in the database. 
         '''
-        
         pass
 
-
-
+    def test_search_and_stock(self):
+        # response = client.get(reverse('search_and_stock'))
+        # request = CallAPI.as_view()(response)
+        # self.assertEqual(request.status_code, 200)
+        pass

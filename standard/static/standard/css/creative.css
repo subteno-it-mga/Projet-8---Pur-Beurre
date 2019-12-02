@@ -10,6 +10,88 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+
+/*-----------CUSTOM SETTINGS---------------*/
+
+.find-off a:hover{
+  color:white;
+  background-color:#f4623a;
+  text-decoration: none;
+}
+
+.nutriscore-setup{
+  height: 50px;
+  width: 50px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+  position:absolute;
+  top:0;
+  font-size:35px;
+}
+
+.save-button{
+  margin-top:10px;
+}
+
+.product-template{
+  margin-top:20px;
+  margin-bottom:20px;
+  background-color:#ececec;
+}
+
+.product-char{
+  color:#f4623a;
+  font-weight: bold;
+}
+
+.product-title{
+  color:#f4623a;
+  padding:10px;
+  background-color:white;
+  margin-top:10px;
+}
+
+.card-like{
+  border:black solid 2px;
+}
+
+.img-max-size{
+  max-width: 100%;
+}
+
+.space-between-sub{
+  margin-top:30px;
+  margin-bottom:30px;
+}
+
+.green-nutri{
+  background-color:green;
+  color:black;
+}
+
+.yellow-nutri{
+  background-color:yellow;
+  color:black;
+}
+
+.orange-nutri{
+  background-color:orange;
+  color:black;
+}
+
+.red-nutri{
+  background-color:red;
+  color:black;
+}
+
+.black-nutri{
+  background-color:black;
+  color:white;
+}
+
+/*-----------END CUSTOM SETTINGS---------------*/
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -9665,7 +9747,8 @@ header.masthead {
   background-size: cover;
 }
 
-#favorite{
+.favorite{
+  z-index:9999;
   padding-top: 10rem;
   padding-bottom: calc(10rem - 72px);
   background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../img/background-head.jpg");

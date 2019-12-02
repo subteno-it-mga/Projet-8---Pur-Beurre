@@ -15,7 +15,7 @@ from django.conf import settings
 from django.views import View
 
 from database.models import Product, SubstituteProduct, Favorite
-from api.main import *
+# from api.main import *
 
 
 class DatabaseManagerClass:
@@ -44,7 +44,7 @@ class DatabaseManagerClass:
 
     def create_entries(self, informations):
         '''
-        Create the entires in database for the searched product.
+        Create the entries in database for the searched product.
         '''
         print("-------------We are creating products-------------")
 
@@ -74,11 +74,11 @@ class DatabaseManagerClass:
                 if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name == "":
                     pass
                 else:
-                    if Product.objects.filter(barcode=barcode) == '':
+                    if Product.objects.filter(barcode=barcode):
                         pass
                     else:
                         nutriscore_modified = DatabaseManagerClass.change_nutriscore(self, nutriscore)
-                        c = Product(
+                        Product.objects.create(
                             name=name,
                             salt=salt,
                             sugar=sugar,
@@ -88,8 +88,6 @@ class DatabaseManagerClass:
                             description=description,
                             image=image,
                             category=category)
-                        c.save()
-                        print(c)
         print("---------------All products are correctly in base------------")
 
     def delete_all_entries(self):
@@ -100,7 +98,7 @@ class DatabaseManagerClass:
         SubstituteProduct.objects.all().delete()
         Favorite.objects.all().delete()
 
-    def display_informations(self):
+    def display_informations(self, ):
         '''
         Search all original products in Database.
         '''
@@ -127,30 +125,42 @@ class DatabaseManagerClass:
         '''
         Add all substitute in the database.
         '''
-        d = SubstituteProduct(
-            name=data_dict['product'],
-            salt=data_dict['salt'], sugar=data_dict['sugar'],
-            fat=data_dict['fat'],
-            nutriscore=data_dict['nutriscore'],
-            barcode=data_dict['barcode'],
-            description=data_dict['description'],
-            image=data_dict['image'],
-            category=data_dict['category'],
-            original=data_dict['original'])
-        d.save()
+        try:
+            test_existing_sub = SubstituteProduct.objects.filter(barcode=data_dict['barcode']).values('barcode')[0]['barcode']
+            if data_dict['barcode'] != str(test_existing_sub):
+                SubstituteProduct.objects.create(
+                    name=data_dict['product'],
+                    salt=data_dict['salt'], sugar=data_dict['sugar'],
+                    fat=data_dict['fat'],
+                    nutriscore=data_dict['nutriscore'],
+                    barcode=data_dict['barcode'],
+                    description=data_dict['description'],
+                    image=data_dict['image'],
+                    category=data_dict['category'],
+                    original=data_dict['original'])
+            else:
+                print("Le produit existe déjà.")
+        except IndexError:
+            SubstituteProduct.objects.create(
+                    name=data_dict['product'],
+                    salt=data_dict['salt'], sugar=data_dict['sugar'],
+                    fat=data_dict['fat'],
+                    nutriscore=data_dict['nutriscore'],
+                    barcode=data_dict['barcode'],
+                    description=data_dict['description'],
+                    image=data_dict['image'],
+                    category=data_dict['category'],
+                    original=data_dict['original'])
 
     def add_favorite_database(self, favorite, user):
         '''
         Add a substitute product in the database depends of the user.
         '''
         product_associate = SubstituteProduct.objects.get(barcode=favorite)
-
-        actual_user = user
-
-        save_favorite = Favorite(
-                        product_associate=product_associate,
-                        user_associate=actual_user,
-                        product_name=product_associate.name,
-                        barcode=product_associate.barcode)
-        save_favorite.save()
+        SubstituteProduct.objects.filter(barcode=favorite).update(in_favorite=True)
+        Favorite.objects.create(
+            product_associate=product_associate.original,
+            user_associate=user,
+            product_name=product_associate.name,
+            barcode=product_associate.barcode)
         print("-----------The favorite was added into database---------------")

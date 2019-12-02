@@ -16,7 +16,7 @@ from django.views import View
 
 from unidecode import unidecode
 
-from database.models import Product, SubstituteProduct
+from database.models import Product, SubstituteProduct, Favorite
 from api.main import CallAPIClass
 from database.main import DatabaseManagerClass
 
@@ -32,9 +32,7 @@ class CallAPI(View):
         '''
         term = request.POST.get('search_term')
 
-        # TODO : call a CallAPIClass object to call functions with informations from api/main.py
-        informations_displayed = CallAPIClass
-        final_information = informations_displayed.treat_input_term(CallAPIClass, term)
+        final_information = CallAPIClass.treat_input_term(CallAPIClass, term)
         return render(request, 'standard/product.html', {'products': final_information})
 
     @staticmethod
@@ -43,13 +41,12 @@ class CallAPI(View):
         This search subsitutes from the category of the product.
         '''
         product = request.POST.get('product_barcode')
-        product_end = request.POST.get('product_barcode')
-        original_product = Product.objects.get(barcode=product_end)
+        original_product = Product.objects.get(barcode=product)
         product_category = DatabaseManagerClass.search_categories(DatabaseManagerClass, product)
         CallAPIClass.retrieve_substitute(CallAPIClass, product_category, original_product)
         
         print("------------Add Products with the same category------------")
 
-        substitute = DatabaseManagerClass.display_substitutes(DatabaseManagerClass, original_product)
-
-        return render(request, 'standard/substitute.html', {'substitute': substitute, 'original': original_product})
+        substitutes = DatabaseManagerClass.display_substitutes(DatabaseManagerClass, original_product)
+        favorites = Favorite.objects.all()
+        return render(request, 'standard/substitute.html', {'substitutes': substitutes, 'favorites': favorites, 'original': original_product})

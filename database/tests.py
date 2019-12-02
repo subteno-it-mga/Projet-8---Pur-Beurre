@@ -53,10 +53,20 @@ class DatabaseTestCase(TestCase):
         Test if the nutriscore is well substitute.
         '''
         # Test if the nutriscore change from strong to integer for a betttr sort in the template
-        test_change_nutriscore = DatabaseManagerClass.change_nutriscore(self, "a")
+        test_change_nutriscore_a = DatabaseManagerClass.change_nutriscore(self, "a")
+        test_change_nutriscore_b = DatabaseManagerClass.change_nutriscore(self, "b")
+        test_change_nutriscore_c = DatabaseManagerClass.change_nutriscore(self, "c")
+        test_change_nutriscore_d = DatabaseManagerClass.change_nutriscore(self, "d")
+        test_change_nutriscore_e = DatabaseManagerClass.change_nutriscore(self, "e")
 
-        self.assertEqual(test_change_nutriscore, 1)
-        self.assertNotEqual(test_change_nutriscore, 2)
+        test_change_nutriscore_x = DatabaseManagerClass.change_nutriscore(self, "x")
+
+        self.assertEqual(test_change_nutriscore_a, 1)
+        self.assertEqual(test_change_nutriscore_b, 2)
+        self.assertEqual(test_change_nutriscore_c, 3)
+        self.assertEqual(test_change_nutriscore_d, 4)
+        self.assertEqual(test_change_nutriscore_e, 5)
+        self.assertEqual(test_change_nutriscore_x, "Pas de Nutriscore ?")
 
     def test_create_entries(self):
         '''
