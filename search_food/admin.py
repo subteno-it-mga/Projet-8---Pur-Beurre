@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Product, SubstituteProduct, Favorite
+
+admin.site.register(Product)
+admin.site.register(SubstituteProduct)
+admin.site.register(Favorite)

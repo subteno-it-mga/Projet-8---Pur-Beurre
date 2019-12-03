@@ -38,10 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'users.apps.UsersConfig',
-    'standard.apps.StandardConfig',
-    'api.apps.ApiConfig',
-    'database.apps.DatabaseConfig',
+    'search_food.apps.SearchFoodConfig',
 ]
 
 MIDDLEWARE = [
