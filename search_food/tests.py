@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-class TestCallAPICall(TestCase):
-=======
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 import httpretty
@@ -14,7 +11,6 @@ from django.urls import reverse
 client = Client()
 
 class TestCallAPI(TestCase):
->>>>>>> second-refactoring
     '''
     This is the tests for the two API CALLS and functions in this app
     '''
