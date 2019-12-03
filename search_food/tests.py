@@ -1,4 +1,5 @@
 from django.test import TestCase, Client, RequestFactory
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 import httpretty
 import requests
@@ -6,8 +7,24 @@ import json
 from urllib.request import urlopen
 from unidecode import unidecode
 from .models import Product, User, Favorite, SubstituteProduct
-from .views import *
+from .views import (
+    user_account, login_user, logout_user, signup, treat_input_term,
+    call_api_for_product, call_api_for_category, search_and_stock,
+    search_substitute, retrieve_substitute, change_nutriscore, check_search,
+    create_entries, add_substitute_products, add_favorite_database,
+    delete_entries, add_favorite, delete_all_entries, index, display_informations,
+    display_substitutes, display_favorite, search_categories
+)
 from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.messages import get_messages
+from django.http import HttpResponse, HttpResponseRedirect
+from django.test import Client
+from django.conf import settings
+
 client = Client()
 
 class TestCallAPI(TestCase):
@@ -55,7 +72,7 @@ class TestCallAPI(TestCase):
         httpretty.reset()
 
     @httpretty.activate
-    def test_api_call_for_category(self):
+    def test_call_api_for_category(self):
         '''
         Test this functionnality wich is use to call API, get the JSON then stock in database.
         In this function, we'll only test the API CALL.
@@ -67,11 +84,10 @@ class TestCallAPI(TestCase):
         httpretty.enable()
 
         url = "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=%s\&page_size=100&axis_x=energy&axis_y=products_n&action=display&json=1" % (category_clean)
-
         # Here test the response and integrity of information given.
         httpretty.register_uri(
             httpretty.GET, url,
-            body='{"page_size": 100,"products":[{"product_name_fr": "Prince: Goût Chocolat au Blé Complet"}]}',
+            body='{"skip": 0,"page_size": 100,"products":[{"product_name_fr": "Prince: Goût Chocolat au Blé Complet"}]}',
             content_type="application/json")
 
         response = requests.get(url)
@@ -79,7 +95,11 @@ class TestCallAPI(TestCase):
 
         self.assertEqual(last_request.method, 'GET')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {"page_size": 100, "products": [{"product_name_fr": "Prince: Goût Chocolat au Blé Complet"}]})
+        self.assertEqual(response.json(), {
+            "skip": 0,
+            "page_size": 100,
+            "products": [{
+                "product_name_fr": "Prince: Goût Chocolat au Blé Complet"}]})
 
         # Test if we can read the json file and retrieve good informations from it.
         result = urlopen(url)
@@ -98,7 +118,7 @@ class TestCallAPI(TestCase):
         of the original product and stock it on the database. In this function, we'll only test the API CALL
         '''
         pass
-    
+
     def test_treat_input_term(self):
         '''
         This function tests if the keyword(s) are split and if the api call is successful.
@@ -141,14 +161,14 @@ class TestCallAPI(TestCase):
 
     def test_retrieve_subsitute(self):
         '''
-        This function test the api call and the retrieve of category and then enter in the database. 
+        This function test the api call and the retrieve of category and then enter in the database.
         '''
         pass
 
     def test_search_and_stock(self):
-        # response = client.get(reverse('search_and_stock'))
-        # request = CallAPI.as_view()(response)
-        # self.assertEqual(request.status_code, 200)
+        test_term = "nutellô"
+        test_final_info = treat_input_term(test_term)
+        self.assertEqual(test_final_info, )
         pass
 
 class DatabaseTestCase(TestCase):
@@ -349,7 +369,9 @@ class DatabaseTestCase(TestCase):
         self.assertEqual(Favorite.objects.get(barcode=12345678910).product_name, 'gerblé')
 
 class TestBasicViews(TestCase):
-
+    '''
+    This class tests basic views
+    '''
     def test_home_page_status_code(self):
         '''
         Check if the returned status code of the page is 200
@@ -363,7 +385,7 @@ class TestBasicViews(TestCase):
         '''
         response = self.client.get(reverse('index'))
         self.assertEquals(response.status_code, 200)
-    
+
     def test_view_uses_correct_template(self):
         '''
         Test if we use the correct template and it returns a 200 status_code
@@ -371,7 +393,7 @@ class TestBasicViews(TestCase):
         response = self.client.get(reverse('index'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'standard/index.html')
-        
+
     def test_home_page_contains_correct_html(self):
         '''
         Test if the html page contains the h1 title (only present in the index page)
@@ -390,15 +412,105 @@ class TestUserAccount(TestCase):
     '''
     This class test the UserAccount functionalities.
     '''
-    def test_post_form_valid(self):
+    def setUp(self):
+        self.client = Client()
+        self.user_form = {
+            'username': 'jacques',
+            'password1': 'jaja61700',
+            'password2': 'jaja61700'
+        }
+        self.user = UserCreationForm(self.user_form)
+        self.user.save()
+        self.factory = RequestFactory()
+
+    def test_login_user(self):
+        username = 'jacques'
+        password = 'jaja61700'
+        false_user = 'jackie'
+        false_password = 'jojo61700'
+
+        user = authenticate(username=username, password=password)
+        self.assertTrue(user)
+
+        if user is not None and user.is_active:
+            logged_in = self.client.login(username=username, password=password)
+            self.assertTrue(logged_in)
+
+            redirect_log = self.client.get(settings.LOGIN_REDIRECT_URL)
+            self.assertEqual(redirect_log.status_code, 200)
+            self.assertTemplateUsed(redirect_log, 'standard/index.html')
+        else:
+            redirect_main = self.client.get(reverse('index'), {'login_message':'The user doesn\'t exist','anchor':'account'})
+            self.assertEqual(redirect_main.status_code, 200)
+
+        response_final = self.client.get(reverse('index'))
+        self.assertEqual(response_final.status_code, 200)
+        self.assertTemplateUsed(response_final, 'standard/index.html')
+
+
+        # self.assertContains(response, 'Company Name XYZ')
+        # user_auth = authenticate(username='jacques', password='jaja61700')
+        # self.assertEqual(user_auth.username, 'jacques')
+
+        # logged_in = self.client.login(username="jacques", password="jaja61700")
+        # self.assertTrue(logged_in)
+
+    def test_logout_user(self):
+        self.client.login(username='jacques', password='jaja61700')
+        response = self.client.get(reverse('logout_user'))
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_account(self):
         '''
         Check if the form fill in UserCreationForm is valid when informations are valids.
         '''
-        form_data = {"username":"martin","password1":"matchingpass","password2":"matchingpass"}
-        form = UserCreationForm(data=form_data)
+        data = {
+            'username': 'jacques61',
+            'password1': 'jaja61700',
+            'password2': 'jaja61700',
+        }
+        form = UserCreationForm(data=data)
         self.assertTrue(form.is_valid())
+        if form.is_valid():
+            form.save()
+            response = self.client.get(reverse('signup'))
+            self.assertEqual(response.status_code, 200)
+        # response = self.client.get(reverse('user_account'), {'username': 'jacques', 'password1': 'jaja61', 'password2': 'jaja61'})
+        # import pdb; pdb.set_trace()
+        # form = UserCreationForm(password1="jaja41", password2="jaja41")
 
-    def test_post_user_creation_case_wrong(self):          
+        # self.assertEqual(form.is_valid(), True)
+        # request = self.factory.post(reverse('user_account'))
+        # user_form = request.POST
+        # user_form = self.user_test
+
+        # form = UserCreationForm(self.user_form)
+        # self.assertEqual(form.is_valid(), False)
+        # request.user = self.user_test
+        # response = home_page(request)
+        # form_data = {
+        #     "username": "martin",
+        #     "password1": "matchingpass",
+        #     "password2": "matchingpass"}
+
+        # form = UserCreationForm(data=form_data)
+        # self.assertEqual(form.is_valid(), True)
+
+        # if form.is_valid():
+        #     form.save()
+        #     username = form.cleaned_data.get('username')
+        #     raw_password = form.cleaned_data.get('password1')
+        #     self.client.login(username=username, password=raw_password)
+
+        #     response = self.client.get(reverse('signup'))
+        #     self.assertEqual(response.status_code, 200)
+
+        # else:
+        #     form = UserCreationForm()
+        #     response = self.client.get(reverse('index'))
+
+    def test_post_user_creation_case_wrong(self):
         '''
         Check if the form is False when the user doesn't fill one or few informations.
         '''
@@ -408,21 +520,21 @@ class TestUserAccount(TestCase):
             "password1": "vitamineD61",
             "password2": "vitamineD61",
             "info": "empty no username"}
-        
+
         # Test : two passwords doesn't matches
         form_data_no_matching_pwd = {
             "username": "martin",
             "password1": "matchingpass",
             "password2": "matching",
             "info": "no matching pwd"}
-        
+
         # Test : empty passwords fields
         form_data_no_pwd = {
             "username": "martin",
             "password1": "",
             "password2": "",
             "info": "empty password"}
-        
+
         # Test : weak passwords (rule : more than 8 characters)
         form_data_weak_password = {
             "username": "martin",
@@ -447,8 +559,8 @@ class TestUserAccount(TestCase):
         test_c = Client()
         test_form_data = {
             "username": "martin",
-             "password1": "thisisatest",
-              "password2": "thisisatest"}
+            "password1": "thisisatest",
+            "password2": "thisisatest"}
 
         test_temp_auth = UserCreationForm(data=test_form_data)
 
@@ -485,4 +597,3 @@ class TestModels(TestCase):
         Check if the product model return the good name with the str method
         '''
         self.assertEqual(self.product_test_model.__str__(), 'Nutella model')
-        

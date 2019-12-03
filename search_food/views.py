@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.contrib.auth import login, authenticate
@@ -166,7 +165,6 @@ def retrieve_substitute(product_category, original_product):
     '''
     This function call the OpenFF API and store it in database.
     '''
-    import pdb; pdb.set_trace()
     categ_product = call_api_for_category(product_category)
     # Loop and search for products into this json dictionnary
     for product in categ_product:
