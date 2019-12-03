@@ -17,15 +17,12 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls import include, url
 from django.urls import path
-from standard import views as standardview
+from search_food import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^users/', include('users.urls')),
-    url(r'^api/', include('api.urls')),
-    url(r'^database/', include('database.urls')),
-    url(r'^standard/', include('standard.urls')),
-    path('',standardview.BasicViews.index, name="index"),
+    url(r'^search_food/', include('search_food.urls')),
+    path('', views.index, name="index"),
 ]
 
 if settings.DEBUG:
