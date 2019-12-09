@@ -17,6 +17,8 @@ from unidecode import unidecode
 from django.views.decorators.csrf import csrf_exempt
 from .models import Product, SubstituteProduct, Favorite
 
+from django.urls import reverse
+
 ##########################################
 #             USER ACCOUNT               #
 ##########################################
@@ -35,7 +37,6 @@ def user_account(request):
         login(request, user)
 
         messages.add_message(request, messages.INFO, form.cleaned_data['username'])
-
         return HttpResponseRedirect(reverse('signup'))
 
     else:
@@ -55,7 +56,7 @@ def login_user(request):
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
     else:
         return render(request, 'standard/index.html', {'login_message':'The user doesn\'t exist','anchor':'account'})
-    return render(request, 'standard/index.html')
+    # return render(request, 'standard/index.html')
 
 def logout_user(request):
     '''
@@ -133,7 +134,7 @@ def call_api_for_category(category):
     return categ_product
 
 ##########################################
-#             SEARCH IN DATABASE         #
+#          SEARCH IN DATABASE            #
 ##########################################
 
 def search_and_stock(request):
@@ -153,7 +154,7 @@ def search_substitute(request):
     original_product = Product.objects.get(barcode=product)
     product_category = search_categories(product)
     retrieve_substitute(product_category, original_product)
-    
+
     print("------------Add Products with the same category------------")
 
     substitutes = display_substitutes(original_product)
@@ -233,7 +234,7 @@ def check_search(search):
     Check if the search is in database or not.
     '''
     if Product.objects.filter(search=search.lower()):
-        return Product.objects.filter(search=search)
+        return Product.objects.filter(search=search.lower())
     else:
         return False
 
@@ -269,10 +270,10 @@ def create_entries(informations, final_term_string):
 
         else:
             if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name == "":
-                pass
+                pass  # pragma : no-cover
             else:
                 if Product.objects.filter(barcode=barcode):
-                    pass
+                    pass  # pragma : no-cover
                 else:
                     nutriscore_modified = change_nutriscore(nutriscore)
                     Product.objects.create(
