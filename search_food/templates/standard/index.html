@@ -67,7 +67,7 @@
                 </ul>
               <div class="tab-content col-12" id="myTabContent">
                   <div class="tab-pane fade show active col-lg-6 mx-auto" id="signin" role="tabpanel" aria-labelledby="signin-id">
-                      <form method="post" role="form" action="{% url 'login_user' %}">
+                      <form class="signin-form" method="post" role="form" action="{% url 'login_user' %}">
                         {% csrf_token %}
                         {% if login_message %}
                         <div class="alert alert-danger">
@@ -82,12 +82,12 @@
                             <label>Mot de passe</label>
                             <input type="password" class="form-control" name="password" placeholder="Mot de passe">
                         </div>
-                        <button class="btn btn-primary" type="submit">Se connecter</button>
+                        <button id="signin-id" class="btn btn-primary" type="submit">Se connecter</button>
                       </form>
                   </div>
                   <div class="tab-pane fade show col-lg-6 mx-auto" id="signup" role="tabpanel" aria-labelledby="signup-id">
                       {% load add_attr %}
-                      <form method="post" action="{% url "user_account" %}">
+                      <form id="signup-form" method="post" action="{% url "user_account" %}">
                           {% csrf_token %}
                           <!-- {{ form.as_p }} -->
                           {% for field in form %}

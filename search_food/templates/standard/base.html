@@ -48,10 +48,10 @@
           </form>
           {% if user.is_authenticated %}
             <li class="nav-item">
-                <a title="Bienvenue {{ user.username }}" class="nav-link"><i class="fas fa-user-circle fa-3x"></i></a>
+                <a id="welcome-to" title="Bienvenue {{ user.username }}" class="nav-link"><i class="fas fa-user-circle fa-3x"></i></a>
             </li>
             <li class="nav-item">
-                <a title="Afficher les favoris" class="nav-link" href="{% url 'display_favorite' %}"><i class="fas fa-carrot fa-3x"></i></a>
+                <a id="menu-favorite" title="Afficher les favoris" class="nav-link" href="{% url 'display_favorite' %}"><i class="fas fa-carrot fa-3x"></i></a>
             </li>
               {% if user.username == "admin" %}
                 <li class="nav-item">
@@ -60,12 +60,12 @@
               {% endif %}
           {% else %}
             <li class="nav-item">
-                <a title="Se connecter" class="nav-link js-scroll-trigger" href="#account"><i class="fas fa-users fa-3x"></i></a>
+                <a id="connect-user" title="Se connecter" class="nav-link js-scroll-trigger" href="#account"><i class="fas fa-users fa-3x"></i></a>
             </li>
           {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">
-              <a title="Se déconnecter" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
+              <a id="disconnect_user" title="Se déconnecter" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
           </li>
           {% endif %}
         </ul>

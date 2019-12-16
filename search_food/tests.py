@@ -24,6 +24,9 @@ from django.contrib.messages import get_messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.test import Client
 from django.conf import settings
+from django.test import LiveServerTestCase
+from selenium import webdriver
+import time
 
 client = Client()
 
@@ -583,3 +586,162 @@ class TestModels(TestCase):
         Check if the product model return the good name with the str method
         '''
         self.assertEqual(self.product_test_model.__str__(), 'Nutella model')
+
+
+class TestSeleniumBrowser(LiveServerTestCase):
+    '''
+    This class is made to test the interaction with the browser.
+    We use Selenium dependancy to test.
+    To test this class you must install the following dependancies:
+        (Selenium) pip install -U selenium
+        (Geckodriver) brew install geckodriver (for UNIX BASE ONLY)
+    '''
+    def setUp(self):
+        '''
+        Setting up the browser and some informations to test.
+        '''
+        self.driver = webdriver.Firefox()
+
+        self.username = "martinbg61700"
+        self.password = "calvadosdedans61700"
+        self.password_confirmation = "calvadosdedans61700"
+
+    def tearDown(self):
+        '''
+        Function to close the navigator
+        '''
+        self.driver.close()
+
+    def test_if_h1_exists(self):
+        '''
+        It tests if the h1 exists. It verifies the text and the classes.
+        '''
+        print("-------------Test if h1 title exists------------------")
+
+        self.driver.get("http://localhost:8000")
+        check_h1 = self.driver.find_element_by_css_selector('h1')
+
+        # Check if h1 exists
+        self.assertTrue(check_h1)
+
+        # Cehck if h1 has two classes name text-white and font-weight-bold
+        self.assertEqual(check_h1.get_attribute('class'), 'text-white font-weight-bold')
+
+        # Check if the slogan does not change
+        self.assertEqual(check_h1.text, 'Du gras oui, mais de qualité !')
+
+    def test_user_signup(self):
+        '''
+        Simulate a user signup. We provide the informations necessary to log the user.
+        '''
+        print("-------------Simulate a signup------------------")
+
+        self.driver.get("http://localhost:8000")
+
+        check_form = self.driver.find_element_by_id('signup-form')
+        self.assertTrue(check_form)
+
+        form_signup = self.driver.find_element_by_id('signup-form')
+        click_on_signup_encard = self.driver.find_element_by_id('signup-id')
+        click_on_signup_encard.click()
+
+        time.sleep(3)
+
+        fill_firstname = self.driver.find_element_by_id('id_username')
+        fill_firstname.click()
+        fill_firstname.send_keys(self.username)
+
+        time.sleep(2)
+
+        fill_pwd1 = self.driver.find_element_by_id('id_password1')
+        fill_pwd1.click()
+        fill_pwd1.send_keys(self.password)
+
+        time.sleep(2)
+
+        fill_pwd2 = self.driver.find_element_by_id('id_password2')
+        fill_pwd2.click()
+        fill_pwd2.send_keys(self.password_confirmation)
+
+        time.sleep(2)
+
+        form_signup.submit()
+
+        time.sleep(2)
+
+        self.assertEqual(self.driver.current_url, "http://localhost:8000/search_food/signup/")
+        redirect_to_index = self.driver.find_element_by_id('redirect-to-index')
+        redirect_to_index.click()
+
+        time.sleep(3)
+
+        check_if_user_is_logged = self.driver.find_element_by_id('welcome-to')
+        self.assertEqual(check_if_user_is_logged.get_attribute('title'), 'Bienvenue martinbg61700')
+
+        click_on_disconnect = self.driver.find_element_by_xpath('//a[@id="disconnect_user"]')
+        self.driver.execute_script("arguments[0].click();", click_on_disconnect)
+
+        time.sleep(3)
+
+        self.assertEqual(self.driver.find_element_by_id('connect-user').get_attribute('title'), 'Se connecter')
+
+    def test_login_user(self):
+        '''
+        Simulate a user logging in. In this case it's a success.
+        '''
+        print("-------------Simulate a login------------------")
+
+        self.driver.get('http://localhost:8000')
+
+        self.driver.find_element_by_name('username').send_keys('testuser61700')
+        time.sleep(3)
+
+        self.driver.find_element_by_name('password').send_keys('dedansletest61')
+        time.sleep(3)
+
+        target_form = self.driver.find_element_by_css_selector('form.signin-form')
+        submit_button = self.driver.find_element_by_id('signin-id')
+
+        self.assertTrue(submit_button)
+
+        target_form.submit()
+        time.sleep(3)
+        click_on_carrot = self.driver.find_element_by_id('menu-favorite')
+        self.driver.execute_script("arguments[0].click();", click_on_carrot)
+        print("------------------" + self.driver.current_url + "----------------------")
+        time.sleep(3)
+
+        self.assertEqual(self.driver.current_url, "http://localhost:8000/search_food/favorite/")
+
+    def test_simulate_research(self):
+        '''
+        Simulate an entire research in the web browser.
+        '''
+        print("-------------Simulate a research------------------")
+        self.driver.get('http://localhost:8000')
+
+        self.driver.find_element_by_name('username').send_keys('testuser61700')
+        time.sleep(3)
+
+        self.driver.find_element_by_name('password').send_keys('dedansletest61')
+        time.sleep(3)
+
+        target_form = self.driver.find_element_by_css_selector('form.signin-form')
+        submit_button = self.driver.find_element_by_id('signin-id')
+
+        self.assertTrue(submit_button)
+
+        target_form.submit()
+
+        time.sleep(2)
+
+        self.driver.find_element_by_name('search_term').send_keys('nutella')
+
+        time.sleep(2)
+
+        validate_form = self.driver.find_element_by_xpath('//form[contains(@class, "form-inline my-2 my-lg-0")]')
+        validate_form.submit()
+
+        time.sleep(2)
+        check_h2 = self.driver.find_element_by_css_selector('h2')
+        self.assertTrue(check_h2)
