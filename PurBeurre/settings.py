@@ -24,7 +24,7 @@ SECRET_KEY = 'im&@(dss#9dsu$=w!hy-3)@_9j@pog%y&_32wvp$ti+yb70y9('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -121,11 +122,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+import dj_database_url
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+DATABASES['purbeurre'] = dj_database_url.config(conn_max_age=600)
 STATIC_URL = '/static/'
-INTERNAL_IPS = ['127.0.0.1']
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

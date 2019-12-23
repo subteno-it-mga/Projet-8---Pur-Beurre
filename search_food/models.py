@@ -46,7 +46,7 @@ class Favorite(models.Model):
     barcode = models.BigIntegerField()
     product_associate = models.ForeignKey(Product, on_delete=models.CASCADE)
     user_associate = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.product_name
 

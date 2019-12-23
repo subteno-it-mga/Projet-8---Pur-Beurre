@@ -60,7 +60,7 @@
               {% endif %}
           {% else %}
             <li class="nav-item">
-                <a id="connect-user" title="Se connecter" class="nav-link js-scroll-trigger" href="#account"><i class="fas fa-users fa-3x"></i></a>
+                <a id="connect-user" title="Se connecter" class="nav-link js-scroll-trigger" href="{% url 'index' %}#account"><i class="fas fa-users fa-3x"></i></a>
             </li>
           {% endif %}
           {% if user.is_authenticated %}
@@ -94,6 +94,8 @@
         <!-- Custom scripts for this template -->
         <script src="{% static 'standard/js/ajax-call.js' %}"></script>
         <script src="{% static 'standard/js/creative.min.js' %}"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
+        
         {% if anchor %}
           <script type='text/javascript'>
             $(document).ready(function(){

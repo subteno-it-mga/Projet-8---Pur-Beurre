@@ -5,11 +5,12 @@
   <!-- Subsitute Page -->
 
 <div class="container-fluid favorite h-100">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row product-template">
                 <h2>Votre produit substitué :</h2>
                 <div class="col-lg-3">
                     <div class="col-lg-12">
+
                         {% if original.nutriscore == "1" %}
                             <span class="nutriscore-setup text-center green-nutri float-right">A</span>
                         {% elif original.nutriscore == "2" %}
@@ -79,10 +80,45 @@
                                             <li class="list-group-item"><span class="product-char">Matière Grasse: </span>{{ product.fat|floatformat:2 }}</li>
                                             <li class="list-group-item find-off"><a href="https://fr.openfoodfacts.org/produit/{{ product.barcode }}" target="_blank">Retrouver sur openfoodfacts</a></li>
                                         </ul>
-                                        {% if product.in_favorite %}
-                                            <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i> Déjà ajouté à la base de donnée.</button>
+                                        {% comment %} {% if not user.is_authenticated %}
+                                            <button class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i> Vous devez être authentifié pour ajouter aux favoris.</button>
+                                            <form action="{% url 'index' %}#account">
+                                                <button type="submit" id="redirect-auth" class="btn btn-primary"><i class="fas fa-users fa-2x"></i> Créer un compte ou s'authentifier</button>
+                                            </form>
+                                        {% elif not product.in_favorite %}
+                                            <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
                                         {% else %}
-                                        <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
+                                            {% if favorites %}
+                                                {% for favorite in favorites.all %}
+                                                    {% if favorite.user_associate == user and favorite.barcode == product.barcode %}
+                                                        <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i> Déjà ajouté à la base de donnée.</button>
+                                                    {% elif favorite.user_associate != user and favorite.barcode == product.barcode %}
+                                                        <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
+                                            {% endif %}
+                                        {% endif %} {% endcomment %}
+                                        {% if not user.is_authenticated %}
+                                            <button class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i> Vous devez être authentifié pour ajouter aux favoris.</button>
+                                            <form action="{% url 'index' %}#account">
+                                                <button type="submit" id="redirect-auth" class="btn btn-primary"><i class="fas fa-users fa-2x"></i> Créer un compte ou s'authentifier</button>
+                                            </form>
+                                        {% else %}
+                                            {% if favorites %}
+                                                {% for favorite in favorites %}
+                                                    {% if product.barcode == favorite.barcode %}
+                                                        <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i> Déjà ajouté à la base de donnée.</button>
+                                                    {% elif favorite.user_associate != user %}
+                                                        <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
+                                                    {% else %}
+                                                        <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                 </div>
@@ -91,7 +127,6 @@
                     </div>    
                 </div>
                 {% endfor %}
-            </div>
         </div>
     </div>
 </div>
