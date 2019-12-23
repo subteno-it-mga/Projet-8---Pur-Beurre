@@ -19,6 +19,8 @@ from .models import Product, SubstituteProduct, Favorite
 
 from django.urls import reverse
 
+# test
+
 ##########################################
 #             USER ACCOUNT               #
 ##########################################
