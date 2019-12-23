@@ -127,7 +127,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['*', 'herokupurbeurremga.herokuapp.com']
+ALLOWED_HOSTS = ['herokupurbeurremga.herokuapp.com']
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
