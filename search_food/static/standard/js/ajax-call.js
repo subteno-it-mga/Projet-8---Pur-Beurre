@@ -13,6 +13,6 @@ $(document).ready(function(){
             $('button[type="submit"][value="'+barcode+'"]').attr("disabled", "disabled");
             $('button[type="submit"][value="'+barcode+'"]').html('<i class="far fa-save fa-2x"></i> Déjà ajouté dans la base de donnée.')
         })
-    })
+    });
     
 })

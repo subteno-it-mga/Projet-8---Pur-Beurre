@@ -9758,7 +9758,7 @@ header.masthead {
   background-size: cover;
 }
 
-/* #product{
+#product{
   padding-top: 10rem;
   padding-bottom: calc(10rem - 72px);
   background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../img/product.jpg");
@@ -9766,7 +9766,7 @@ header.masthead {
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: cover;
-} */
+}
 
 header.masthead h1 {
   font-size: 2.25rem;
@@ -9847,3 +9847,13 @@ header.masthead h1 {
   background-size: cover;
 }
 
+/* CUSTOM */
+.space-col{
+  
+  background-color: #345a61;
+  
+}
+
+#redirect-auth{
+  margin-top:5px;
+}

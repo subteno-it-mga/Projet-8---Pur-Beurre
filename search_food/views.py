@@ -144,7 +144,8 @@ def search_and_stock(request):
     term = request.POST.get('search_term')
 
     final_information = treat_input_term(term)
-    return render(request, 'standard/product.html', {'products': final_information})
+    original_search = final_information[0].search
+    return render(request, 'standard/product.html', {'products': final_information, 'original': original_search})
 
 def search_substitute(request):
     '''
@@ -158,7 +159,8 @@ def search_substitute(request):
     print("------------Add Products with the same category------------")
 
     substitutes = display_substitutes(original_product)
-    favorites = Favorite.objects.all()
+    favorites = Favorite.objects.filter(user_associate=request.user)
+    import pdb; pdb.set_trace()
     return render(request, 'standard/substitute.html', {'substitutes': substitutes, 'favorites': favorites, 'original': original_product})
 
 
