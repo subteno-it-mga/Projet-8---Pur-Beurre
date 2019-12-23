@@ -25,9 +25,3 @@ urlpatterns = [
     path('', views.index, name="index"),
     # path('account', views.index, name="account_anchor"),
 ]
-
-if settings.DEBUG:
-    import debug_toolbar  # pragma : no-cover
-    urlpatterns = [  # pragma : no-cover
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
