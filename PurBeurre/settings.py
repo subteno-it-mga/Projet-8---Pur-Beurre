@@ -127,7 +127,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'herokupurbeurremga.herokuapp.com']
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
@@ -145,7 +145,7 @@ except Exception as e:
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 import django_heroku
 django_heroku.settings(locals())
