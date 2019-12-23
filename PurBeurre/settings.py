@@ -24,7 +24,7 @@ SECRET_KEY = 'im&@(dss#9dsu$=w!hy-3)@_9j@pog%y&_32wvp$ti+yb70y9('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -121,6 +122,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Configure Django App for Heroku.
-import django_heroku
-django_heroku.settings(locals())
+import dj_database_url
+
+DATABASES['purbeurre'] = dj_database_url.config(conn_max_age=600)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
