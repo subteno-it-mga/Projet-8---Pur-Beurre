@@ -1,8 +1,8 @@
 [[source]]
 
-url = "https://pypi.python.org/simple"
+url = "https://herokupurbeurremga.herokuapp.com/"
 verify_ssl = true
-name = "pypi"
+name = "PurBeurre"
 
 
 [requires]
