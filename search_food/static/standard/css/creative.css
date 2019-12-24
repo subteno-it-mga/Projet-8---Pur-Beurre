@@ -9704,13 +9704,13 @@ hr.light {
     background-color: transparent;
   }
   #mainNav .navbar-brand {
-    color: rgba(255, 255, 255, 0.7);
+    color: #f4623a;
   }
   #mainNav .navbar-brand:hover {
     color: #fff;
   }
   #mainNav .navbar-nav .nav-item .nav-link {
-    color: rgba(255, 255, 255, 0.7);
+    color: #f4623a;
     padding: 0 1rem;
   }
   #mainNav .navbar-nav .nav-item .nav-link:hover {
@@ -9759,13 +9759,7 @@ header.masthead {
 }
 
 #product{
-  padding-top: 10rem;
-  padding-bottom: calc(10rem - 72px);
-  background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../img/product.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
+  background-color:red;
 }
 
 header.masthead h1 {

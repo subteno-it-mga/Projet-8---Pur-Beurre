@@ -25,7 +25,7 @@ SECRET_FILE = os.path.join(BASE_DIR, 'secret.txt')
 
 try:
     SECRET_KEY = open(SECRET_FILE).read().strip()
-except IOError:
+except IOError:  # pragma : no-cover
     try:
         import random
         SECRET_KEY = ''.join([random.SystemRandom().choice(
@@ -34,7 +34,7 @@ except IOError:
         secret = open(SECRET_FILE, 'w')
         secret.write(SECRET_KEY)
         secret.close()
-    except IOError:
+    except IOError:  # pragma : no-cover
         Exception('Please create a %s file with random characters \
         to generate your secret key!' % SECRET_FILE)
 
@@ -46,7 +46,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ON_HEROKU = os.environ.get('ON_HEROKU')
 ON_PROD = 'PRODUCTION' in os.environ
 
-if ON_PROD or ON_HEROKU:
+if ON_PROD or ON_HEROKU:  # pragma : no-cover
     DEBUG = False
 else:
     DEBUG = True
@@ -98,7 +98,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PurBeurre.wsgi.application'
 
-if ON_HEROKU:
+if ON_HEROKU:  # pragma : no-cover
     DATABASES = {'default': dj_database_url.config()}
     ALLOWED_HOSTS = ['herokupurbeurremga.herokuapp.com']
 else:
@@ -147,7 +147,7 @@ USE_TZ = True
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 
-if ON_PROD or ON_HEROKU:
+if ON_PROD or ON_HEROKU:  # pragma : no-cover
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

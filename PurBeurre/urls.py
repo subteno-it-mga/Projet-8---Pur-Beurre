@@ -23,7 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^search_food/', include('search_food.urls')),
     path('', views.index, name="index"),
-    # path('account', views.index, name="account_anchor"),
 ]
 
 if settings.DEBUG:

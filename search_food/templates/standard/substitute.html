@@ -1,7 +1,7 @@
 {% extends 'standard/base.html' %}
 
 {% block content %}  
-  
+{% load check_favorite %}
   <!-- Subsitute Page -->
 
 <div class="container-fluid favorite h-100">
@@ -79,7 +79,11 @@
                                             <li class="list-group-item"><span class="product-char">Matière Grasse: </span>{{ product.fat|floatformat:2 }}</li>
                                             <li class="list-group-item find-off"><a href="https://fr.openfoodfacts.org/produit/{{ product.barcode }}" target="_blank">Retrouver sur openfoodfacts</a></li>
                                         </ul>
-                                        {% if product.in_favorite %}
+                                        {% if product.barcode in favorites.barcode.values %}
+                                            <h1>Le produit est dans les favoris</h1>
+                                        {% endif %}
+                                        {% check_favorite product.barcode user.username as check_fav%}
+                                        {% if check_fav %}
                                             <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i> Déjà ajouté à la base de donnée.</button>
                                         {% else %}
                                         <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i> Ajouter aux favoris</button>
