@@ -162,7 +162,6 @@ def search_substitute(request):
 
     substitutes = display_substitutes(original_product)
     favorites = Favorite.objects.filter(user_associate=request.user)
-    import pdb; pdb.set_trace()
     return render(request, 'standard/substitute.html', {'substitutes': substitutes, 'favorites': favorites, 'original': original_product})
 
 

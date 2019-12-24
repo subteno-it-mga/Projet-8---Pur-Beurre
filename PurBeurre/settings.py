@@ -73,9 +73,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'PurBeurre.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -87,11 +84,11 @@ WSGI_APPLICATION = 'PurBeurre.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#     }
+# }
 
 
 # Password validation
@@ -127,7 +124,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['herokupurbeurremga.herokuapp.com']
+ALLOWED_HOSTS = ['herokupurbeurremga.herokuapp.com', '*']
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
