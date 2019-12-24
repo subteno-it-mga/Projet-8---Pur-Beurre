@@ -161,7 +161,13 @@ def search_substitute(request):
     print("------------Add Products with the same category------------")
 
     substitutes = display_substitutes(original_product)
-    favorites = Favorite.objects.filter(user_associate=request.user)
+
+    check_auth = request.user.username
+
+    if check_auth != '':
+        favorites = Favorite.objects.filter(user_associate=request.user)
+    else:
+        favorites = {}
     return render(request, 'standard/substitute.html', {'substitutes': substitutes, 'favorites': favorites, 'original': original_product})
 
 
