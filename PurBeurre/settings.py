@@ -20,7 +20,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'im&@(dss#9dsu$=w!hy-3)@_9j@pog%y&_32wvp$ti+yb70y9('
+
+SECRET_FILE = os.path.join(BASE_DIR, 'secret.txt')
+
+try:
+    SECRET_KEY = open(SECRET_FILE).read().strip()
+except IOError:
+    try:
+        import random
+        SECRET_KEY = ''.join([random.SystemRandom().choice(
+            'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+            for i in range(50)])
+        secret = open(SECRET_FILE, 'w')
+        secret.write(SECRET_KEY)
+        secret.close()
+    except IOError:
+        Exception('Please create a %s file with random characters \
+        to generate your secret key!' % SECRET_FILE)
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False

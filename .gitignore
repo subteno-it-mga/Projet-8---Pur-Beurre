@@ -108,3 +108,6 @@ venv.bak/
 
 # ds store
 .DS_Store
+
+# Secret file
+secret.txt
