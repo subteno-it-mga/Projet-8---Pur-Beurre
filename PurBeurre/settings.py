@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,6 +25,14 @@ SECRET_KEY = 'im&@(dss#9dsu$=w!hy-3)@_9j@pog%y&_32wvp$ti+yb70y9('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ON_HEROKU = os.environ.get('ON_HEROKU')
+ON_PROD = 'PRODUCTION' in os.environ
+
+if ON_PROD or ON_HEROKU:
+    DEBUG = False
+else:
+    DEBUG = True
 
 # Application definition
 
@@ -72,27 +81,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PurBeurre.wsgi.application'
 
+if ON_HEROKU:
+    DATABASES = {'default': dj_database_url.config()}
+    ALLOWED_HOSTS = ['herokupurbeurremga.herokuapp.com']
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'purbeurre',
+            'USER': 'martingaucher',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '5432',
+        }
+    }
+    ALLOWED_HOSTS = ['*']
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'purbeurre',
-#         'USER': 'martingaucher',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': '5432',
-#     }
-# }
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#     }
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -123,27 +127,19 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['herokupurbeurremga.herokuapp.com', '*']
-
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-
-DATABASES = { 'default' : dj_database_url.config()}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# try to load local_settings.py if it exists
-try:
-  from local_settings import *
-except Exception as e:
-  pass
+if ON_PROD or ON_HEROKU:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else:
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "static"),
+    )
 
 import django_heroku
 django_heroku.settings(locals())
