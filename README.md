@@ -14,8 +14,23 @@ and add subsitutes in favorite in your personnal space.
 ### 3 - Create and set the database
 In this case i use postgresql, but we can use an other db engine.
 
-**STEP 1 :** Create a database.
-**STEP 2 :** Setting up the database in PurBeurre/settings.py
+**STEP 1 :** 
+Create a database.
+
+```sql
+createdb <your database name>
+```
+
+**STEP 2:**
+Create your virtualenv.
+
+```shell
+virtualenv env -p python3
+```
+
+**STEP 3 :** 
+Setting up the database in PurBeurre/settings.py
+
 ```python
 DATABASES = {
     'default': {
@@ -27,6 +42,14 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+```
+
+**STEP 4 :**
+Migrate the model into the database
+*you must be at this location to launch the command: Projet OpenClassRoom/Projet-8-Pur-Beurre/PurBeurre*
+
+```shell
+./manage.py migrate
 ```
 
 ### BONUS - Basic commands to run the project
