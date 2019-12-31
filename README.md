@@ -91,8 +91,6 @@ coverage run --source='.' manage.py test search_food
 coverage report
 ```
 
-
-
 This project was made by Martin Gaucher for Open Class Room.
 
 
