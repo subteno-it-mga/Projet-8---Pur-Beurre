@@ -3961,6 +3961,7 @@ input[type="button"].btn-block {
 
 .nav-link:hover, .nav-link:focus {
   text-decoration: none;
+  color: #1B40C2 !important;
 }
 
 .nav-link.disabled {
@@ -9758,9 +9759,6 @@ header.masthead {
   background-size: cover;
 }
 
-#product{
-  background-color:red;
-}
 
 header.masthead h1 {
   font-size: 2.25rem;
@@ -9850,4 +9848,10 @@ header.masthead h1 {
 
 #redirect-auth{
   margin-top:5px;
+}
+
+.row-margin{
+  margin-bottom:20px;
+  margin-top:20px;
+  max-height: 250px;
 }
