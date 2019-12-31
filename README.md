@@ -24,7 +24,7 @@ createdb <your database name>
 **STEP 2:**
 Create your virtualenv in this path: Projet OpenClassRoom/Projet-8-Pur-Beurre.
 
-```shell
+```bash
 virtualenv env -p python3
 ```
 
@@ -49,7 +49,7 @@ Migrate the model into the database
 
 *you must be at this location to launch the command: Projet OpenClassRoom/Projet-8-Pur-Beurre/PurBeurre*
 
-```shell
+```bash
 ./manage.py migrate
 ```
 
