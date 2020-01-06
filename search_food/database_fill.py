@@ -41,10 +41,19 @@ def pre_fill_database():
             barcode=barcode,
             image=image,
             category=category,
-            search='nutella'
+            search='nutella-fill'
         )
         print("Product is in database.")
 
     except KeyError:
 
         print("Can't access to the data.")
+
+def clean_database():
+    '''
+    Clean database for the custom command
+    '''
+    import pdb; pdb.set_trace()
+    product_delete = Product.objects.filter(search="nutella-fill")
+    product_delete.objects.delete()
+    print("Product deleted.")
