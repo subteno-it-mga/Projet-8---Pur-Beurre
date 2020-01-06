@@ -339,7 +339,8 @@ def add_favorite_database(favorite, user):
         product_associate=product_associate.original,
         user_associate=user,
         product_name=product_associate.name,
-        barcode=product_associate.barcode)
+        barcode=product_associate.barcode,
+        image=product_associate.image)
     print("-----------The favorite was added into database---------------")
 
 def delete_entries(request):

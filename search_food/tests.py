@@ -399,7 +399,7 @@ class DatabaseTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'standard/favorite.html')
-        self.assertContains(response, '<h1>Favoris</h1>')
+        self.assertContains(response, '<h1 style="color:white;">Favoris</h1>')
 
     def test_check_search(self):
 

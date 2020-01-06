@@ -53,7 +53,6 @@ def clean_database():
     '''
     Clean database for the custom command
     '''
-    import pdb; pdb.set_trace()
     product_delete = Product.objects.filter(search="nutella-fill")
-    product_delete.objects.delete()
+    product_delete.delete()
     print("Product deleted.")

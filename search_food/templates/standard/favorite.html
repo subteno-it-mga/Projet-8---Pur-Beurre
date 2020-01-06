@@ -6,7 +6,7 @@
 
 <div class="container-fluid favorite">
         <div class="container">
-          <h1>Favoris</h1>
+          <h1 style="color:white;">Favoris</h1>
             <div class="row">
                 {% for favorite in product %}
                 {% if user == favorite.user_associate %}
@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                               {% if favorite.image %}
-                                  <img class="img img-max-size" src="{{ product.image }}"/>
+                                  <img class="img img-max-size" src="{{ favorite.image }}"/>
                               {% else %}
                                   <p>Pas d'image disponible.</p>
                               {% endif %}
