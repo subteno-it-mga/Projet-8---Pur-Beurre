@@ -1,4 +1,5 @@
 from django.test import TestCase, Client, RequestFactory
+from unittest import TestCase as TC
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 import httpretty
@@ -745,3 +746,24 @@ class TestSeleniumBrowser(LiveServerTestCase):
         time.sleep(2)
         check_h2 = self.driver.find_element_by_css_selector('h2')
         self.assertTrue(check_h2)
+
+class DatabaseFillCommand(TC):
+    '''
+    Test the custom command that prefill the database
+    '''
+    def setUp(self):
+        '''
+        Setting up the variable for database fill command
+        '''
+        self.test_product = 'nutella'
+        self.test_url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&action=process&json=1&page_size=10" % (self.test_product)
+
+    def test_get_files(self):
+        '''
+        Test if we get the good informations
+        '''
+        self.test_result = urlopen(self.test_url)
+        self.test_json_result = json.load(self.test_result)
+        self.test_product_dict = self.test_json_result["products"]
+
+        self.assertTrue(self.test_product_dict[0]["generic_name"], 'Nutella')
