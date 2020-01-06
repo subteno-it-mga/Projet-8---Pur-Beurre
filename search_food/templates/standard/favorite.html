@@ -8,25 +8,32 @@
         <div class="container">
           <h1 style="color:white;">Favoris</h1>
             <div class="row">
-                {% for favorite in product %}
-                {% if user == favorite.user_associate %}
-                <div class="col-lg-12 product-template">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                              {% if favorite.image %}
-                                  <img class="img img-max-size" src="{{ favorite.image }}"/>
-                              {% else %}
-                                  <p>Pas d'image disponible.</p>
-                              {% endif %}
-                              <h2 class="product-title">{{ favorite.product_name }}</h2>
-                              <p>Substitut de : {{ favorite.product_associate }}</p>
+                {% if not product %}
+                    <div class="container" style="min-height: 500px; height: 500px; ">
+                        <h2>Vous n'avez pas encore ajouté de favoris</h2>
+                    </div>
+                {% else %}
+                    {% for favorite in product %}
+                    {% if user == favorite.user_associate %}
+                    <div class="col-lg-12 product-template">
+                        <div class="container min-height:500px;">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                {% if favorite.image %}
+                                    <img class="img img-max-size" src="{{ favorite.image }}"/>
+                                {% else %}
+                                    <p>Pas d'image disponible.</p>
+                                {% endif %}
+                                <h2 class="product-title">{{ favorite.product_name }}</h2>
+                                <p>Substitut de : {{ favorite.product_associate }}</p>
+                                <p class="list-group-item find-off"><a href="https://fr.openfoodfacts.org/produit/{{ favorite.barcode }}" target="_blank">Retrouver sur openfoodfacts</a></p>
+                                </div>
                             </div>
                         </div>
-                    </div>    
-                </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 {% endif %}
-                {% endfor %}
             </div>
         </div>
     </div>
