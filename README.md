@@ -93,4 +93,96 @@ coverage report
 
 This project was made by Martin Gaucher for Open Class Room.
 
+---------------
+## Partie Livrable
+---------------
 
+# Plan de test
+
+## Sommaire
+
+### 1 - Pourquoi tester ?
+
+### 2 - Quoi tester ?
+
+### 3 - Comment tester ?
+
+### 4 - Qui teste ?
+
+### 5 - Livrables
+
+--------
+
+# 1 - Pourquoi tester ?
+
+Un jour, un grand homme m'a dit : 
+> Tester, c'est douté.
+
+Une citation avec laquelle je suis entièrement d'accord. Mais pas dans
+notre cas.
+
+Le doute s'invite justement lorsque des tests ne sont pas effectués avant le
+déploiement d'une application. Surtout lorsque cette dernière n'a pas été
+mise à jour depuis quelques mois.
+
+On pourrait tout simplement lancer le projet, comme si de rien n'était
+et débugger tout le code à la main pendant des heures sans savoir ce qui va
+ne pas fonctionner après la correction du précédent bug.
+
+Alors que si nous lançons un test avant, on voit ce qui ne va pas directement 
+ou bien si tout est vert, on peut lancer l'application sereinement.
+
+* Plus concrètement, quels sont les objectifs à atteindre ?
+
+Les objectifs des tests servent à :
+
+*Péréniser un projet*  
+*S'assurer du bon fonctionnement avant une utilisation*  
+*Tester les limites de l'application*  
+*Cela permet d'économiser de l'argent*
+
+**Aparté :**
+
+Je travaille dans une entreprise qui intégre un progiciel (Odoo). J'ai parlé
+avec mes collègues, de tests.
+
+Et le constat fût surprenant puisque qu'il y a très peu de développeurs qui
+réalisent des tests au sein de ma société. Et rare sont les clients qui veulent
+payer plus cher pour se munir d'une batterie de tests (qui seraient pourtant
+utiles) afin de solidifier leurs Odoo. 
+
+Pour cette application, je pense que des tests sont nécessaires. Car PurBeurre
+est une application qui travaille avec un ORM (base de donnée) et qui récupére
+des données par le biais d'une API. 
+
+# 2 - Quoi tester ?
+
+> Dans cette aplication, que devons-nous tester ? Pour commencer, nous allons
+> lister les fonctionnalités de l'application qui sont importantes pour
+>l'expérience utilisateur.
+
+## Liste des fonctionnalités principales de l'application
+
+- Système d'authentification
+    - Connexion
+    - Inscription
+    - Déconnexion
+
+- Recherche du produit
+    - Vérifier si l'api n'a pas changé et renvoi toujours le même
+    format de données à exploiter
+    - Vérifier si les produits rentrent bien en base de donnée
+
+- Recherche dans la base de donnée grâce à l'ORM
+    - Vérifier si les produits sont bien présents en base de donnée
+    - Vérifier si les informations renvoyées sont les bonnes
+
+- Le système de Favoris
+    - Les favoris sont bien ajoutés dans l'espace de l'utilisateur
+    - Unicité des favoris
+
+# 3 - Comment tester ?
+
+# 4 - Qui teste ?
+
+# 5 - Livrables
