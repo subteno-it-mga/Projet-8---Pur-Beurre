@@ -1,29 +1,25 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.messages import get_messages
+'''
+search_food/views.py
+This file contains the principals views. That is the heart of the app.
+'''
 from urllib.request import urlopen
 import json
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.views import View
-
-from unidecode import unidecode
 from django.views.decorators.csrf import csrf_exempt
-from .models import Product, SubstituteProduct, Favorite
-
 from django.urls import reverse
-
-# test
+from unidecode import unidecode
+from .models import Product, SubstituteProduct, Favorite
 
 ##########################################
 #             USER ACCOUNT               #
 ##########################################
+
 
 def user_account(request):
     '''
@@ -38,12 +34,13 @@ def user_account(request):
         user = authenticate(username=username, password=raw_password)
         login(request, user)
 
-        messages.add_message(request, messages.INFO, form.cleaned_data['username'])
+        messages.add_message(request, messages.INFO,
+                             form.cleaned_data['username'])
         return HttpResponseRedirect(reverse('signup'))
 
-    else:
-        form = UserCreationForm()
-        return render(request, 'standard/index.html', {'form': form})
+    form = UserCreationForm()
+    return render(request, 'standard/index.html', {'form': form})
+
 
 def login_user(request):
     '''
@@ -56,9 +53,9 @@ def login_user(request):
     if user is not None and user.is_active:
         login(request, user)
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-    else:
-        return render(request, 'standard/index.html', {'login_message':'The user doesn\'t exist','anchor':'account'})
-    # return render(request, 'standard/index.html')
+    return render(request, 'standard/index.html', {
+        'login_message': 'The user doesn\'t exist', 'anchor': 'account'})
+
 
 def logout_user(request):
     '''
@@ -66,6 +63,7 @@ def logout_user(request):
     '''
     logout(request)
     return HttpResponseRedirect(settings.LOGOUT_REDIRECT_URL)
+
 
 def signup(request):
     '''
@@ -102,33 +100,39 @@ def treat_input_term(keyword):
 
     if not check_existing_search:
         create_entries(product, final_term_string)
-        print("-----------------We create products in Database--------------------------")
     else:
         display_informations(final_term_string)
-        print("-----------------Directly display the products because they already are in base--------------------------")
 
     informations_displayed = display_informations(final_term_string)
     print("------------All informations will be displayed------------")
 
     return informations_displayed
 
+
 def call_api_for_product(product):
     '''
-    Private method to call the OpenFF API, retrieve products and return the json dictionnary.
+    Private method to call the OpenFF API, retrieve products and return the
+    json dictionnary.
     '''
-    url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&action=process&json=1&page_size=10" % (product)
+    url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&" \
+        "action=process&json=1&page_size=10" % (product)
     result = urlopen(url)
     json_result = json.load(result)
     product_dict = json_result["products"]
 
     return product_dict
 
+
 def call_api_for_category(category):
     '''
-    Private method to call the OpenFF API, retrieve category and return the json dictionnary.
+    Private method to call the OpenFF API, retrieve category and return the
+    json dictionnary.
     '''
     category_clean = unidecode(category)
-    url = "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=%s\&page_size=100&axis_x=energy&axis_y=products_n&action=display&json=1" % (category_clean)
+    url = "https://world.openfoodfacts.org/cgi/search.pl?action=process&" \
+        "tagtype_0=categories&tag_contains_0=contains&tag_0=%s&page_size=" \
+        "100&axis_x=energy&axis_y=products_n&action=display&json=1" \
+        % (category_clean)
     result = urlopen(url)
     json_result = json.load(result)
     categ_product = json_result['products']
@@ -139,15 +143,19 @@ def call_api_for_category(category):
 #          SEARCH IN DATABASE            #
 ##########################################
 
+
 def search_and_stock(request):
     '''
-    Get the keyword from the input form the laucnh the OPen Food Facts API call.
+    Get the keyword from the input form the laucnh the OPen Food Facts API
+    call.
     '''
     term = request.POST.get('search_term')
 
     final_information = treat_input_term(term)
     original_search = final_information[0].search
-    return render(request, 'standard/product.html', {'products': final_information, 'original': original_search})
+    return render(request, 'standard/product.html', {
+        'products': final_information, 'original': original_search})
+
 
 def search_substitute(request):
     '''
@@ -168,7 +176,10 @@ def search_substitute(request):
         favorites = Favorite.objects.filter(user_associate=request.user)
     else:
         favorites = {}
-    return render(request, 'standard/substitute.html', {'substitutes': substitutes, 'favorites': favorites, 'original': original_product})
+    return render(request, 'standard/substitute.html', {
+        'substitutes': substitutes,
+        'favorites': favorites,
+        'original': original_product})
 
 
 def retrieve_substitute(product_category, original_product):
@@ -199,7 +210,9 @@ def retrieve_substitute(product_category, original_product):
             barcode = 100000
             image = "No image"
 
-        if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name == "":
+        if nutriscore == "Pas de nutriscore" or \
+            name == "Pas de nom" or \
+                name == "":
             pass
         else:
             nutriscore_db = change_nutriscore(nutriscore)
@@ -218,9 +231,11 @@ def retrieve_substitute(product_category, original_product):
             }
             add_substitute_products(data_dictionnary)
 
+
 def change_nutriscore(nutriscore):
     '''
-    Change the nutriscore in the database entry to sort it simplier in the template
+    Change the nutriscore in the database entry to sort it simplier in the
+    template
     '''
     if nutriscore == "a":
         nutriscore = 1
@@ -234,9 +249,10 @@ def change_nutriscore(nutriscore):
         nutriscore = 5
     else:
         message_nutriscore = "Pas de Nutriscore ?"
+    if message_nutriscore:
         return message_nutriscore
-
     return nutriscore
+
 
 def check_search(search):
     '''
@@ -244,8 +260,8 @@ def check_search(search):
     '''
     if Product.objects.filter(search=search.lower()):
         return Product.objects.filter(search=search.lower())
-    else:
-        return False
+    return False
+
 
 def create_entries(informations, final_term_string):
     '''
@@ -278,7 +294,9 @@ def create_entries(informations, final_term_string):
             search = "Pas de recherche"
 
         else:
-            if nutriscore == "Pas de nutriscore" or name == "Pas de nom" or name == "":
+            if nutriscore == "Pas de nutriscore" or \
+                name == "Pas de nom" or \
+                    name == "":
                 pass  # pragma : no-cover
             else:
                 if Product.objects.filter(barcode=barcode):
@@ -298,12 +316,14 @@ def create_entries(informations, final_term_string):
                         search=search)
     print("---------------All products are correctly in base------------")
 
+
 def add_substitute_products(data_dict):
     '''
     Add all substitute in the database.
     '''
     try:
-        test_existing_sub = SubstituteProduct.objects.filter(barcode=data_dict['barcode']).values('barcode')[0]['barcode']
+        test_existing_sub = SubstituteProduct.objects.filter(
+            barcode=data_dict['barcode']).values('barcode')[0]['barcode']
         if data_dict['barcode'] != str(test_existing_sub):
             SubstituteProduct.objects.create(
                 name=data_dict['product'],
@@ -319,15 +339,16 @@ def add_substitute_products(data_dict):
             print("Le produit existe déjà.")
     except IndexError:
         SubstituteProduct.objects.create(
-                name=data_dict['product'],
-                salt=data_dict['salt'], sugar=data_dict['sugar'],
-                fat=data_dict['fat'],
-                nutriscore=data_dict['nutriscore'],
-                barcode=data_dict['barcode'],
-                description=data_dict['description'],
-                image=data_dict['image'],
-                category=data_dict['category'],
-                original=data_dict['original'])
+            name=data_dict['product'],
+            salt=data_dict['salt'], sugar=data_dict['sugar'],
+            fat=data_dict['fat'],
+            nutriscore=data_dict['nutriscore'],
+            barcode=data_dict['barcode'],
+            description=data_dict['description'],
+            image=data_dict['image'],
+            category=data_dict['category'],
+            original=data_dict['original'])
+
 
 def add_favorite_database(favorite, user):
     '''
@@ -343,7 +364,8 @@ def add_favorite_database(favorite, user):
         image=product_associate.image)
     print("-----------The favorite was added into database---------------")
 
-def delete_entries(request):
+
+def delete_entries():
     '''
     Erase all database entries. ONLY FOR THE ADMIN.
     '''
@@ -352,6 +374,7 @@ def delete_entries(request):
     print("--------------All entries cleaned-------------")
 
     return HttpResponseRedirect('/')
+
 
 @csrf_exempt
 def add_favorite(request):
@@ -369,6 +392,7 @@ def add_favorite(request):
     }
     return JsonResponse(data)
 
+
 def delete_all_entries():
     '''
     Delete all the entries in the database. ONLY FOR ADMIN.
@@ -381,6 +405,7 @@ def delete_all_entries():
 #             RENDER TEMPLATE            #
 ##########################################
 
+
 def index(request):
     '''
     Display the form in the main page.
@@ -388,17 +413,20 @@ def index(request):
     form = UserCreationForm
     return render(request, 'standard/index.html', {'form': form})
 
+
 def display_informations(search):
     '''
     Search all original products in Database.
     '''
     return Product.objects.filter(search=search.lower())
 
+
 def display_substitutes(original_product):
     '''
     Display all product substitute from the original product.
     '''
     return SubstituteProduct.objects.filter(original=original_product)
+
 
 def search_categories(barcode):
     '''
@@ -408,8 +436,10 @@ def search_categories(barcode):
         product_categories = Product.objects.get(barcode=barcode)
         return product_categories.category
     except Product.DoesNotExist:
-        message_information = "Ce produit n'est pas ou plus présent dans la base."
+        message_information = "Ce produit n'est pas ou plus présent dans la"\
+            "base."
         return message_information
+
 
 def display_favorite(request):
     '''
@@ -418,6 +448,5 @@ def display_favorite(request):
     actual_user = request.user
     retrieve_favorite = Favorite.objects.filter(user_associate=actual_user)
 
-    return render(request, 'standard/favorite.html', {'product': retrieve_favorite})
-
-
+    return render(request, 'standard/favorite.html', {
+        'product': retrieve_favorite})

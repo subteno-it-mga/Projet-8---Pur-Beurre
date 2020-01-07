@@ -1,11 +1,16 @@
-from django.conf.urls import url
+'''
+search_food/urls.py
+This file  contains the url collection.
+'''
 from django.urls import path
 
 from . import views
 
 urlpatterns = [
     path('search/', views.search_and_stock, name="search_and_stock"),
-    path('search_substitute/', views.search_substitute, name="search_substitute"),
+    path(
+        'search_substitute/',
+        views.search_substitute, name="search_substitute"),
     path('delete_entries/', views.delete_entries, name="delete_entries"),
     path('add_favorite/', views.add_favorite, name="add_favorite"),
     path('', views.index, name="index"),

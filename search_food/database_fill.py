@@ -1,3 +1,7 @@
+'''
+search_food/database_fill.py
+This file  contains the custom command to pre-fill the database.
+'''
 import json
 from urllib.request import urlopen
 from .models import Product
@@ -7,17 +11,20 @@ def get_files():
     '''
     Get the informations from the openfoodfact API.
     '''
-    product = 'nutella'
-    url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&action=process&json=1&page_size=10" % (product)
-    result = urlopen(url)
-    json_result = json.load(result)
-    product_dict = json_result["products"]
+    db_product = 'nutella'
+    db_url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&" \
+        "action=process&json=1&page_size=10" % (db_product)
+    db_result = urlopen(db_url)
+    db_json_result = json.load(db_result)
+    db_product_dict = db_json_result["products"]
 
-    return product_dict
+    return db_product_dict
+
 
 def pre_fill_database():
     '''
-    We fill the database with the informations obtained from get_files function.
+    We fill the database with the informations obtained from get_files
+    function.
     '''
     product = get_files()
     try:
@@ -48,6 +55,7 @@ def pre_fill_database():
     except KeyError:
 
         print("Can't access to the data.")
+
 
 def clean_database():
     '''
