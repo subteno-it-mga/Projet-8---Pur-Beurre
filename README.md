@@ -225,6 +225,56 @@ spécifications. Cette partie n'est pas non plus demandée dans ce projet.
 
 ## Système d'authentification
 
+Pour le système d'authentification, il a fallu testé trois étapes clés:
+- La connexion
+- L'inscription
+- La déconnexion
+
+### 1 - La connexion
+Avec les fonctions ``` test_login_user  ``` et ``` test_user_account  ```
+dans ```tests.py``` j'ai testé le cas où l'utilisateur
+rentre les bonnes informations et est bien redirigé vers la page d'accueil.
+Dans le cas contraire, on reste sur la page afin de signaler à l'utilisateur
+qu'il n'existe pas ou qu'il s'est trompé de mot de passe.
+
+### 2 - L'inscription
+La fonction ``` test_post_user_creation_case_wrong ``` dans ``` tests.py ```
+effectue 4 cas où l'utilisateur ne remplie pas les critères utilisés
+pour la création d'un compte. Ces derniers sont : 
+    1 - Nom d'utilisateur vide.
+    2 - Les deux mots de passe ne correspondent pas.
+    3 - Un des deux mots de passe est vide.
+    4 - La sécurité du mot de passe est trop faible.
+
+La fonction ```test_signup``` vérifie que l'utilisateur qui s'inscrit atterit
+bien sur la page de confirmation d'inscription.
+
+### 3 - La déconnexion
+La fonction ```test_logout``` teste si l'utilisateur est bien déconnecté est
+redirigé et bien déconnecté.
+
+## Recherche du produit
+
+En ce qui concerne la recherche de produit, il y a deux points cruciaux:
+- Vérifier si l'api n'a pas changé et renvoi toujours le même format de 
+données à exploiter
+- Vérifier si les produits rentrent bien en base de donnée
+
+### 1 - Vérification ddu fonctionnement de l'API
+Cette collection de fonction vérifie que l'on atteint bien l'API et que les
+termes qui sont entrés soit bien formatés. 
+```
+test_call_api_for_product
+test_call_api_for_category
+test_treat_input_term
+```
+
+### 2 - Vérification de l'entrée en base
+Cette fonction ``` test_search_and_stock ``` teste si le produit est bien entré
+en base après l'appel à l'API.
+
+## Recherche dans la base de donnée grâce à l'ORM
+
 
 # 4 - Qui teste ?
 
