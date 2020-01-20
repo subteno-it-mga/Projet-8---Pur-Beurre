@@ -91,13 +91,19 @@ coverage run --source='.' manage.py test search_food
 coverage report
 ```
 
+### Check the lint check
+
+If you want to see clean jobs, execute this command:
+
+```bash
+pylint --load-plugins pylint_django search_food/
+```
+
 This project was made by Martin Gaucher for Open Class Room.
 
----------------
-## Partie Livrable
----------------
 
-# Plan de test
+---------------
+# Partie Livrable - Plan de test
 
 ## Sommaire
 
@@ -182,6 +188,43 @@ des données par le biais d'une API.
     - Unicité des favoris
 
 # 3 - Comment tester ?
+
+> La réponse à cette interrogation se décompose, en fonction des objectifs des 
+> tests comme suit :
+
+ - Spécifier les niveaux, types et méthodes de tests (cas de tests)
+ - Définir les ressources matérielles adhéquats (configuration matérielles,
+logicielles, outils de production...)
+
+### Les niveaux de tests 
+
+Il y a plusieurs niveaux de tests représentés par une pyramide.
+![Tests](Livrables/images/test.png)
+
+### Les tests de composants / unitaires
+
+Les tests unitaires (aussi appelé test de composants) permettent de vérifier
+le bon fonctionnement d'une partie précise d'un logiciel ou d'une portion
+d'un programme.
+
+### Les tests d'intégration
+
+Le test d'intégration permet de vérifier l'aspect fonctionnel, les performances
+et la fiabilité du logiciel. Il détecte les erreurs que ne peut détecter les
+tests unitaires.
+
+### Les tests système
+
+Dans ce projt il n'est pas demandé d'effectuer ce genre de tests. Ces derniers
+servent à tester les charges sur un serveur et bien d'autres fonctionnalités.
+
+### Les tests d'acceptation
+
+Les tests d'acceptation vérifient  que l'application est conformes aux
+spécifications. Cette partie n'est pas non plus demandée dans ce projet.
+
+## Système d'authentification
+
 
 # 4 - Qui teste ?
 
