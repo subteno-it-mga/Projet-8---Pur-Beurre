@@ -199,7 +199,7 @@ logicielles, outils de production...)
 ### Les niveaux de tests 
 
 Il y a plusieurs niveaux de tests représentés par une pyramide.
-![Tests](Livrables/images/test.png)
+![Tests](Livrables/images/tests.png)
 
 ### Les tests de composants / unitaires
 
