@@ -243,7 +243,7 @@ class DatabaseTestCase(TestCase):
         self.assertEqual(test_change_nutriscore_c, 3)
         self.assertEqual(test_change_nutriscore_d, 4)
         self.assertEqual(test_change_nutriscore_e, 5)
-        self.assertEqual(test_change_nutriscore_x, "Pas de Nutriscore ?")
+        self.assertEqual(test_change_nutriscore_x, "Pas de Nutriscore.")
 
     def test_create_entries(self):
         '''
@@ -298,8 +298,7 @@ class DatabaseTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'standard/index.html')
         self.assertContains(
-            response, '<h1 class="text-white font-weight-bold">Du gras oui,'
-            'mais de qualité !</h1>')
+            response, '<h1 class="text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
 
     def test_display_informations(self):
         '''
