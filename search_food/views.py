@@ -26,7 +26,7 @@ def user_account(request):
     Method post to retrieve all informations from the signup form.
     '''
     form = UserCreationForm(request.POST)
-    if form.is_valid():
+    if form.is_valid():  # pragma : no-cover
         form.save()
 
         username = form.cleaned_data.get('username')
@@ -248,13 +248,12 @@ def change_nutriscore(nutriscore):
     elif nutriscore == "e":
         nutriscore = 5
     else:
-        message_nutriscore = "Pas de Nutriscore ?"
-    if message_nutriscore:
+        message_nutriscore = "Pas de Nutriscore."
         return message_nutriscore
     return nutriscore
 
 
-def check_search(search):
+def check_search(search):  # pragma : no-cover
     '''
     Check if the search is in database or not.
     '''
@@ -365,7 +364,7 @@ def add_favorite_database(favorite, user):
     print("-----------The favorite was added into database---------------")
 
 
-def delete_entries():
+def delete_entries():  # pragma : no-cover
     '''
     Erase all database entries. ONLY FOR THE ADMIN.
     '''
@@ -436,7 +435,7 @@ def search_categories(barcode):
         product_categories = Product.objects.get(barcode=barcode)
         return product_categories.category
     except Product.DoesNotExist:
-        message_information = "Ce produit n'est pas ou plus présent dans la"\
+        message_information = "Ce produit n'est pas ou plus présent dans la "\
             "base."
         return message_information
 

@@ -115,8 +115,6 @@ This project was made by Martin Gaucher for Open Class Room.
 
 ### 4 - Qui teste ?
 
-### 5 - Livrables
-
 --------
 
 # 1 - Pourquoi tester ?
@@ -260,7 +258,7 @@ En ce qui concerne la recherche de produit, il y a deux points cruciaux:
 données à exploiter
 - Vérifier si les produits rentrent bien en base de donnée
 
-### 1 - Vérification ddu fonctionnement de l'API
+### 1 - Vérification du fonctionnement de l'API
 Cette collection de fonction vérifie que l'on atteint bien l'API et que les
 termes qui sont entrés soit bien formatés. 
 ```
@@ -275,7 +273,19 @@ en base après l'appel à l'API.
 
 ## Recherche dans la base de donnée grâce à l'ORM
 
+### Vérifier si les produits sont bien présents en base de donnée et que l'ajout aux favoris s'effectue bien
+
+Les fonctions présentent dans la classe ``` DatabaseTestCase ``` vérifient
+que les données sont bien créées, qu'on les affichent bien et qu'on peut les
+modifier (comme par exemple les supprimer ou bien modifier des entrées). On
+vérifie également que les favoris s'ajoutent bien en base.
+
+
 
 # 4 - Qui teste ?
 
-# 5 - Livrables
+Étant seul à réaliser ce projet, je me charge de tester le programme en
+écrivant mes propres tests. Un développeur qui reprendrait mon projet pourrait
+lancer les tests avant de mettre en marche le programme et de l'utiliser afin
+de s'assurrer que rien n'est déprécié par exemple. 
+
