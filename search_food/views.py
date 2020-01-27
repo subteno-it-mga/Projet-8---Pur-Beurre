@@ -449,3 +449,9 @@ def display_favorite(request):
 
     return render(request, 'standard/favorite.html', {
         'product': retrieve_favorite})
+
+def mention(request):
+    '''
+    Display the legal mentions page.
+    '''
+    return render(request, 'standard/mention-legales.html')

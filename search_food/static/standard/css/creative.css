@@ -9855,3 +9855,12 @@ header.masthead h1 {
   margin-top:20px;
   max-height: 250px;
 }
+
+.mentions{
+  color:white;
+  margin-top:100px;
+}
+
+.mention-index{
+  margin-top:30px;
+}
