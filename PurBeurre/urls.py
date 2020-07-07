@@ -19,10 +19,14 @@ from django.conf.urls import include, url
 from django.urls import path
 from search_food import views
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^search_food/', include('search_food.urls')),
     path('', views.index, name="index"),
+    path('sentry-debug/', trigger_error),
 ]
 
 if settings.DEBUG:
