@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,35 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_FILE = os.path.join(BASE_DIR, 'secret.txt')
-
-try:
-    SECRET_KEY = open(SECRET_FILE).read().strip()
-except IOError:  # pragma : no-cover
-    try:
-        import random
-        SECRET_KEY = ''.join([random.SystemRandom().choice(
-            'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
-            for i in range(50)])
-        secret = open(SECRET_FILE, 'w')
-        secret.write(SECRET_KEY)
-        secret.close()
-    except IOError:  # pragma : no-cover
-        Exception('Please create a %s file with random characters \
-        to generate your secret key!' % SECRET_FILE)
-
+SECRET_KEY = "O`5w3%+6aAUw)xON1Bnv|1Qg"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ON_HEROKU = os.environ.get('ON_HEROKU')
-ON_PROD = 'PRODUCTION' in os.environ
-
-if ON_PROD or ON_HEROKU:  # pragma : no-cover
-    DEBUG = False
-else:
-    DEBUG = True
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -65,7 +41,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,21 +73,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PurBeurre.wsgi.application'
 
-if ON_HEROKU:  # pragma : no-cover
-    DATABASES = {'default': dj_database_url.config()}
-    ALLOWED_HOSTS = ['herokupurbeurremga.herokuapp.com']
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'purbeurre',
-            'USER': 'martingaucher',
-            'PASSWORD': '',
-            'HOST': '',
-            'PORT': '5432',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'purbeurre_local',
+        'USER': 'martingaucher',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '5432',
     }
-    ALLOWED_HOSTS = ['*']
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -147,19 +117,8 @@ USE_TZ = True
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 
-if ON_PROD or ON_HEROKU:  # pragma : no-cover
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+STATIC_URL = '/static/'
 
-else:
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "static"),
-    )
+INTERNAL_IPS = ['127.0.0.1']
 
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/'
-
-import django_heroku
-django_heroku.settings(locals())
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

@@ -111,3 +111,7 @@ venv.bak/
 
 # Secret file
 secret.txt
+
+# Ignore for production
+PurBeurre/settings/production.py
+staticfiles/
