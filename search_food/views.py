@@ -15,6 +15,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from unidecode import unidecode
 from .models import Product, SubstituteProduct, Favorite
+from django.core.serializers import serialize
+
+
+from django.core.serializers.json import DjangoJSONEncoder
+
+class LazyEncoder(DjangoJSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, YourCustomType):
+            return str(obj)
+        return super().default(obj)
+
 
 ##########################################
 #             USER ACCOUNT               #
@@ -455,3 +466,15 @@ def mention(request):
     Display the legal mentions page.
     '''
     return render(request, 'standard/mention-legales.html')
+
+##########################################
+#             CRON OPERATION             #
+##########################################
+
+def cron_database_fill(request):
+    keyword = "Nutella"
+    new_entry = list(treat_input_term(keyword))
+    data = serialize('json', new_entry, cls=LazyEncoder)
+
+    return JsonResponse(data, safe=False)
+
