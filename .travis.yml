@@ -5,10 +5,11 @@ python:
 before_script:
   - pip install -r requirements.txt
 
+
+env: DJANGO_SETTINGS_MODULE="PurBeurre.settings.travis"
+
 addons:
   firefox: latest
-
-env: DJANGO_SETTINGS_MODULE="PurBeurre.settings"
 
 services:
   - postgresql
