@@ -298,7 +298,9 @@ class DatabaseTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'standard/index.html')
         self.assertContains(
-            response, '<h1 class="text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
+            response,
+            '<h1 class="text-white font-weight-bold">\
+            Du gras oui, mais de qualité !</h1>')
 
     def test_display_informations(self):
         '''
@@ -436,7 +438,8 @@ class DatabaseTestCase(TestCase):
         '''
         client = Client()
         client.login(username='testuser', password='passwordtest')
-        response = client.post(reverse('add_favorite'), {'barcode': 12345678910})
+        response = client.post(
+            reverse('add_favorite'), {'barcode': 12345678910})
         self.assertTrue(response.status_code, 200)
 
 

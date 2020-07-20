@@ -20,5 +20,8 @@ urlpatterns = [
     path('logout_user/', views.logout_user, name="logout_user"),
     path('login_user/', views.login_user, name="login_user"),
     path('mention/', views.mention, name="mention"),
-    path('cron_database_fill', views.cron_database_fill, name='cron_database_fill'),
+    path(
+        'cron_database_fill',
+        views.cron_database_fill,
+        name='cron_database_fill'),
 ]
