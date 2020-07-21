@@ -22,8 +22,10 @@ import random
 import string
 import os
 
-if os.environ.get('TRAVIS_PROD'):
-    test_url = os.environ.get('TRAVIS_PROD')
+TRAVIS_PROD = os.environ.get('TRAVIS_PROD')
+
+if TRAVIS_PROD:
+    test_url = TRAVIS_PROD
 else:
     test_url = 'http://localhost:8000'
 

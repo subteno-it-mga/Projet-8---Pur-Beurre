@@ -4,9 +4,14 @@ python:
 
 before_script:
   - pip install -r requirements.txt
+  - psql -c 'create database travis_ci_test;' -U postgres_travis
 
 addons:
   firefox: latest
+
+web:
+  environment:
+    - TRAVIS_PROD=http://161.35.153.11/
 
 env: DJANGO_SETTINGS_MODULE="PurBeurre.settings.travis" MOZ_HEADLESS=1
 
