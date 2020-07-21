@@ -18,6 +18,9 @@ from .views import call_api_for_product, create_entries, \
     display_substitutes, search_categories, add_substitute_products, \
     add_favorite_database
 
+import random
+import string
+
 
 class TestCallAPI(TestCase):
     '''
@@ -299,8 +302,7 @@ class DatabaseTestCase(TestCase):
         self.assertTemplateUsed(response, 'standard/index.html')
         self.assertContains(
             response,
-            '<h1 class="text-white font-weight-bold">\
-            Du gras oui, mais de qualité !</h1>')
+            '<h1 class="text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
 
     def test_display_informations(self):
         '''
@@ -477,8 +479,7 @@ class TestBasicViews(TestCase):
         '''
         response = self.client.get('/')
         self.assertContains(
-            response, '<h1 class="text-white font-weight-bold">Du gras oui,'
-            'mais de qualité !</h1>')
+            response, '<h1 class="text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
 
     def test_home_page_does_not_contain_incorrect_html(self):
         '''
@@ -662,11 +663,12 @@ class TestSeleniumBrowser(LiveServerTestCase):
         '''
         Setting up the browser and some informations to test.
         '''
+        length = 8
+        letters = string.ascii_lowercase
         self.test_passed = False
         self.driver = webdriver.Firefox()
-        self.username = "martinbg61700"
-        self.password = "calvadosdedans61700"
-        self.password_confirmation = "calvadosdedans61700"
+        self.username = ''.join(random.choice(letters) for i in range(length))
+        self.password = ''.join(random.choice(letters) for i in range(length))
 
     def tearDown(self):
         '''
@@ -725,7 +727,7 @@ class TestSeleniumBrowser(LiveServerTestCase):
 
         fill_pwd2 = self.driver.find_element_by_id('id_password2')
         fill_pwd2.click()
-        fill_pwd2.send_keys(self.password_confirmation)
+        fill_pwd2.send_keys(self.password)
 
         time.sleep(2)
 
@@ -742,7 +744,7 @@ class TestSeleniumBrowser(LiveServerTestCase):
 
         check_if_user_is_logged = self.driver.find_element_by_id('welcome-to')
         self.assertEqual(check_if_user_is_logged.get_attribute(
-            'title'), 'Bienvenue martinbg61700')
+            'title'), 'Bienvenue %s' %(self.username))
 
         click_on_disconnect = self.driver.find_element_by_xpath(
             '//a[@id="disconnect_user"]')
