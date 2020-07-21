@@ -12,11 +12,12 @@ before_script:
 addons:
   firefox: latest
 
-web:
-  environment:
-    - TRAVIS_PROD=http://161.35.153.11/
 
-env: DJANGO_SETTINGS_MODULE="PurBeurre.settings.travis" MOZ_HEADLESS=1
+env: 
+  global:
+    - TRAVIS_PROD=http://161.35.153.11/
+  jobs:
+    - DJANGO_SETTINGS_MODULE="PurBeurre.settings.travis" MOZ_HEADLESS=1
 
 before_install:
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.22.0/geckodriver-v0.22.0-linux64.tar.gz
@@ -28,6 +29,7 @@ before_install:
 
 script:
   - ./manage.py migrate
+  - ./manage.py travis_tests
   - ./manage.py test search_food/
 
 branches:

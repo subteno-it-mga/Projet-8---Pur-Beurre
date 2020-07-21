@@ -4,7 +4,7 @@ This file  contains the custom command to pre-fill the database.
 '''
 import json
 from urllib.request import urlopen
-from .models import Product
+from .models import Product, User
 
 
 def get_files():
@@ -64,3 +64,10 @@ def clean_database():
     product_delete = Product.objects.filter(search="nutella-fill")
     product_delete.delete()
     print("Product deleted.")
+
+def create_user(name, mail, password):
+    '''
+    Fill database for tests
+    '''
+    User.objects.create_user(
+            name, mail, password)
