@@ -13,8 +13,8 @@ LOGOUT_REDIRECT_URL = '/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': 'postgres',
+        'NAME': 'travis_ci_test',
+        'USER': 'postgres_travis',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
