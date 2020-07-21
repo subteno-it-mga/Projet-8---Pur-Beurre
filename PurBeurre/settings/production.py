@@ -7,8 +7,6 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
-ALLOWED_HOSTS = ['*']
-
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
