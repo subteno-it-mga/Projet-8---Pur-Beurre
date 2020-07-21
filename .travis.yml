@@ -5,15 +5,25 @@ python:
 before_script:
   - pip install -r requirements.txt
 
+addons:
+  firefox: latest
 
-env: DJANGO_SETTINGS_MODULE="PurBeurre.settings.travis"
+env: DJANGO_SETTINGS_MODULE="PurBeurre.settings.travis" MOZ_HEADLESS=1
 
 services:
   - postgresql
 
+before_install:
+  - wget https://github.com/mozilla/geckodriver/releases/download/v0.22.0/geckodriver-v0.22.0-linux64.tar.gz
+  - mkdir geckodriver
+  - tar -xzf geckodriver-v0.22.0-linux64.tar.gz -C geckodriver
+  - export PATH=$PATH:$PWD/geckodriver
+  - geckodriver --version
+  - export MOZ_HEADLESS=1
 
 script:
-  - flake8 search_food/
+  - ./manage.py migrate
+  - ./manage.py test search_food/
 
 branches:
   only:
