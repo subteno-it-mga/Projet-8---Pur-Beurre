@@ -20,7 +20,12 @@ from .views import call_api_for_product, create_entries, \
 
 import random
 import string
+import os
 
+if os.environ.get('TRAVIS_PROD'):
+    test_url = os.environ.get('TRAVIS_PROD')
+else:
+    test_url = 'http://localhost:8000'
 
 class TestCallAPI(TestCase):
     '''
@@ -682,7 +687,7 @@ class TestSeleniumBrowser(LiveServerTestCase):
         '''
         print("-------------Test if h1 title exists------------------")
 
-        self.driver.get("http://localhost:8000")
+        self.driver.get(test_url)
         check_h1 = self.driver.find_element_by_css_selector('h1')
 
         # Check if h1 exists
@@ -702,7 +707,7 @@ class TestSeleniumBrowser(LiveServerTestCase):
         '''
         print("-------------Simulate a signup------------------")
 
-        self.driver.get("http://localhost:8000")
+        self.driver.get(test_url)
 
         check_form = self.driver.find_element_by_id('signup-form')
         self.assertTrue(check_form)
@@ -736,7 +741,7 @@ class TestSeleniumBrowser(LiveServerTestCase):
         time.sleep(2)
 
         self.assertEqual(self.driver.current_url,
-                         "http://localhost:8000/search_food/signup/")
+                         test_url + "/search_food/signup/")
         redirect_to_index = self.driver.find_element_by_id('redirect-to-index')
         redirect_to_index.click()
 
@@ -762,7 +767,7 @@ class TestSeleniumBrowser(LiveServerTestCase):
         '''
         print("-------------Simulate a login------------------")
 
-        self.driver.get('http://localhost:8000')
+        self.driver.get(test_url)
 
         self.driver.find_element_by_name('username').send_keys('testuser61700')
         time.sleep(3)
@@ -785,14 +790,14 @@ class TestSeleniumBrowser(LiveServerTestCase):
         time.sleep(3)
 
         self.assertEqual(self.driver.current_url,
-                         "http://localhost:8000/search_food/favorite/")
+                         test_url + "/search_food/favorite/")
 
     def test_simulate_research(self):
         '''
         Simulate an entire research in the web browser.
         '''
         print("-------------Simulate a research------------------")
-        self.driver.get('http://localhost:8000')
+        self.driver.get(test_url)
 
         self.driver.find_element_by_name('username').send_keys('testuser61700')
         time.sleep(3)
