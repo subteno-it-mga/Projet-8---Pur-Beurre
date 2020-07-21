@@ -22,12 +22,13 @@ import random
 import string
 import os
 
-TRAVIS_PROD = os.environ.get('TRAVIS_PROD')
+# TRAVIS_PROD = os.environ.get('TRAVIS_PROD')
 
-if TRAVIS_PROD:
-    test_url = TRAVIS_PROD
-else:
-    test_url = 'http://localhost:8000'
+# if TRAVIS_PROD:
+#     test_url = TRAVIS_PROD
+# else:
+#     test_url = 'http://localhost:8000'
+test_url = 'http://161.35.153.11/'
 
 class TestCallAPI(TestCase):
     '''
