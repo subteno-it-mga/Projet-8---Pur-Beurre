@@ -2,9 +2,12 @@ language: python
 python:
   - '3.5'
 
+services:
+  - postgresql
+
 before_script:
   - pip install -r requirements.txt
-  - psql -c 'create database travis_ci_test;' -U postgres_travis
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 addons:
   firefox: latest
@@ -14,9 +17,6 @@ web:
     - TRAVIS_PROD=http://161.35.153.11/
 
 env: DJANGO_SETTINGS_MODULE="PurBeurre.settings.travis" MOZ_HEADLESS=1
-
-services:
-  - postgresql
 
 before_install:
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.22.0/geckodriver-v0.22.0-linux64.tar.gz
