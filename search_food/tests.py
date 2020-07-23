@@ -744,7 +744,7 @@ class TestSeleniumBrowser(LiveServerTestCase):
         time.sleep(2)
 
         self.assertEqual(self.driver.current_url,
-                         test_url + "/search_food/signup/")
+                         test_url + "search_food/signup/")
         redirect_to_index = self.driver.find_element_by_id('redirect-to-index')
         redirect_to_index.click()
 
