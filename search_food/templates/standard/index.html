@@ -94,7 +94,8 @@
                           <!-- {{ form.as_p }} -->
                           <div class="form-group">
                               <label>Adresse e-mail</label>
-                              <input type="text" class="form-control" name="email" placeholder="Utilisateur">
+                              <input type="text" class="form-control" name="email" id="userEmailAddress" placeholder="Adresse email">
+                              <p id="errorEmail" class="alert alert-danger d-none">Adresse email invalide !</p>
                           </div>
                           {% for field in form %}
                           <div class="form-group">
@@ -102,7 +103,7 @@
                             {{ field.label_tag }} {{ field|add_attr:"class:form-control" }}
                         </div>
                           {% endfor %}
-                        <button class="btn btn-primary" type="submit">S'enregistrer</button>
+                        <button class="btn btn-primary btn-create-mail" type="submit" disabled>S'enregistrer</button>
                       </form>
                   </div>
               </div>
