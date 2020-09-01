@@ -18,6 +18,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.urls import path
 from search_food import views
+from django_email_verification import urls as mail_urls
 
 def trigger_error(request):
     division_by_zero = 1 / 0
@@ -27,6 +28,7 @@ urlpatterns = [
     url(r'^search_food/', include('search_food.urls')),
     path('', views.index, name="index"),
     path('sentry-debug/', trigger_error),
+    path('email/', include(mail_urls)),
 ]
 
 if settings.DEBUG:

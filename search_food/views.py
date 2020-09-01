@@ -5,7 +5,7 @@ This file contains the principals views. That is the heart of the app.
 from urllib.request import urlopen
 import json
 from django.http import HttpResponseRedirect, JsonResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.contrib import messages
@@ -17,6 +17,7 @@ from unidecode import unidecode
 from .models import Product, SubstituteProduct, Favorite
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
+from django_email_verification import sendConfirm
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -33,21 +34,15 @@ def user_account(request):
     '''
     Method post to retrieve all informations from the signup form.
     '''
-    form = UserCreationForm(request.POST)
-    if form.is_valid():  # pragma : no-cover
-        form.save()
+    email = request.POST.get('email')
+    password = request.POST.get('password1')
+    username = request.POST.get('username')
 
-        username = form.cleaned_data.get('username')
-        raw_password = form.cleaned_data.get('password1')
-        user = authenticate(username=username, password=raw_password)
-        login(request, user)
+    user = get_user_model().objects.create(username=username, password=password, email=email)
+    user.set_password(password)
+    sendConfirm(user)
 
-        messages.add_message(request, messages.INFO,
-                             form.cleaned_data['username'])
-        return HttpResponseRedirect(reverse('signup'))
-
-    form = UserCreationForm()
-    return render(request, 'standard/index.html', {'form': form})
+    return render(request, 'standard/index.html')
 
 
 def login_user(request):
@@ -57,12 +52,15 @@ def login_user(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(username=username, password=password)
-
+    print(user)
     if user is not None and user.is_active:
         login(request, user)
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+    # if not user.is_active:
+    #     return render(request, 'standard/index.html', {
+    #     'login_message': 'Vous devez activer votre adresse email. Pensez à consulter vos emails ou bien cliquer sur ce lien', 'anchor': 'account'})
     return render(request, 'standard/index.html', {
-        'login_message': 'The user doesn\'t exist', 'anchor': 'account'})
+        'login_message': 'Cet utilisateur n\'existe pas ou bien vous n\'avez pas validé votre email.', 'anchor': 'account'})
 
 
 def logout_user(request):

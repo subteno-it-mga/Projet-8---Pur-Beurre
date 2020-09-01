@@ -15,6 +15,7 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'search_food.apps.SearchFoodConfig',
+    'django_email_verification',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,14 @@ STATIC_URL = '/static/'
 INTERNAL_IPS = ['127.0.0.1']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+EMAIL_ACTIVE_FIELD = 'is_active'
+EMAIL_SERVER = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_ADDRESS = config('EMAIL_ADDRESS')
+EMAIL_FROM_ADDRESS = config('EMAIL_FROM_ADDRESS')
+EMAIL_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_MAIL_SUBJECT = 'Confirmer votre email'
+EMAIL_MAIL_HTML = 'standard/mail_body.html'
+EMAIL_PAGE_TEMPLATE = 'standard/mail_success.html'
+EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'

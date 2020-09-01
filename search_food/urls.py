@@ -2,8 +2,8 @@
 search_food/urls.py
 This file  contains the url collection.
 '''
-from django.urls import path
-
+from django.urls import path, include
+from django.contrib import admin
 from . import views
 
 urlpatterns = [
