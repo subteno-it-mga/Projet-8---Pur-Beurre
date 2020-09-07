@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'search_food.apps.SearchFoodConfig',
     'django_email_verification',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -135,11 +136,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 EMAIL_ACTIVE_FIELD = 'is_active'
 EMAIL_SERVER = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_ADDRESS = config('EMAIL_ADDRESS')
 EMAIL_FROM_ADDRESS = config('EMAIL_FROM_ADDRESS')
 EMAIL_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_HOST_USER = config('EMAIL_FROM_ADDRESS')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_USE_TLS = True
 EMAIL_MAIL_SUBJECT = 'Confirmer votre email'
 EMAIL_MAIL_HTML = 'standard/mail_body.html'
 EMAIL_PAGE_TEMPLATE = 'standard/mail_success.html'
 EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+CRISPY_TEMPLATE_PACK = 'uni_form'
+SERVER_EMAIL = 'django@my-domain.com'

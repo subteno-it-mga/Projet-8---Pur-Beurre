@@ -70,8 +70,6 @@
                         {% if login_message %}
                           <div class="alert alert-danger">
                             {{ login_message }}
-                            </br>
-                            <button class="btn btn-primary">Renvoyer l'email</button>
                           </div>
                         {% endif %}
                       <form class="signin-form" method="post" role="form" action="{% url 'login_user' %}">
@@ -85,6 +83,7 @@
                             <input type="password" class="form-control" name="password" placeholder="Mot de passe">
                         </div>
                         <button id="signin-id" class="btn btn-primary" type="submit">Se connecter</button>
+                        <a style="font-size:10px;float:right;" href="{% url 'password_reset' %}">J'ai oublié mon mot de passe.</a>
                       </form>
                   </div>
                   <div class="tab-pane fade show col-lg-6 mx-auto" id="signup" role="tabpanel" aria-labelledby="signup-id">
