@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from search_food.database_fill import create_user
 
+
 class Command(BaseCommand):
     help = 'Pre fill the database for travis tests'
 

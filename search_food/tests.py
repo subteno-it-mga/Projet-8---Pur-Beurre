@@ -310,7 +310,8 @@ class DatabaseTestCase(TestCase):
         self.assertTemplateUsed(response, 'standard/index.html')
         self.assertContains(
             response,
-            '<h1 class="text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
+            '<h1 class="text-white font-weight-bold">'
+            'Du gras oui, mais de qualité !</h1>')
 
     def test_display_informations(self):
         '''
@@ -487,7 +488,9 @@ class TestBasicViews(TestCase):
         '''
         response = self.client.get('/')
         self.assertContains(
-            response, '<h1 class="text-white font-weight-bold">Du gras oui, mais de qualité !</h1>')
+            response,
+            '<h1 class="text-white font-weight-bold">'
+            'Du gras oui, mais de qualité !</h1>')
 
     def test_home_page_does_not_contain_incorrect_html(self):
         '''
@@ -752,7 +755,7 @@ class TestSeleniumBrowser(LiveServerTestCase):
 
         check_if_user_is_logged = self.driver.find_element_by_id('welcome-to')
         self.assertEqual(check_if_user_is_logged.get_attribute(
-            'title'), 'Bienvenue %s' %(self.username))
+            'title'), 'Bienvenue %s' % (self.username))
 
         click_on_disconnect = self.driver.find_element_by_xpath(
             '//a[@id="disconnect_user"]')

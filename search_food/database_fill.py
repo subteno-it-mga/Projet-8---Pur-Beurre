@@ -65,6 +65,7 @@ def clean_database():
     product_delete.delete()
     print("Product deleted.")
 
+
 def create_user(name, mail, password):
     '''
     Fill database for tests

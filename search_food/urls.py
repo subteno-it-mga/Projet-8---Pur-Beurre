@@ -2,9 +2,9 @@
 search_food/urls.py
 This file  contains the url collection.
 '''
-from django.urls import path
-
+from django.urls import path, include
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('search/', views.search_and_stock, name="search_and_stock"),
@@ -24,4 +24,24 @@ urlpatterns = [
         'cron_database_fill',
         views.cron_database_fill,
         name='cron_database_fill'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path(
+        'password_reset/done/',
+        auth_views.PasswordResetDoneView.as_view(
+            template_name='password/password_reset_done.html'),
+        name='password_reset_done'
+        ),
+    path(
+        'reset/done/',
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name='password/password_reset_complete.html'),
+        name='password_reset_complete'
+        ),
+    path(
+        'reset/<uidb64>/<token>/',
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name="password/password_reset_confirm.html"),
+        name='password_reset_confirm'
+        ),
+    path("password_reset", views.password_reset_request, name="password_reset")
 ]
