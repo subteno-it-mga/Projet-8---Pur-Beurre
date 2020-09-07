@@ -18,6 +18,7 @@ from .models import Product, SubstituteProduct, Favorite
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from django_email_verification import sendConfirm
+from django.contrib.auth.models import User
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -37,12 +38,17 @@ def user_account(request):
     email = request.POST.get('email')
     password = request.POST.get('password1')
     username = request.POST.get('username')
+    error_message = ""
 
-    user = get_user_model().objects.create(username=username, password=password, email=email)
-    user.set_password(password)
-    sendConfirm(user)
+    check_email_exist = User.objects.filter(email=email)
+    if not check_email_exist:
+        user = get_user_model().objects.create(username=username, password=password, email=email)
+        user.set_password(password)
+        sendConfirm(user)
+    else:
+        error_message = "Cet email est déjà pris !"
 
-    return render(request, 'standard/index.html')
+    return render(request, 'standard/index.html', {'error_message': error_message})
 
 
 def login_user(request):

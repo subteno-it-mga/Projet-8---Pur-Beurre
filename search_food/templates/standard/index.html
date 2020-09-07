@@ -88,10 +88,12 @@
                       </form>
                   </div>
                   <div class="tab-pane fade show col-lg-6 mx-auto" id="signup" role="tabpanel" aria-labelledby="signup-id">
+                  {% if error_message %}
+                          <p class="alert alert-danger">Cet email est déjà pris.</p>
+                        {% endif %}
                       {% load add_attr %}
                       <form id="signup-form" method="post" action="{% url "user_account" %}">
                           {% csrf_token %}
-                          <!-- {{ form.as_p }} -->
                           <div class="form-group">
                               <label>Adresse e-mail</label>
                               <input type="text" class="form-control" name="email" id="userEmailAddress" placeholder="Adresse email">
