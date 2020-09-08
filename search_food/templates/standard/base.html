@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +45,7 @@
           <form method="POST" action="{% url 'search_and_stock' %}" class="form-inline my-2 my-lg-0">
             {% csrf_token %}
             <input class="form-control mr-sm-2" placeholder="Chercher un produit" name="search_term">
-            <button class="btn btn-primary" type="submit">Chercher</button>
+            <button class="btn btn-primary" type="submit">{% trans "Chercher" %}</button>
           </form>
           {% if user.is_authenticated %}
             <li class="nav-item">

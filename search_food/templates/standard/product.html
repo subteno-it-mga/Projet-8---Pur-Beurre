@@ -1,11 +1,11 @@
 {% extends 'standard/base.html' %}
-
+{% load i18n %}
 {% block content %}
 
   <!-- Product Page -->
         <div class="container-fluid h-10" id="product">
           <div class="row align-items-center justify-content-center text-center" style="margin-top:10em;">
-            <h2 class="text-center" style="color:white;">Produit de substitution pour : {{ original }}</h2>
+            <h2 class="text-center" style="color:white;">{% trans "Produit de substitution pour :" %} {{ original }}</h2>
           </div>
             <div class="container">
                 <div class="row">
@@ -18,7 +18,7 @@
                                     <p class="card-text">{{ product.description }}</p>
                                     <form action="{% url 'search_substitute' %}" method="POST">
                                         {% csrf_token %}
-                                    <button name="product_barcode" value="{{ product.barcode }}" class="btn btn-primary" style="position:absolute; bottom:0; margin-top:10px;">COMPARER</button>
+                                    <button name="product_barcode" value="{{ product.barcode }}" class="btn btn-primary" style="position:absolute; bottom:0; margin-top:10px;">{% trans "COMPARER" %}</button>
                                 </div>
                             </div>
                         {% if forloop.counter|divisibleby:4 %}</div><div class="card-group">{% endif %}

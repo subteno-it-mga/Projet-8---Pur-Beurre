@@ -1,3 +1,4 @@
+{% load i18n %}
 {% extends 'standard/base.html' %}
 
 {% block content %}
@@ -16,7 +17,7 @@
               <hr class="divider my-4">
             </div>
             <div class="col-lg-8 align-self-baseline">
-              <p class="text-white-75 font-weight-light mb-5">Vous devez vous rendre dans votre boite email pour confirmer le mail que vous nous avons envoyé.</p>
+              <p class="text-white-75 font-weight-light mb-5">{% trans "Vous devez vous rendre dans votre boite email pour confirmer le mail que vous nous avons envoyé." %}</p>
             </div>
           </div>
         </div>

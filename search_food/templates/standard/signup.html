@@ -1,5 +1,5 @@
 {% extends 'standard/base.html' %}
-
+{% load i18n %}
 {% block content %}
 
   <!-- Masthead -->
@@ -16,9 +16,9 @@
               <hr class="divider my-4">
             </div>
             <div class="col-lg-8 align-self-baseline">
-              <p class="text-white-75 font-weight-light mb-5">Votre compte a bien été créé. Vous pouvez maintenant vous régalez avec cette application en cherchant des produits adaptés à vos envies :) !</p>
+              <p class="text-white-75 font-weight-light mb-5">{% trans "Votre compte a bien été créé. Vous pouvez maintenant vous régalez avec cette application en cherchant des produits adaptés à vos envies :) !" %}</p>
 
-              <h2 id="redirect-to-index">Vous allez être redirigé automatiquement dans 30 secondes ou vous pouvez <a href="{% url 'index' %}">cliquez ici</a></h2>
+              <h2 id="redirect-to-index">{% trans "Vous allez être redirigé automatiquement dans 30 secondes ou vous pouvez" %} <a href="{% url 'index' %}">{% trans "cliquez ici" %}</a></h2>
             </div>
           </div>
         </div>

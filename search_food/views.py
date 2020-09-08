@@ -23,6 +23,7 @@ from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
+from django.utils.translation import gettext as _
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -53,7 +54,7 @@ def user_account(request):
         user.set_password(password)
         sendConfirm(user)
     else:
-        error_message = "Cet email est déjà pris !"
+        error_message = _("Cet email est déjà pris !")
 
     return render(
         request,
@@ -74,8 +75,8 @@ def login_user(request):
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
     return render(request, 'standard/index.html', {
         'login_message':
-        'Cet utilisateur n\'existe pas ou bien vous'
-        'n\'avez pas validé votre email.',
+        _('Cet utilisateur n\'existe pas ou bien vous'
+        'n\'avez pas validé votre email.'),
         'anchor': 'account'})
 
 
@@ -102,7 +103,7 @@ def password_reset_request(request):
             associated_users = User.objects.filter(Q(email=data))
             if associated_users.exists():
                 for user in associated_users:
-                    subject = "Password Reset Requested"
+                    subject =_("Password Reset Requested")
                     email_template_name = "password/password_reset_email.txt"
                     c = {
                         "email": user.email,
@@ -440,7 +441,7 @@ def add_favorite(request):
     user = request.user
     add_favorite_database(int(barcode), user)
 
-    message = "bien ajouté aux favoris"
+    message = _("bien ajouté aux favoris")
 
     data = {
         'message': message,
@@ -491,8 +492,8 @@ def search_categories(barcode):
         product_categories = Product.objects.get(barcode=barcode)
         return product_categories.category
     except Product.DoesNotExist:
-        message_information = "Ce produit n'est pas ou plus présent dans la "\
-            "base."
+        message_information = _("Ce produit n'est pas ou plus présent dans la "\
+            "base.")
         return message_information
 
 

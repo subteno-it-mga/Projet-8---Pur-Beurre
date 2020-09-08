@@ -1,0 +1,475 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-08 07:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: search_food/templates/password/password_reset.html:14
+#: search_food/templates/password/password_reset_complete.html:8
+#: search_food/templates/password/password_reset_confirm.html:10
+#: search_food/templates/password/password_reset_done.html:8
+msgid "Réinitialisation de mot de passe"
+msgstr ""
+
+#: search_food/templates/password/password_reset.html:18
+#: search_food/templates/password/password_reset_confirm.html:20
+msgid "Réinitialiser le mot de passe"
+msgstr ""
+
+#: search_food/templates/password/password_reset.html:20
+msgid ""
+"Vous avez oublié votre mot de passe ? Entrez votre adresse email ci-dessous "
+"et nous vous enverrons les instructions de réinitialisations."
+msgstr ""
+
+#: search_food/templates/password/password_reset.html:24
+msgid "Envoyer l'email"
+msgstr ""
+
+#: search_food/templates/password/password_reset_complete.html:12
+msgid "Réinitilisation de mot de passe complété"
+msgstr ""
+
+#: search_food/templates/password/password_reset_complete.html:14
+msgid ""
+"Votre nouveau mot de passe a bien été sauvegardé. Vous pouvez continuer et "
+"vous connecter dès maintenant avec votre nouveau mot de passe."
+msgstr ""
+
+#: search_food/templates/password/password_reset_complete.html:15
+#: search_food/templates/standard/index.html:62
+#: search_food/templates/standard/index.html:85
+msgid "Se connecter"
+msgstr ""
+
+#: search_food/templates/password/password_reset_confirm.html:14
+msgid "Confirmation de réinitialisation de mot de passe"
+msgstr ""
+
+#: search_food/templates/password/password_reset_confirm.html:16
+msgid "Veuillez entrer le nouveau mot de passe"
+msgstr ""
+
+#: search_food/templates/password/password_reset_done.html:13
+msgid "Réinitialisation de mot de passe envoyé"
+msgstr ""
+
+#: search_food/templates/password/password_reset_done.html:15
+msgid ""
+"Nous vous avons envoyé par email les instructions pour réinitialiser votre "
+"mot de passe si un compte existe avec l'email que vous avez entré. Vous "
+"allez le recevoir sous peu..<br>Si vous ne recevez pas d'email, assurez-vous "
+"d'avoir entré l'adresse email avec laquelle vous avez enregistré votre "
+"compte."
+msgstr ""
+
+#: search_food/templates/standard/base.html:48
+#: search_food/templates/standard/index.html:22
+msgid "Chercher"
+msgstr ""
+
+#: search_food/templates/standard/favorite.html:9
+msgid "Favoris"
+msgstr ""
+
+#: search_food/templates/standard/favorite.html:13
+msgid "Vous n'avez pas encore ajouté de favoris"
+msgstr ""
+
+#: search_food/templates/standard/favorite.html:25
+#: search_food/templates/standard/substitute.html:28
+#: search_food/templates/standard/substitute.html:63
+#: search_food/templates/standard/substitute2.html:22
+#: search_food/templates/standard/substitute2.html:100
+#: search_food/templates/standard/substitute2.html:186
+#: search_food/templates/standard/substitute2.html:268
+#: search_food/templates/standard/substitute2.html:350
+msgid "Pas d'image disponible."
+msgstr ""
+
+#: search_food/templates/standard/favorite.html:28
+msgid "Substitut de :"
+msgstr ""
+
+#: search_food/templates/standard/favorite.html:29
+#: search_food/templates/standard/substitute.html:82
+msgid "Retrouver sur openfoodfacts"
+msgstr ""
+
+#: search_food/templates/standard/index.html:11
+msgid "Du gras oui, mais de qualité !"
+msgstr "Fat yes, but of quality !"
+
+#: search_food/templates/standard/index.html:18
+msgid ""
+"Si vous chercher la pâte à tartiner de vos rêves et qui ne vous fera pas "
+"grossir, rechercher par exemple 'Noutello' ou quelque chose du genre, puis "
+"nous vous proposerons un produit de substitution ;)"
+msgstr ""
+
+#: search_food/templates/standard/index.html:34
+msgid "Notre Histoire"
+msgstr ""
+
+#: search_food/templates/standard/index.html:36
+msgid "De la ratatouille aux croissants"
+msgstr ""
+
+#: search_food/templates/standard/index.html:37
+msgid ""
+"Pur Beurre est l'initiative de deux amoureux de la gastronomie française, "
+"Colette Tatou et Rémy, que vous avez déjà certainement rencontrés dans notre "
+"excellent restaurant Ratatouille."
+msgstr ""
+
+#: search_food/templates/standard/index.html:38
+msgid ""
+"Nous aimons tous manger, surtout en France ! Personnellement, une baguette "
+"fraîche, du bon fromage de chèvre et un bon vin rouge me suffisent "
+"amplement. Comme tout le monde, je fais mes courses au supermarché. Mais "
+"petit à petit je me suis rendue compte, surtout lorsque nous avons ouvert le "
+"restaurant, que je pouvais remplacer les produits aseptisés que j'avais "
+"l'habitude d'acheter par de bons produits du terroir Et souvent pour le même "
+"prix !"
+msgstr ""
+
+#: search_food/templates/standard/index.html:39
+msgid ""
+"Pour ma part je me rendais déjà dans bien des magasins car j'aime beaucoup "
+"me balader, surtout dans les caves et les cuisines. Je connaissais par coeur "
+"le contenu des boutiques bio (dont je raffole) ainsi que les ingrédients de "
+"tous les aliments vendus. Lorsque Colette m'a demandé si elle pouvait "
+"remplacer son Nutella matinal par un aliment plus sain, je savais tout de "
+"suite où le trouver. L'idée de Pur Beurre était née !"
+msgstr ""
+
+#: search_food/templates/standard/index.html:54
+msgid "Créer un compte"
+msgstr ""
+
+#: search_food/templates/standard/index.html:58
+msgid "Une adresse email, un mot de passe et c'est parti pour la tambouille !"
+msgstr ""
+
+#: search_food/templates/standard/index.html:65
+msgid "S'inscrire"
+msgstr ""
+
+#: search_food/templates/standard/index.html:78
+msgid "Nom d'utilisateur"
+msgstr ""
+
+#: search_food/templates/standard/index.html:82
+msgid "Mot de passe"
+msgstr ""
+
+#: search_food/templates/standard/index.html:86
+msgid "J'ai oublié mon mot de passe."
+msgstr ""
+
+#: search_food/templates/standard/index.html:91
+msgid "Cet email est déjà pris."
+msgstr ""
+
+#: search_food/templates/standard/index.html:97
+msgid "Adresse e-mail"
+msgstr ""
+
+#: search_food/templates/standard/index.html:99
+msgid "Adresse email invalide !"
+msgstr ""
+
+#: search_food/templates/standard/index.html:107
+msgid "S'enregistrer"
+msgstr ""
+
+#: search_food/templates/standard/index.html:122
+msgid ""
+"Un soucis ? Vous voulez me suggèrer un nouveau plat sur la carte ? Envoyez "
+"moi un message :)"
+msgstr ""
+
+#: search_food/templates/standard/index.html:124
+msgid "Si vous avez le moindre soucis à me remonter n'hésitez surtout pas !"
+msgstr ""
+
+#: search_food/templates/standard/index.html:130
+msgid "Dring dring"
+msgstr ""
+
+#: search_food/templates/standard/index.html:135
+msgid "Martin Gaucher pour Open Class Rooms"
+msgstr ""
+
+#: search_food/templates/standard/index.html:139
+#: search_food/templates/standard/mention-legales.html:12
+msgid "Mentions légales"
+msgstr ""
+
+#: search_food/templates/standard/mail_body.html:12
+msgid "Veuillez <a href="
+msgstr ""
+
+#: search_food/templates/standard/mail_body.html:13
+msgid ""
+"Ensuite vous pourrez vous connecter avec votre nom d'utilisateur et votre "
+"mot de passe"
+msgstr ""
+
+#: search_food/templates/standard/mail_body.html:14
+msgid "Pur Beurre Martin Gaucher 2020  - Du gras oui, mais de qualité"
+msgstr ""
+
+#: search_food/templates/standard/mail_confirmation.html:20
+msgid ""
+"Vous devez vous rendre dans votre boite email pour confirmer le mail que "
+"vous nous avons envoyé."
+msgstr ""
+
+#: search_food/templates/standard/mail_success.html:12
+msgid "Vérification de l'email"
+msgstr ""
+
+#: search_food/templates/standard/mail_success.html:17
+msgid ""
+"Vous avez bien confirmé votre email ! Vous pouvez maintenant vous régalez "
+"avec cette application en cherchant des produits adaptés à vos envies :) !"
+msgstr ""
+
+#: search_food/templates/standard/mail_success.html:19
+#: search_food/templates/standard/signup.html:21
+msgid ""
+"Vous allez être redirigé automatiquement dans 30 secondes ou vous pouvez"
+msgstr ""
+
+#: search_food/templates/standard/mail_success.html:19
+#: search_food/templates/standard/signup.html:21
+msgid "cliquez ici"
+msgstr ""
+
+#: search_food/templates/standard/mail_success.html:23
+msgid ""
+"Il y a une erreur avec votre jeton d'authentification. Veuillez réessayer "
+"svp."
+msgstr ""
+
+#: search_food/templates/standard/mail_success.html:24
+msgid "Renvoyer l'email d'authentification !"
+msgstr ""
+
+#: search_food/templates/standard/mention-legales.html:15
+msgid "Template bootstrap utilisé :"
+msgstr ""
+
+#: search_food/templates/standard/mention-legales.html:16
+msgid ""
+"Les données (images, nom, informations) des aliments proviennent de l'API"
+msgstr ""
+
+#: search_food/templates/standard/mention-legales.html:17
+msgid ""
+"Les autres images utilisées (la photo de Colette et Rémi) sont la propriété "
+"de Disney."
+msgstr ""
+
+#: search_food/templates/standard/mention-legales.html:18
+msgid "L'image de fond utilisée est disponible à cette adresse :"
+msgstr ""
+
+#: search_food/templates/standard/mention-legales.html:20
+msgid "Toutes les autres ressources sont libres de droit"
+msgstr ""
+
+#: search_food/templates/standard/mention-legales.html:21
+msgid "Site hébergé sur "
+msgstr ""
+
+#: search_food/templates/standard/product.html:8
+msgid "Produit de substitution pour :"
+msgstr ""
+
+#: search_food/templates/standard/product.html:21
+msgid "COMPARER"
+msgstr ""
+
+#: search_food/templates/standard/signup.html:19
+msgid ""
+"Votre compte a bien été créé. Vous pouvez maintenant vous régalez avec cette "
+"application en cherchant des produits adaptés à vos envies :) !"
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:10
+#: search_food/templates/standard/substitute2.html:14
+msgid "Votre produit substitué :"
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:38
+#: search_food/templates/standard/substitute2.html:9
+msgid "Voici la liste des produits que vous nous proposons:"
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:69
+msgid "Caractéristiques: "
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:72
+msgid "Description: "
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:74
+msgid "Pas de description"
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:79
+msgid "Sel: "
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:80
+msgid "Sugar: "
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:81
+msgid "Matière Grasse: "
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:85
+msgid "Le produit est dans les favoris"
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:89
+msgid "Vous devez vous connecter pour pouvoir accèder à cette fonctionnalité."
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:91
+msgid "Déjà ajouté à la base de donnée."
+msgstr ""
+
+#: search_food/templates/standard/substitute.html:93
+#: search_food/templates/standard/substitute2.html:164
+#: search_food/templates/standard/substitute2.html:248
+#: search_food/templates/standard/substitute2.html:330
+#: search_food/templates/standard/substitute2.html:412
+msgid "Ajouter aux favoris"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:28
+#: search_food/templates/standard/substitute2.html:106
+#: search_food/templates/standard/substitute2.html:192
+#: search_food/templates/standard/substitute2.html:274
+#: search_food/templates/standard/substitute2.html:356
+msgid "Caractérisques"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:34
+#: search_food/templates/standard/substitute2.html:112
+#: search_food/templates/standard/substitute2.html:198
+#: search_food/templates/standard/substitute2.html:280
+#: search_food/templates/standard/substitute2.html:362
+msgid "Courte description : "
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:36
+#: search_food/templates/standard/substitute2.html:114
+#: search_food/templates/standard/substitute2.html:200
+#: search_food/templates/standard/substitute2.html:282
+#: search_food/templates/standard/substitute2.html:364
+msgid "Pas de description disponible"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:43
+#: search_food/templates/standard/substitute2.html:121
+#: search_food/templates/standard/substitute2.html:207
+#: search_food/templates/standard/substitute2.html:289
+#: search_food/templates/standard/substitute2.html:371
+msgid "Pas de sel"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:45
+#: search_food/templates/standard/substitute2.html:123
+#: search_food/templates/standard/substitute2.html:209
+#: search_food/templates/standard/substitute2.html:291
+#: search_food/templates/standard/substitute2.html:373
+msgid "Sel : "
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:52
+#: search_food/templates/standard/substitute2.html:130
+#: search_food/templates/standard/substitute2.html:216
+#: search_food/templates/standard/substitute2.html:298
+#: search_food/templates/standard/substitute2.html:380
+msgid "Pas de matière grasse"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:54
+#: search_food/templates/standard/substitute2.html:132
+#: search_food/templates/standard/substitute2.html:218
+#: search_food/templates/standard/substitute2.html:300
+#: search_food/templates/standard/substitute2.html:382
+msgid "Matière grasse : "
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:61
+#: search_food/templates/standard/substitute2.html:139
+#: search_food/templates/standard/substitute2.html:225
+#: search_food/templates/standard/substitute2.html:307
+#: search_food/templates/standard/substitute2.html:389
+msgid "Pas de sucre"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:63
+#: search_food/templates/standard/substitute2.html:141
+#: search_food/templates/standard/substitute2.html:227
+#: search_food/templates/standard/substitute2.html:309
+#: search_food/templates/standard/substitute2.html:391
+msgid "Sucre : "
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:90
+msgid "Meilleur produit basé sur le nutriscore:"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:176
+msgid "Meilleur produit basé sur le taux de sucres:"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:258
+msgid "Meilleur produit basé sur le taux de sel:"
+msgstr ""
+
+#: search_food/templates/standard/substitute2.html:340
+msgid "Meilleur produit basé sur le taux de matière grasse:"
+msgstr ""
+
+#: search_food/views.py:57
+msgid "Cet email est déjà pris !"
+msgstr ""
+
+#: search_food/views.py:78
+msgid "Cet utilisateur n'existe pas ou bien vousn'avez pas validé votre email."
+msgstr ""
+
+#: search_food/views.py:106
+msgid "Password Reset Requested"
+msgstr ""
+
+#: search_food/views.py:444
+msgid "bien ajouté aux favoris"
+msgstr ""
+
+#: search_food/views.py:495
+msgid "Ce produit n'est pas ou plus présent dans la base."
+msgstr ""

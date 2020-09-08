@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,8 +9,8 @@
 </head>
     <body>
         <h1>PUR BEURRE</h1><br>
-        <h2>Veuillez <a href="{{ link }}">cliquer sur ce lien </a>pour confirmer votre compte !</h2>
-        <h3>Ensuite vous pourrez vous connecter avec votre nom d'utilisateur et votre mot de passe</h3>
-        <h4>Pur Beurre Martin Gaucher 2020  - Du gras oui, mais de qualité</h4>
+        <h2>{% trans "Veuillez <a href="{{ link }}">cliquer sur ce lien </a>pour confirmer votre compte !" %}</h2>
+        <h3>{% trans "Ensuite vous pourrez vous connecter avec votre nom d'utilisateur et votre mot de passe" %}</h3>
+        <h4>{% trans "Pur Beurre Martin Gaucher 2020  - Du gras oui, mais de qualité" %}</h4>
     </body>
 </html>
