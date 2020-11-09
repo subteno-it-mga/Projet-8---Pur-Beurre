@@ -43,5 +43,6 @@ urlpatterns = [
             template_name="password/password_reset_confirm.html"),
         name='password_reset_confirm'
         ),
-    path("password_reset", views.password_reset_request, name="password_reset")
+    path("password_reset", views.password_reset_request, name="password_reset"),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

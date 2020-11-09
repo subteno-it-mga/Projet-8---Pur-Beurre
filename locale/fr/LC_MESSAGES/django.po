@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-09 10:15+0100\n"
+"POT-Creation-Date: 2020-11-09 10:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: search_food/templates/password/password_reset.html:14
 #: search_food/templates/password/password_reset.html:18
@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 
 #: search_food/templates/password/password_reset.html:24
-msgid "Envoyer l'email"
+msgid "Send email"
 msgstr ""
 
 #: search_food/templates/password/password_reset_complete.html:8
@@ -140,7 +140,7 @@ msgstr ""
 
 #: search_food/templates/standard/index.html:11
 msgid "Fat yes, but of quality !"
-msgstr ""
+msgstr "Du gras oui, mais de qualité !"
 
 #: search_food/templates/standard/index.html:18
 msgid ""

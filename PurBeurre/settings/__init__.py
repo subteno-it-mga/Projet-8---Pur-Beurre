@@ -17,6 +17,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 import os
 from decouple import config
 
+from django.utils.translation import ugettext_lazy as _
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -154,3 +155,9 @@ SERVER_EMAIL = 'django@my-domain.com'
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, '../locale')]
 LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('fr', _('French')),
+    ('ru', _('Russian')),
+)
