@@ -8,86 +8,114 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-08 07:45+0000\n"
+"POT-Creation-Date: 2020-11-09 10:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: fr\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: search_food/templates/password/password_reset.html:14
-#: search_food/templates/password/password_reset_complete.html:8
-#: search_food/templates/password/password_reset_confirm.html:10
-#: search_food/templates/password/password_reset_done.html:8
-msgid "Réinitialisation de mot de passe"
-msgstr ""
-
 #: search_food/templates/password/password_reset.html:18
 #: search_food/templates/password/password_reset_confirm.html:20
-msgid "Réinitialiser le mot de passe"
+msgid "Reset the password"
 msgstr ""
 
 #: search_food/templates/password/password_reset.html:20
 msgid ""
-"Vous avez oublié votre mot de passe ? Entrez votre adresse email ci-dessous "
-"et nous vous enverrons les instructions de réinitialisations."
+"Did you forgot your password ? Enter your mail address below and we'll send "
+"you reset instructions."
 msgstr ""
 
 #: search_food/templates/password/password_reset.html:24
 msgid "Envoyer l'email"
 msgstr ""
 
+#: search_food/templates/password/password_reset_complete.html:8
+#: search_food/templates/password/password_reset_confirm.html:10
+#: search_food/templates/password/password_reset_done.html:8
+msgid "Password reset"
+msgstr ""
+
 #: search_food/templates/password/password_reset_complete.html:12
-msgid "Réinitilisation de mot de passe complété"
+msgid "Password reset complete"
 msgstr ""
 
 #: search_food/templates/password/password_reset_complete.html:14
 msgid ""
-"Votre nouveau mot de passe a bien été sauvegardé. Vous pouvez continuer et "
-"vous connecter dès maintenant avec votre nouveau mot de passe."
+"Your new password has been saved. You can continue and connect to your "
+"account right now with your new password."
 msgstr ""
 
 #: search_food/templates/password/password_reset_complete.html:15
+#: search_food/templates/standard/base.html:64
 #: search_food/templates/standard/index.html:62
 #: search_food/templates/standard/index.html:85
-msgid "Se connecter"
+msgid "Sign in"
 msgstr ""
 
 #: search_food/templates/password/password_reset_confirm.html:14
-msgid "Confirmation de réinitialisation de mot de passe"
+msgid "Password reset confirmation"
 msgstr ""
 
 #: search_food/templates/password/password_reset_confirm.html:16
-msgid "Veuillez entrer le nouveau mot de passe"
+msgid "Please enter the new password"
 msgstr ""
 
 #: search_food/templates/password/password_reset_done.html:13
-msgid "Réinitialisation de mot de passe envoyé"
+msgid "Password reset sent"
 msgstr ""
 
 #: search_food/templates/password/password_reset_done.html:15
 msgid ""
-"Nous vous avons envoyé par email les instructions pour réinitialiser votre "
-"mot de passe si un compte existe avec l'email que vous avez entré. Vous "
-"allez le recevoir sous peu..<br>Si vous ne recevez pas d'email, assurez-vous "
-"d'avoir entré l'adresse email avec laquelle vous avez enregistré votre "
-"compte."
+"We send you by email instructions to reset your password if an account exist "
+"with the email you entered. You'll receive it soon.<br>If you don't, make "
+"sure you entered the right mail address."
+msgstr ""
+
+#: search_food/templates/standard/base.html:9
+msgid "Pur Beurre ! An app to eat well ;)"
+msgstr ""
+
+#: search_food/templates/standard/base.html:47
+#: search_food/templates/standard/index.html:21
+msgid "Search a product"
 msgstr ""
 
 #: search_food/templates/standard/base.html:48
 #: search_food/templates/standard/index.html:22
-msgid "Chercher"
+msgid "Search"
+msgstr ""
+
+#: search_food/templates/standard/base.html:52
+msgid "Welcome"
+msgstr ""
+
+#: search_food/templates/standard/base.html:55
+msgid "Display favorites"
+msgstr ""
+
+#: search_food/templates/standard/base.html:59
+msgid "Purge database"
+msgstr ""
+
+#: search_food/templates/standard/base.html:69
+msgid "Log out"
+msgstr ""
+
+#: search_food/templates/standard/compare.html:9
+msgid "Compare"
 msgstr ""
 
 #: search_food/templates/standard/favorite.html:9
-msgid "Favoris"
+msgid "Favorites"
 msgstr ""
 
 #: search_food/templates/standard/favorite.html:13
-msgid "Vous n'avez pas encore ajouté de favoris"
+msgid "You have no favorite yet"
 msgstr ""
 
 #: search_food/templates/standard/favorite.html:25
@@ -98,244 +126,235 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:186
 #: search_food/templates/standard/substitute2.html:268
 #: search_food/templates/standard/substitute2.html:350
-msgid "Pas d'image disponible."
+msgid "No picture available."
 msgstr ""
 
 #: search_food/templates/standard/favorite.html:28
-msgid "Substitut de :"
+msgid "Substitute of :"
 msgstr ""
 
 #: search_food/templates/standard/favorite.html:29
 #: search_food/templates/standard/substitute.html:82
-msgid "Retrouver sur openfoodfacts"
+msgid "Find on openfoodfacts"
 msgstr ""
 
 #: search_food/templates/standard/index.html:11
-msgid "Du gras oui, mais de qualité !"
-msgstr "Fat yes, but of quality !"
+msgid "Fat yes, but of quality !"
+msgstr ""
 
 #: search_food/templates/standard/index.html:18
 msgid ""
-"Si vous chercher la pâte à tartiner de vos rêves et qui ne vous fera pas "
-"grossir, rechercher par exemple 'Noutello' ou quelque chose du genre, puis "
-"nous vous proposerons un produit de substitution ;)"
+"If you're looking for the spread of your dreams that won't make you fat, "
+"look for example for 'Noutello' or something like that, then we'll suggest a "
+"substitute product. ;)"
 msgstr ""
 
 #: search_food/templates/standard/index.html:34
-msgid "Notre Histoire"
+msgid "Our history"
 msgstr ""
 
 #: search_food/templates/standard/index.html:36
-msgid "De la ratatouille aux croissants"
+msgid "From ratatouille to croissants"
 msgstr ""
 
 #: search_food/templates/standard/index.html:37
 msgid ""
-"Pur Beurre est l'initiative de deux amoureux de la gastronomie française, "
-"Colette Tatou et Rémy, que vous avez déjà certainement rencontrés dans notre "
-"excellent restaurant Ratatouille."
+"Pur Beurre is the initiative of two lovers of French gastronomy, Colette "
+"Tatou and Rémy, whom you have certainly already met in our excellent "
+"Ratatouille restaurant."
 msgstr ""
 
 #: search_food/templates/standard/index.html:38
 msgid ""
-"Nous aimons tous manger, surtout en France ! Personnellement, une baguette "
-"fraîche, du bon fromage de chèvre et un bon vin rouge me suffisent "
-"amplement. Comme tout le monde, je fais mes courses au supermarché. Mais "
-"petit à petit je me suis rendue compte, surtout lorsque nous avons ouvert le "
-"restaurant, que je pouvais remplacer les produits aseptisés que j'avais "
-"l'habitude d'acheter par de bons produits du terroir Et souvent pour le même "
-"prix !"
+"We all love to eat, especially in France! Personally, a fresh baguette, good "
+"goat's cheese and a good red wine are more than enough for me. Like everyone "
+"else, I shop at the supermarket. But little by little I realised, especially "
+"when we opened the restaurant, that I could replace the aseptic products I "
+"used to buy with good local products and often for the same price!"
 msgstr ""
 
 #: search_food/templates/standard/index.html:39
 msgid ""
-"Pour ma part je me rendais déjà dans bien des magasins car j'aime beaucoup "
-"me balader, surtout dans les caves et les cuisines. Je connaissais par coeur "
-"le contenu des boutiques bio (dont je raffole) ainsi que les ingrédients de "
-"tous les aliments vendus. Lorsque Colette m'a demandé si elle pouvait "
-"remplacer son Nutella matinal par un aliment plus sain, je savais tout de "
-"suite où le trouver. L'idée de Pur Beurre était née !"
+"For my part, I was already going to many shops because I like to walk around "
+"a lot, especially in cellars and kitchens. I knew the contents of the "
+"organic shops by heart (which I love) as well as the ingredients of all the "
+"food sold. When Colette asked me if she could replace her morning Nutella "
+"with a healthier food, I knew right away where to find it. The idea for Pur "
+"Beurre was born!"
 msgstr ""
 
 #: search_food/templates/standard/index.html:54
-msgid "Créer un compte"
+msgid "Create an account"
 msgstr ""
 
 #: search_food/templates/standard/index.html:58
-msgid "Une adresse email, un mot de passe et c'est parti pour la tambouille !"
+msgid "An email address, a password and off you go!"
 msgstr ""
 
 #: search_food/templates/standard/index.html:65
-msgid "S'inscrire"
+#: search_food/templates/standard/index.html:107
+msgid "Sign up"
 msgstr ""
 
 #: search_food/templates/standard/index.html:78
-msgid "Nom d'utilisateur"
+#: search_food/templates/standard/index.html:79
+msgid "Username"
 msgstr ""
 
 #: search_food/templates/standard/index.html:82
-msgid "Mot de passe"
+#: search_food/templates/standard/index.html:83
+msgid "Password"
 msgstr ""
 
 #: search_food/templates/standard/index.html:86
-msgid "J'ai oublié mon mot de passe."
+msgid "I forgot my password."
 msgstr ""
 
 #: search_food/templates/standard/index.html:91
-msgid "Cet email est déjà pris."
+msgid "This email is already taken"
 msgstr ""
 
 #: search_food/templates/standard/index.html:97
-msgid "Adresse e-mail"
-msgstr ""
-
+#: search_food/templates/standard/index.html:98
 #: search_food/templates/standard/index.html:99
-msgid "Adresse email invalide !"
-msgstr ""
-
-#: search_food/templates/standard/index.html:107
-msgid "S'enregistrer"
+msgid "Email"
 msgstr ""
 
 #: search_food/templates/standard/index.html:122
 msgid ""
-"Un soucis ? Vous voulez me suggèrer un nouveau plat sur la carte ? Envoyez "
-"moi un message :)"
+"Any problems? You want to suggest a new dish on the menu? Send me a "
+"message :)"
 msgstr ""
 
 #: search_food/templates/standard/index.html:124
-msgid "Si vous avez le moindre soucis à me remonter n'hésitez surtout pas !"
+msgid ""
+"If you have the slightest problem to pull me up, don't hesitate to contact "
+"me!"
 msgstr ""
 
 #: search_food/templates/standard/index.html:130
 msgid "Dring dring"
 msgstr ""
 
-#: search_food/templates/standard/index.html:135
-msgid "Martin Gaucher pour Open Class Rooms"
+#: search_food/templates/standard/index.html:134
+msgid "Martin Gaucher for Open Class Rooms"
 msgstr ""
 
-#: search_food/templates/standard/index.html:139
+#: search_food/templates/standard/index.html:138
 #: search_food/templates/standard/mention-legales.html:12
-msgid "Mentions légales"
+msgid "Legals mentions"
 msgstr ""
 
 #: search_food/templates/standard/mail_body.html:12
-msgid "Veuillez <a href="
+msgid "Please <a href="
 msgstr ""
 
 #: search_food/templates/standard/mail_body.html:13
-msgid ""
-"Ensuite vous pourrez vous connecter avec votre nom d'utilisateur et votre "
-"mot de passe"
+msgid "Then you can connect with your username and your password."
 msgstr ""
 
 #: search_food/templates/standard/mail_body.html:14
-msgid "Pur Beurre Martin Gaucher 2020  - Du gras oui, mais de qualité"
+msgid "Pur Beurre Martin Gaucher 2020  - Fat yes, but of quality !"
 msgstr ""
 
 #: search_food/templates/standard/mail_confirmation.html:20
-msgid ""
-"Vous devez vous rendre dans votre boite email pour confirmer le mail que "
-"vous nous avons envoyé."
+msgid "You must go to your email inbox to confirm the email you have sent us."
 msgstr ""
 
 #: search_food/templates/standard/mail_success.html:12
-msgid "Vérification de l'email"
+msgid "Email verification"
 msgstr ""
 
 #: search_food/templates/standard/mail_success.html:17
 msgid ""
-"Vous avez bien confirmé votre email ! Vous pouvez maintenant vous régalez "
-"avec cette application en cherchant des produits adaptés à vos envies :) !"
+"You have confirmed your email! You can now enjoy this application while "
+"looking for products adapted to your desires :) !"
 msgstr ""
 
 #: search_food/templates/standard/mail_success.html:19
 #: search_food/templates/standard/signup.html:21
-msgid ""
-"Vous allez être redirigé automatiquement dans 30 secondes ou vous pouvez"
+msgid "You will be redirected automatically in 30 seconds or you can"
 msgstr ""
 
 #: search_food/templates/standard/mail_success.html:19
 #: search_food/templates/standard/signup.html:21
-msgid "cliquez ici"
+msgid "click here"
 msgstr ""
 
 #: search_food/templates/standard/mail_success.html:23
-msgid ""
-"Il y a une erreur avec votre jeton d'authentification. Veuillez réessayer "
-"svp."
+msgid "There is an error with your authentication token. Please try again."
 msgstr ""
 
 #: search_food/templates/standard/mail_success.html:24
-msgid "Renvoyer l'email d'authentification !"
+msgid "Send back authentification email"
 msgstr ""
 
 #: search_food/templates/standard/mention-legales.html:15
-msgid "Template bootstrap utilisé :"
+msgid "Bootstrap template used :"
 msgstr ""
 
 #: search_food/templates/standard/mention-legales.html:16
 msgid ""
-"Les données (images, nom, informations) des aliments proviennent de l'API"
+"The data (images, names, information) of the foodstuffs come from the API."
 msgstr ""
 
 #: search_food/templates/standard/mention-legales.html:17
 msgid ""
-"Les autres images utilisées (la photo de Colette et Rémi) sont la propriété "
-"de Disney."
+"The other images used (the photo of Colette and Rémi) are the property of "
+"Disney."
 msgstr ""
 
 #: search_food/templates/standard/mention-legales.html:18
-msgid "L'image de fond utilisée est disponible à cette adresse :"
+msgid "The background image used is available at this address:"
 msgstr ""
 
 #: search_food/templates/standard/mention-legales.html:20
-msgid "Toutes les autres ressources sont libres de droit"
+msgid "All other resources are free of charge"
 msgstr ""
 
 #: search_food/templates/standard/mention-legales.html:21
-msgid "Site hébergé sur "
+msgid "Site hosted on"
 msgstr ""
 
 #: search_food/templates/standard/product.html:8
-msgid "Produit de substitution pour :"
+msgid "Substitution product for :"
 msgstr ""
 
 #: search_food/templates/standard/product.html:21
-msgid "COMPARER"
+msgid "COMPARE"
 msgstr ""
 
 #: search_food/templates/standard/signup.html:19
 msgid ""
-"Votre compte a bien été créé. Vous pouvez maintenant vous régalez avec cette "
-"application en cherchant des produits adaptés à vos envies :) !"
+"Your account has been created. You can now enjoy this application by "
+"searching for products adapted to your desires. :) !"
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:10
 #: search_food/templates/standard/substitute2.html:14
-msgid "Votre produit substitué :"
+msgid "Your substitute product :"
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:38
 #: search_food/templates/standard/substitute2.html:9
-msgid "Voici la liste des produits que vous nous proposons:"
+msgid "Here is the list of products:"
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:69
-msgid "Caractéristiques: "
+msgid "characteristics: "
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:72
 msgid "Description: "
 msgstr ""
 
-#: search_food/templates/standard/substitute.html:74
-msgid "Pas de description"
+#: search_food/templates/standard/substitute.html:74 search_food/views.py:261
+#: search_food/views.py:342
+msgid "No description"
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:79
-msgid "Sel: "
+msgid "Salt: "
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:80
@@ -343,19 +362,19 @@ msgid "Sugar: "
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:81
-msgid "Matière Grasse: "
+msgid "Fat: "
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:85
-msgid "Le produit est dans les favoris"
+msgid "This product is in favorites"
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:89
-msgid "Vous devez vous connecter pour pouvoir accèder à cette fonctionnalité."
+msgid "You must be connected to access this functionnality."
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:91
-msgid "Déjà ajouté à la base de donnée."
+msgid "Already added in database."
 msgstr ""
 
 #: search_food/templates/standard/substitute.html:93
@@ -363,7 +382,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:248
 #: search_food/templates/standard/substitute2.html:330
 #: search_food/templates/standard/substitute2.html:412
-msgid "Ajouter aux favoris"
+msgid "Add to favorites"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:28
@@ -371,7 +390,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:192
 #: search_food/templates/standard/substitute2.html:274
 #: search_food/templates/standard/substitute2.html:356
-msgid "Caractérisques"
+msgid "Characteristics"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:34
@@ -379,7 +398,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:198
 #: search_food/templates/standard/substitute2.html:280
 #: search_food/templates/standard/substitute2.html:362
-msgid "Courte description : "
+msgid "Short description : "
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:36
@@ -387,7 +406,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:200
 #: search_food/templates/standard/substitute2.html:282
 #: search_food/templates/standard/substitute2.html:364
-msgid "Pas de description disponible"
+msgid "No description available"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:43
@@ -395,7 +414,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:207
 #: search_food/templates/standard/substitute2.html:289
 #: search_food/templates/standard/substitute2.html:371
-msgid "Pas de sel"
+msgid "Salt free"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:45
@@ -403,7 +422,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:209
 #: search_food/templates/standard/substitute2.html:291
 #: search_food/templates/standard/substitute2.html:373
-msgid "Sel : "
+msgid "Salt : "
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:52
@@ -411,7 +430,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:216
 #: search_food/templates/standard/substitute2.html:298
 #: search_food/templates/standard/substitute2.html:380
-msgid "Pas de matière grasse"
+msgid "Fat free"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:54
@@ -419,7 +438,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:218
 #: search_food/templates/standard/substitute2.html:300
 #: search_food/templates/standard/substitute2.html:382
-msgid "Matière grasse : "
+msgid "Fat : "
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:61
@@ -427,7 +446,7 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:225
 #: search_food/templates/standard/substitute2.html:307
 #: search_food/templates/standard/substitute2.html:389
-msgid "Pas de sucre"
+msgid "Sugar free"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:63
@@ -435,41 +454,67 @@ msgstr ""
 #: search_food/templates/standard/substitute2.html:227
 #: search_food/templates/standard/substitute2.html:309
 #: search_food/templates/standard/substitute2.html:391
-msgid "Sucre : "
+msgid "Sugar : "
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:90
-msgid "Meilleur produit basé sur le nutriscore:"
+msgid "Base product base on nutriscore:"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:176
-msgid "Meilleur produit basé sur le taux de sucres:"
+msgid "Best product based on sugar rate:"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:258
-msgid "Meilleur produit basé sur le taux de sel:"
+msgid "Best product based on salt rate:"
 msgstr ""
 
 #: search_food/templates/standard/substitute2.html:340
-msgid "Meilleur produit basé sur le taux de matière grasse:"
+msgid "Best products based on fat rate:"
 msgstr ""
 
 #: search_food/views.py:57
-msgid "Cet email est déjà pris !"
+msgid "This email is already taken !"
 msgstr ""
 
 #: search_food/views.py:78
-msgid "Cet utilisateur n'existe pas ou bien vousn'avez pas validé votre email."
+msgid "This user does not exists or you did not validateyour email."
 msgstr ""
 
 #: search_food/views.py:106
 msgid "Password Reset Requested"
 msgstr ""
 
+#: search_food/views.py:122
+msgid "Invalid header found."
+msgstr ""
+
+#: search_food/views.py:262 search_food/views.py:271 search_food/views.py:343
+#: search_food/views.py:354
+msgid "No name"
+msgstr ""
+
+#: search_food/views.py:266 search_food/views.py:270 search_food/views.py:347
+#: search_food/views.py:353
+msgid "No nutriscore"
+msgstr ""
+
+#: search_food/views.py:268 search_food/views.py:349
+msgid "No image"
+msgstr ""
+
+#: search_food/views.py:308
+msgid "No nutriscore."
+msgstr ""
+
+#: search_food/views.py:350
+msgid "No research"
+msgstr ""
+
 #: search_food/views.py:444
-msgid "bien ajouté aux favoris"
+msgid "Well added to favorites"
 msgstr ""
 
 #: search_food/views.py:495
-msgid "Ce produit n'est pas ou plus présent dans la base."
+msgid "This product is not in database anymore "
 msgstr ""

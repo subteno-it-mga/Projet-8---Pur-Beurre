@@ -27,6 +27,7 @@ def trigger_error(request):
 urlpatterns = i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^search_food/', include('search_food.urls')),
+    url(r'^rosetta/', include('rosetta.urls')),
     path('', views.index, name="index"),
     path('sentry-debug/', trigger_error),
     path('email/', include(mail_urls)),

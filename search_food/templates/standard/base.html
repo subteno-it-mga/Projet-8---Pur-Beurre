@@ -6,7 +6,7 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Pur Beurre ! Une appli pour bien manger ;)">
+  <meta name="description" content="{% trans "Pur Beurre ! An app to eat well ;)"%}">
   <meta name="author" content="Martin Gaucher">
   
   {% load static %}
@@ -44,29 +44,29 @@
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <form method="POST" action="{% url 'search_and_stock' %}" class="form-inline my-2 my-lg-0">
             {% csrf_token %}
-            <input class="form-control mr-sm-2" placeholder="Chercher un produit" name="search_term">
-            <button class="btn btn-primary" type="submit">{% trans "Chercher" %}</button>
+            <input class="form-control mr-sm-2" placeholder="{% trans "Search a product" %}" name="search_term">
+            <button class="btn btn-primary" type="submit">{% trans "Search" %}</button>
           </form>
           {% if user.is_authenticated %}
             <li class="nav-item">
-                <a id="welcome-to" title="Bienvenue {{ user.username }}" class="nav-link"><i class="fas fa-user-circle fa-3x"></i></a>
+                <a id="welcome-to" title="{% trans "Welcome" %} {{ user.username }}" class="nav-link"><i class="fas fa-user-circle fa-3x"></i></a>
             </li>
             <li class="nav-item">
-                <a id="menu-favorite" title="Afficher les favoris" class="nav-link" href="{% url 'display_favorite' %}"><i class="fas fa-carrot fa-3x"></i></a>
+                <a id="menu-favorite" title="{% trans "Display favorites" %}" class="nav-link" href="{% url 'display_favorite' %}"><i class="fas fa-carrot fa-3x"></i></a>
             </li>
               {% if user.username == "admin" %}
                 <li class="nav-item">
-                    <a title="Purger la base de donnée" class="nav-link" href="{% url 'delete_entries' %}"><i class="fas fa-air-freshener fa-3x"></i></a>
+                    <a title="{% trans "Purge database" %}" class="nav-link" href="{% url 'delete_entries' %}"><i class="fas fa-air-freshener fa-3x"></i></a>
                 </li>
               {% endif %}
           {% else %}
             <li class="nav-item">
-                <a id="connect-user" title="Se connecter" class="nav-link js-scroll-trigger" href="{% url 'index' %}#account"><i class="fas fa-users fa-3x"></i></a>
+                <a id="connect-user" title="{% trans "Sign in"%}" class="nav-link js-scroll-trigger" href="{% url 'index' %}#account"><i class="fas fa-users fa-3x"></i></a>
             </li>
           {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">
-              <a id="disconnect_user" title="Se déconnecter" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
+              <a id="disconnect_user" title="{% trans "Log out" %}" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
           </li>
           {% endif %}
         </ul>

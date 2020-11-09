@@ -6,11 +6,11 @@
 
 <div class="container-fluid favorite">
         <div class="container">
-          <h1 style="color:white;">{% trans "Favoris" %}</h1>
+          <h1 style="color:white;">{% trans "Favorites" %}</h1>
             <div class="row">
                 {% if not product %}
                     <div class="container" style="min-height: 500px; height: 500px; ">
-                        <h2>{% trans "Vous n'avez pas encore ajouté de favoris" %}</h2>
+                        <h2>{% trans "You have no favorite yet" %}</h2>
                     </div>
                 {% else %}
                     {% for favorite in product %}
@@ -22,11 +22,11 @@
                                 {% if favorite.image %}
                                     <img class="img img-max-size" src="{{ favorite.image }}"/>
                                 {% else %}
-                                    <p>{% trans "Pas d'image disponible." %}</p>
+                                    <p>{% trans "No picture available." %}</p>
                                 {% endif %}
                                 <h2 class="product-title">{{ favorite.product_name }}</h2>
-                                <p>{% trans "Substitut de :"%} {{ favorite.product_associate }}</p>
-                                <p class="list-group-item find-off"><a href="https://fr.openfoodfacts.org/produit/{{ favorite.barcode }}" target="_blank">{% trans "Retrouver sur openfoodfacts" %}</a></p>
+                                <p>{% trans "Substitute of :"%} {{ favorite.product_associate }}</p>
+                                <p class="list-group-item find-off"><a href="https://fr.openfoodfacts.org/produit/{{ favorite.barcode }}" target="_blank">{% trans "Find on openfoodfacts" %}</a></p>
                                 </div>
                             </div>
                         </div>

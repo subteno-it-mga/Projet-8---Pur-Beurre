@@ -54,7 +54,7 @@ def user_account(request):
         user.set_password(password)
         sendConfirm(user)
     else:
-        error_message = _("Cet email est déjà pris !")
+        error_message = _("This email is already taken !")
 
     return render(
         request,
@@ -75,8 +75,8 @@ def login_user(request):
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
     return render(request, 'standard/index.html', {
         'login_message':
-        _('Cet utilisateur n\'existe pas ou bien vous'
-        'n\'avez pas validé votre email.'),
+        _('This user does not exists or you did not validate'
+        'your email.'),
         'anchor': 'account'})
 
 
@@ -119,7 +119,7 @@ def password_reset_request(request):
                         send_mail(subject, email, settings.EMAIL_HOST_USER, [
                                     user.email], fail_silently=False)
                     except BadHeaderError:
-                        return HttpResponse('Invalid header found.')
+                        return HttpResponse(_('Invalid header found.'))
                     return redirect("/search_food/password_reset/done/")
     password_reset_form = PasswordResetForm()
     return render(
@@ -258,17 +258,17 @@ def retrieve_substitute(product_category, original_product):
             category = product["compared_to_category"]
 
         except KeyError:
-            description = "Pas de description"
-            name = "Pas de nom"
+            description = _("No description")
+            name = _("No name")
             salt = 0.0
             fat = 0.0
             sugar = 0.0
-            nutriscore = "Pas de nutriscore"
+            nutriscore = _("No nutriscore")
             barcode = 100000
-            image = "No image"
+            image = _("No image")
 
-        if nutriscore == "Pas de nutriscore" or \
-            name == "Pas de nom" or \
+        if nutriscore == _("No nutriscore") or \
+            name == _("No name") or \
                 name == "":
             pass
         else:
@@ -305,7 +305,7 @@ def change_nutriscore(nutriscore):
     elif nutriscore == "e":
         nutriscore = 5
     else:
-        message_nutriscore = "Pas de Nutriscore."
+        message_nutriscore = _("No nutriscore.")
         return message_nutriscore
     return nutriscore
 
@@ -339,19 +339,19 @@ def create_entries(informations, final_term_string):
             search = final_term_string.lower()
 
         except KeyError:
-            description = "Pas de description"
-            name = "Pas de nom"
+            description = _("No description")
+            name = _("No name")
             salt = 0.0
             fat = 0.0
             sugar = 0.0
-            nutriscore = "Pas de nutriscore"
+            nutriscore = _("No nutriscore")
             barcode = 100000
-            image = "No image"
-            search = "Pas de recherche"
+            image = _("No image")
+            search = _("No research")
 
         else:
-            if nutriscore == "Pas de nutriscore" or \
-                name == "Pas de nom" or \
+            if nutriscore == _("No nutriscore") or \
+                name == _("No name") or \
                     name == "":
                 pass  # pragma : no-cover
             else:
@@ -441,7 +441,7 @@ def add_favorite(request):
     user = request.user
     add_favorite_database(int(barcode), user)
 
-    message = _("bien ajouté aux favoris")
+    message = _("Well added to favorites")
 
     data = {
         'message': message,
@@ -492,8 +492,7 @@ def search_categories(barcode):
         product_categories = Product.objects.get(barcode=barcode)
         return product_categories.category
     except Product.DoesNotExist:
-        message_information = _("Ce produit n'est pas ou plus présent dans la "\
-            "base.")
+        message_information = _("This product is not in database anymore ")
         return message_information
 
 

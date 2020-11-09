@@ -11,12 +11,14 @@ django-crispy-forms==1.9.2
 django-debug-toolbar==2.1
 django-email-verification==0.0.7
 django-heroku==0.3.1
+django-rosetta==0.9.4
 flake8==3.8.3
 flake8-django==1.1.1
 httpretty==1.0.2
 idna==2.10
 importlib-metadata==1.7.0
 mccabe==0.6.1
+polib==1.1.0
 psycopg2==2.8.5
 pycodestyle==2.6.0
 pycparser==2.20

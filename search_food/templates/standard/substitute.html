@@ -7,7 +7,7 @@
 <div class="container-fluid favorite">
         <div class="container">
             <div class="row product-template">
-                <h2>{% trans "Votre produit substitué :" %}</h2>
+                <h2>{% trans "Your substitute product :" %}</h2>
                 <div class="col-lg-3">
                     <div class="col-lg-12">
                         {% if original.nutriscore == "1" %}
@@ -25,7 +25,7 @@
                         {% if original.image %}
                             <img class="img img-fluid img-max-size" src="{{ original.image }}"/>
                         {% else %}
-                            <p>{% trans "Pas d'image disponible." %}</p>
+                            <p>{% trans "No picture available." %}</p>
                         {% endif %}
 
                         <h3 class="text-center"> {{ original.name }} </h3>
@@ -35,7 +35,7 @@
         </div>
         <div class="container">
             <section class="jumbotron text-center">
-                <h1>{% trans "Voici la liste des produits que vous nous proposons:" %}</h1>
+                <h1>{% trans "Here is the list of products:" %}</h1>
             </section>
             <div class="row">
                 {% for product in substitutes|dictsort:"nutriscore"|slice:":10" %}
@@ -60,37 +60,37 @@
                                         {% if product.image %}
                                             <img class="img img-max-size" src="{{ product.image }}"/>
                                         {% else %}
-                                            <p>{% trans "Pas d'image disponible." %}</p>
+                                            <p>{% trans "No picture available." %}</p>
                                         {% endif %}
 
                                         <h2 class="product-title">{{ product.name }}</h2>
                                     </div>
                                     <div class="col-lg-6">
-                                        <h3 class="product-title">{% trans "Caractéristiques: "%}</h3>
+                                        <h3 class="product-title">{% trans "characteristics: "%}</h3>
                                         
                                         <ul class="list-group">
                                                 <li class="list-group-item"><span class="product-char">{% trans "Description: " %}</span>
                                                     {% if product.description == "" %}
-                                                        {% trans "Pas de description" %}%
+                                                        {% trans "No description" %}%
                                                     {% else %}
                                                         {{ product.description }}
                                                     {% endif %}
                                                 </li>
-                                            <li class="list-group-item"><span class="product-char">{% trans "Sel: "%}</span>{{ product.salt|floatformat:2 }}</li>
+                                            <li class="list-group-item"><span class="product-char">{% trans "Salt: "%}</span>{{ product.salt|floatformat:2 }}</li>
                                             <li class="list-group-item"><span class="product-char">{% trans "Sugar: "%}</span>{{ product.sugar|floatformat:2 }}</li>
-                                            <li class="list-group-item"><span class="product-char">{% trans "Matière Grasse: "%}</span>{{ product.fat|floatformat:2 }}</li>
-                                            <li class="list-group-item find-off"><a href="https://fr.openfoodfacts.org/produit/{{ product.barcode }}" target="_blank">{% trans "Retrouver sur openfoodfacts" %}</a></li>
+                                            <li class="list-group-item"><span class="product-char">{% trans "Fat: "%}</span>{{ product.fat|floatformat:2 }}</li>
+                                            <li class="list-group-item find-off"><a href="https://fr.openfoodfacts.org/produit/{{ product.barcode }}" target="_blank">{% trans "Find on openfoodfacts" %}</a></li>
                                         </ul>
                                         {% if product.barcode in favorites.barcode.values %}
-                                            <h1>{% trans "Le produit est dans les favoris" %}</h1>
+                                            <h1>{% trans "This product is in favorites" %}</h1>
                                         {% endif %}
                                         {% check_favorite product.barcode user.username as check_fav%}
                                         {% if not user.is_authenticated %}
-                                            <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i>{% trans "Vous devez vous connecter pour pouvoir accèder à cette fonctionnalité." %}</button>
+                                            <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i>{% trans "You must be connected to access this functionnality." %}</button>
                                         {% elif check_fav %}
-                                            <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i>{% trans "Déjà ajouté à la base de donnée." %}</button>
+                                            <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i>{% trans "Already added in database." %}</button>
                                         {% else %}
-                                        <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i>{% trans "Ajouter aux favoris" %}</button>
+                                        <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i>{% trans "Add to favorites" %}</button>
                                         {% endif %}
                                     </div>
                                 </div>

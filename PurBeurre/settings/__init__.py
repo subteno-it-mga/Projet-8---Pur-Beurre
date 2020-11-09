@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'search_food.apps.SearchFoodConfig',
     'django_email_verification',
     'crispy_forms',
+    'rosetta',
 ]
 
 MIDDLEWARE = [
@@ -151,10 +152,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 CRISPY_TEMPLATE_PACK = 'uni_form'
 SERVER_EMAIL = 'django@my-domain.com'
 
-LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
-LANGUAGE_CODE = 'fr-FR'
-
-LANGUAGES = [
-    ('en-EN','English'),
-    ('fr-FR', 'French')
-]
+LOCALE_PATHS = [os.path.join(BASE_DIR, '../locale')]
+LANGUAGE_CODE = 'en'
