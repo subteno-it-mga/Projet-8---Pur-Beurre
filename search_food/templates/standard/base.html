@@ -25,34 +25,34 @@
 
   <!-- Theme CSS - Includes Bootstrap -->
   <link href="{% static 'standard/css/creative.css' %}" rel="stylesheet">
+  <link href="{% static 'standard/css/sidebar.css' %}" rel="stylesheet">
 
 </head>
-
+<div id="mySidebar" class="sidebar">
+<form action="{% url 'set_language' %}" method="post">
+{% csrf_token %}
+<input name="next" type="hidden" value="{{ request.get_full_path }}" />
+    {% get_current_language as LANGUAGE_CODE %}
+    {% get_available_languages as LANGUAGES %}
+    {% get_language_info_list for LANGUAGES as languages %}
+    {% for language in languages %}
+      <div class="language-sidebar">
+            <button type="submit"
+                    name="language"
+                    value="{{ language.code }}"
+                    class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
+                    style="background:transparent; border:none;">
+                    <img style="max-height:30px;" src="/static/standard/icon/country/{{ language.code }}.png"/>
+                    <span>{{ language.name }}</span>
+            </button>
+      </div>
+    {% endfor %}
+</form>
+</div>
 <body id="page-top">
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-    <form action="{% url 'set_language' %}" method="post" style="position:fixed;left:0;">
-        {% csrf_token %}
-        <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}" />
-        <ul class="nav navbar-nav navbar-right language menu">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
-                <li> 
-                    <button type="submit"
-                            name="language"
-                            value="{{ language.code }}"
-                            class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
-                            style="background:transparent; border:none;">
-                            <img style="max-height:30px;" src="/static/standard/icon/{{ language.code }}.png"/>
-                    </button>
-                </li>
-            {% endfor %}
-        </ul>
-    </form>
       <a class="navbar-brand js-scroll-trigger" href="/">
         <img class="img img-fluid" style="max-height:100px;" src=" {% static 'standard/img/logo_pur_beurre.png' %} "/>
         Pur Beurre
@@ -89,6 +89,9 @@
               <a id="disconnect_user" title="{% trans "Log out" %}" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
           </li>
           {% endif %}
+          <li class="nav-item">
+              <a id="disconnect_user" title="{% trans "Change language" %}" onclick="openNav()" class="nav-link openbtn"><i class="fas fa-language fa-3x"></i></a>
+          </li>
         </ul>
       </div>
     </div>
@@ -116,6 +119,7 @@
         <script src="{% static 'standard/js/ajax-call.js' %}"></script>
         <script src="{% static 'standard/js/creative.min.js' %}"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
+         <script src="{% static 'standard/js/sidebar.js' %}"></script>
         
         {% if anchor %}
           <script type='text/javascript'>

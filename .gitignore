@@ -114,3 +114,6 @@ secret.txt
 
 # Ignore for production
 staticfiles/
+
+# vs code
+.vscode

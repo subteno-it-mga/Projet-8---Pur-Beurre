@@ -160,4 +160,7 @@ LANGUAGES = (
     ('en', _('English')),
     ('fr', _('French')),
     ('ru', _('Russian')),
+    ('zh-hans', _('Chinese'))
 )
+
+SUPPORTED_LANGUAGES = ['en', 'zh', 'ar', 'ru', 'fr', 'es', 'pt', 'it', 'tr', 'th', 'vi', 'id']
