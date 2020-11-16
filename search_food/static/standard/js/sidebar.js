@@ -8,4 +8,5 @@ function openNav() {
   function closeNav() {
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("page-top").style.marginLeft = "0";
-  } 
+  }
+  

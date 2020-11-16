@@ -75,3 +75,11 @@ class Favorite(models.Model):
 
     class Meta:
         verbose_name_plural = 'Favorites'
+
+
+class PBLanguage(models.Model):
+    '''
+    This model is used to determinate languages
+    '''
+    language_code = models.CharField(max_length=200)
+    language_name = models.CharField(max_length=200)
