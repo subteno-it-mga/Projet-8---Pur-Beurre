@@ -78,6 +78,9 @@
                 <li class="nav-item">
                     <a title="{% trans "Purge database" %}" class="nav-link" href="{% url 'delete_entries' %}"><i class="fas fa-air-freshener fa-3x"></i></a>
                 </li>
+                 <li class="nav-item">
+                    <a title="{% trans "Manage languages" %}" class="nav-link" href="{% url 'manage_languages' %}"><i class="fas fa-globe fa-3x"></i></a>
+                </li>
               {% endif %}
           {% else %}
             <li class="nav-item">

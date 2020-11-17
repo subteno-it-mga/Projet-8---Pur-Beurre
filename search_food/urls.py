@@ -45,4 +45,5 @@ urlpatterns = [
         ),
     path("password_reset", views.password_reset_request, name="password_reset"),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('languages/', views.manage_languages, name="manage_languages"),
 ]

@@ -79,7 +79,7 @@ class Favorite(models.Model):
 
 class PBLanguage(models.Model):
     '''
-    This model is used to determinate languages
+    This model is used to determinate languages installed on website
     '''
     language_code = models.CharField(max_length=200)
     language_name = models.CharField(max_length=200)

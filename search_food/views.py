@@ -12,7 +12,7 @@ from django.contrib.auth import logout
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from unidecode import unidecode
-from .models import Product, SubstituteProduct, Favorite
+from .models import Product, SubstituteProduct, Favorite, PBLanguage
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from django_email_verification import sendConfirm
@@ -525,3 +525,15 @@ def cron_database_fill(request):
     data = serialize('json', new_entry, cls=LazyEncoder)
 
     return JsonResponse(data, safe=False)
+
+##########################################
+#             LANGUAGES                  #
+##########################################
+
+def manage_languages(request):
+    '''
+    Display the installed languages and languages to install.
+    '''
+    language_model = PBLanguage.objects.all()
+
+    return render(request, 'standard/manage_languages.html', {'installed':language_model})

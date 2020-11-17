@@ -1,0 +1,46 @@
+{% extends 'standard/base.html' %}
+{% load i18n %}
+{% block content %}  
+  
+  <!-- Subsitute Page -->
+
+<div class="container-fluid favorite">
+        <div class="container">
+          <h1 style="color:white;">{% trans "Manage Languages" %}</h1>
+            <div class="row">
+                <div class="col-12">
+                  <h2>{% trans "Languages installed" %}</h2>
+                    {% if not installed %}
+                      <h3> {% trans "There is no language install yet." %}
+                    {% else %}
+                      <ul>
+                        {% for lang in installed %}
+                          <li>{{ lang.language_name }}</li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                  <h2>{% trans "Languages available for an installation" %}</h2>
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                      <div class="language-sidebar">
+                            <button type="submit"
+                                    name="language"
+                                    value="{{ language.code }}"
+                                    class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
+                                    style="background:transparent; border:none;">
+                                    <img style="max-height:30px;" src="/static/standard/icon/country/{{ language.code }}.png"/>
+                                    <span>{{ language.name }}</span>
+                            </button>
+                      </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}
