@@ -35,7 +35,7 @@ urlpatterns = [
         'reset/done/',
         auth_views.PasswordResetCompleteView.as_view(
             template_name='password/password_reset_complete.html'),
-        name='password_reset_complete'
+            name='password_reset_complete'
         ),
     path(
         'reset/<uidb64>/<token>/',
@@ -47,4 +47,6 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('languages/', views.manage_languages, name="manage_languages"),
     path('install_language/', views.install_language, name="install_language"),
+    path('page_modify_language', views.modify_language_display, name="page_modify_language"),
+    path('modify_language', views.modify_language, name="modify_language"),
 ]

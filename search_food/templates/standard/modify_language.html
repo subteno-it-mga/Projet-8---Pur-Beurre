@@ -1,0 +1,41 @@
+{% extends 'standard/base.html' %}
+{% load i18n %}
+{% block content %}  
+{% csrf_token %}
+
+<div class="container-fluid favorite">
+        <div class="container" style="color:white;">
+          <h1 style="color:white;">{% trans "Modify the current language" %}</h1>
+            <div class="row">
+                <div class="col-12">
+                  <h2>{% trans "All entry of translations" %}</h2>
+                      <span>{% trans 'Search' %}</span><input type="text" id="input_search_translation"/>
+                      <form action="{% url 'modify_language' %}" method="POST" >
+                        {% csrf_token %}
+                        <input name="language_code" type="hidden" value="{{ language_code }}"/>
+                        <table id="table_translation" class="table" style="color:white;">
+                        <thead>
+                          <tr>
+                            <th>{% trans 'Original text' %}</th>
+                            <th>{% trans 'Translation' %}</th>
+                            <th>{% trans 'Modify translation' %}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for k, v in po.items %}
+                            <tr>
+                              <td>{{k}}</td>
+                              <td class="modify_text_language">{{v}}</td>
+                              <td><textarea name="{{ k }}"></textarea></td>
+                            </tr>
+                          {% endfor %}
+                        <tbody>
+                        </table>
+                        <button class="btn btn-primary fixed-bottom" type="submit">{% trans 'Save modifications' %}</button>
+                      </form>
+                </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

@@ -25,7 +25,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.utils.translation import gettext as _
 from .translation import translate_po
-
+import polib
+from django.core import management
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -544,7 +545,7 @@ def manage_languages(request):
             language_installed.append(item)
             code.append(key)
 
-    return render(request, 'standard/manage_languages.html', {'installed': language_installed, 'code': code})
+    return render(request, 'standard/manage_languages.html', {'installed': language_model, 'code': code})
 
 def install_language(request):
     '''
@@ -561,3 +562,43 @@ def install_language(request):
         message = _("There was a problem during the translation please try again or contact the developer.")
     
     return redirect('/' + language_code)
+
+def modify_language_display(request):
+    '''
+    Manage the language to modify some translations.
+    '''
+    language_code = request.POST.get('language_code')
+    if language_code == "zh-hans":
+        language_code = "zh"
+    path = 'locale/' + language_code + '/LC_MESSAGES/django.po'
+    po = polib.pofile(path)
+    po_file_dict = {}
+
+    for entry in po:
+        po_file_dict[entry.msgid] = entry.msgstr
+
+    return render(request, 'standard/modify_language.html', {'po': po_file_dict, 'language_code': language_code})
+    
+def modify_language(request):
+    '''
+    Modify and save translations in po file.
+    '''
+    create_dict = {}
+    for k,v in request.POST.items():
+        if k != 'csrfmiddlewaretoken' and k != 'language_code' and v:
+            create_dict[k] = v
+    
+    language_code = request.POST.get('language_code')
+    if language_code == "zh-hans":
+        language_code = "zh"
+    path = 'locale/' + language_code + '/LC_MESSAGES/django.po'
+    po = polib.pofile(path)
+
+    for entry in po:
+        if entry.msgid in create_dict:
+            entry.msgstr = create_dict[entry.msgid]
+            
+    po.save(path)
+    management.call_command('compilemessages')
+    
+    return render(request, 'standard/modify_translate_done.html', {'message': _('Traductions are modified and saved.')})

@@ -19,11 +19,17 @@
                     {% if not installed %}
                       <h3> {% trans "There is no language install yet." %}
                     {% else %}
-                      <ul>
                         {% for lang in installed %}
-                          <li style="text-transform:capitalize;">{{ lang }}</li>
+                          <div class="language-sidebar">
+                            <form method="POST" action="{% url 'page_modify_language' %}">
+                              {% csrf_token %}
+                              <input name="language_code" type="hidden" value="{{ lang.language_code }}"/>
+                              <img style="max-height:30px;" src="/static/standard/icon/country/{{ lang.language_code }}.png"/>
+                            <button style="background:transparent; border:none;" type="submit" style="text-transform:capitalize;">{% trans lang.language_name %}</button>
+                            </form>
+                          </div>
                         {% endfor %}
-                      </ul>
+                      </div>
                     {% endif %}
                 </div>
                 <div class="col-12">
@@ -42,7 +48,7 @@
                                       class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
                                       style="background:transparent; border:none;">
                                       <img style="max-height:30px;" src="/static/standard/icon/country/{{ language.code }}.png"/>
-                                      <span>{{ language.name }}</span>
+                                      <span>{% trans language.name %}</span>
                               </button>
                               </form>
                         </div>
