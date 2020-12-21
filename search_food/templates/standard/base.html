@@ -10,6 +10,7 @@
   <meta name="author" content="Martin Gaucher">
   
   {% load static %}
+  {% load available_languages %}
 
   <title>Pur Beurre</title>
   <link rel="shortcut icon" href=" {% static 'standard/img/favicon.ico' %} " />
@@ -29,23 +30,26 @@
 
 </head>
 <div id="mySidebar" class="sidebar">
-<form action="{% url 'set_language' %}" method="post">
+<form action="{% url 'set_language' %}" method="POST">
 {% csrf_token %}
 <input name="next" type="hidden" value="{{ request.get_full_path }}" />
     {% get_current_language as LANGUAGE_CODE %}
     {% get_available_languages as LANGUAGES %}
     {% get_language_info_list for LANGUAGES as languages %}
+    {% get_translated_languages as available %}
     {% for language in languages %}
-      <div class="language-sidebar">
-            <button type="submit"
-                    name="language"
-                    value="{{ language.code }}"
-                    class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
-                    style="background:transparent; border:none;">
-                    <img style="max-height:30px;" src="/static/standard/icon/country/{{ language.code }}.png"/>
-                    <span>{{ language.name }}</span>
-            </button>
-      </div>
+      {% if language.code in available %}
+        <div class="language-sidebar">
+              <button type="submit"
+                      name="language"
+                      value="{{ language.code }}"
+                      class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
+                      style="background:transparent; border:none;">
+                      <img style="max-height:30px;" src="/static/standard/icon/country/{{ language.code }}.png"/>
+                      <span>{{ language.name }}</span>
+              </button>
+        </div>
+      {% endif %}
     {% endfor %}
 </form>
 </div>
@@ -93,7 +97,7 @@
           </li>
           {% endif %}
           <li class="nav-item">
-              <a id="disconnect_user" title="{% trans "Change language" %}" onclick="openNav()" class="nav-link openbtn"><i class="fas fa-language fa-3x"></i></a>
+              <a id="language-sidebar" title="{% trans "Change language" %}" class="nav-link"><i class="fas fa-language fa-3x"></i></a>
           </li>
         </ul>
       </div>

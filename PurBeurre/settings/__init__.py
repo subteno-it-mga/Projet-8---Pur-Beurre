@@ -167,4 +167,4 @@ LANGUAGES = (
     ('id', _('Indonesian')),
 )
 
-SUPPORTED_LANGUAGES = ['en', 'zh', 'ru', 'fr', 'es', 'it', 'tr', 'vi', 'id']
+SUPPORTED_LANGUAGES = ['en', 'zh-hans', 'ru', 'fr', 'es', 'it', 'tr', 'vi', 'id']

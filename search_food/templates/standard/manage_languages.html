@@ -1,11 +1,17 @@
 {% extends 'standard/base.html' %}
 {% load i18n %}
 {% block content %}  
-  
+{% csrf_token %}
   <!-- Subsitute Page -->
 
 <div class="container-fluid favorite">
         <div class="container">
+          <div id="ajax-loader" style="display:none;">
+            <div id="div-ajax-loader">
+              <img src="/static/standard/img/805.svg"/>
+              <span class="text-ajax-loader">{% trans 'Please wait, the language you chose is currently installing...'  %}</span>
+            </div>
+          </div>
           <h1 style="color:white;">{% trans "Manage Languages" %}</h1>
             <div class="row">
                 <div class="col-12">
@@ -15,7 +21,7 @@
                     {% else %}
                       <ul>
                         {% for lang in installed %}
-                          <li>{{ lang.language_name }}</li>
+                          <li style="text-transform:capitalize;">{{ lang }}</li>
                         {% endfor %}
                       </ul>
                     {% endif %}
@@ -26,16 +32,22 @@
                     {% get_available_languages as LANGUAGES %}
                     {% get_language_info_list for LANGUAGES as languages %}
                     {% for language in languages %}
-                      <div class="language-sidebar">
-                            <button type="submit"
-                                    name="language"
-                                    value="{{ language.code }}"
-                                    class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
-                                    style="background:transparent; border:none;">
-                                    <img style="max-height:30px;" src="/static/standard/icon/country/{{ language.code }}.png"/>
-                                    <span>{{ language.name }}</span>
-                            </button>
-                      </div>
+                      {% if language.code not in code and language.code != "en" %}
+                        <div class="language-sidebar">
+                              <form class="install-language" action="{% url 'install_language' %}" method="POST">
+                              {% csrf_token %}
+                              <button type="submit"
+                                      name="language"
+                                      value="{{ language.code }}"
+                                      class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
+                                      style="background:transparent; border:none;">
+                                      <img style="max-height:30px;" src="/static/standard/icon/country/{{ language.code }}.png"/>
+                                      <span>{{ language.name }}</span>
+                              </button>
+                              </form>
+                        </div>
+                      {% else %}
+                      {% endif %}
                     {% endfor %}
                 </div>
             </div>

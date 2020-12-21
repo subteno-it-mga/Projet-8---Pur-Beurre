@@ -24,6 +24,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.utils.translation import gettext as _
+from .translation import translate_po
+
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -431,13 +433,11 @@ def delete_entries():  # pragma : no-cover
 
     return HttpResponseRedirect('/')
 
-
-@csrf_exempt
 def add_favorite(request):
     '''
     Add a substitute product in the database depend of the user.
     '''
-    barcode = request.POST.get('barcode')
+    barcode = request.POST.get('product_barcode')
     user = request.user
     add_favorite_database(int(barcode), user)
 
@@ -447,7 +447,6 @@ def add_favorite(request):
         'message': message,
     }
     return JsonResponse(data)
-
 
 def delete_all_entries():
     '''
@@ -535,5 +534,30 @@ def manage_languages(request):
     Display the installed languages and languages to install.
     '''
     language_model = PBLanguage.objects.all()
+    all_languages = dict(settings.LANGUAGES)
+    language_installed = []
+    code = []
 
-    return render(request, 'standard/manage_languages.html', {'installed':language_model})
+    for key, item in all_languages.items():
+        check_exist = language_model.filter(language_code=key)
+        if check_exist:
+            language_installed.append(item)
+            code.append(key)
+
+    return render(request, 'standard/manage_languages.html', {'installed': language_installed, 'code': code})
+
+def install_language(request):
+    '''
+    Install the desire language for the website
+    '''
+    language_code = request.POST.get('language')
+    all_languages = dict(settings.LANGUAGES)
+    language_name = all_languages[language_code]
+    try:
+        translate_po(language_code)
+        PBLanguage.objects.create(language_code=language_code, language_name=language_name)
+        message = _("The translation is a success. You can swap language clicking the languages icon.")
+    except:
+        message = _("There was a problem during the translation please try again or contact the developer.")
+    
+    return redirect('/' + language_code)

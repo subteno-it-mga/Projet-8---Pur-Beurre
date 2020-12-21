@@ -10,3 +10,21 @@ function openNav() {
     document.getElementById("page-top").style.marginLeft = "0";
   }
   
+  $('#language-sidebar').on('click', function(){
+    let sidebar = $('#mySidebar');
+    let top = $('#page-top');
+
+    if(sidebar.width() === 0){
+      sidebar.width(250);
+      top.css("margin-left", "250px");
+    }
+    else {
+      sidebar.width(0);
+      top.css("margin-left", "0px");
+    }
+  })
+
+  $("body").on('focus', function(){
+    $('#mySidebar').width(0);
+    $('#page-top').css("margin-left", "0px");
+  })
