@@ -52,6 +52,14 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rosetta',
 ]
+OPTIONS = [
+    {
+        'loaders': [
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+        ]
+    }
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

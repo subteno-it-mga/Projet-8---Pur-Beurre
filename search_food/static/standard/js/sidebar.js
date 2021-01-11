@@ -10,7 +10,7 @@ function openNav() {
     document.getElementById("page-top").style.marginLeft = "0";
   }
   
-  $('#language-sidebar').on('click', function(){
+  $('#language-sidebar, #close-language-sidebar').on('click', function(){
     let sidebar = $('#mySidebar');
     let top = $('#page-top');
 

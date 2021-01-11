@@ -554,6 +554,7 @@ def install_language(request):
     language_code = request.POST.get('language')
     all_languages = dict(settings.LANGUAGES)
     language_name = all_languages[language_code]
+
     try:
         translate_po(language_code)
         PBLanguage.objects.create(language_code=language_code, language_name=language_name)
@@ -602,3 +603,19 @@ def modify_language(request):
     management.call_command('compilemessages')
     
     return render(request, 'standard/modify_translate_done.html', {'message': _('Traductions are modified and saved.')})
+
+def uninstall_language(request, code):
+    import os
+    import shutil
+
+    if code == "zh":
+        current_language = PBLanguage.objects.filter(language_code="zh-hans")
+    else:
+        current_language = PBLanguage.objects.filter(language_code=code)
+    
+    current_language.delete()
+    cwd = os.getcwd()
+    path = cwd +'/locale/'+ code
+    shutil.rmtree(path)
+    
+    return redirect('/en')

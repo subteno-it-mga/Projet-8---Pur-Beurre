@@ -49,4 +49,5 @@ urlpatterns = [
     path('install_language/', views.install_language, name="install_language"),
     path('page_modify_language', views.modify_language_display, name="page_modify_language"),
     path('modify_language', views.modify_language, name="modify_language"),
+    path('uninstall_language/<str:code>', views.uninstall_language, name="uninstall_language"),
 ]
