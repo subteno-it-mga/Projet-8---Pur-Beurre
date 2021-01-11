@@ -90,9 +90,7 @@
                                         {% elif check_fav %}
                                             <button name="product_barcode" class="btn-favorite btn btn-primary save-button" disabled><i class="far fa-save fa-2x"></i>{% trans "Already added in database." %}</button>
                                         {% else %}
-                                         <form id="form-favorite" action="{% url 'add_favorite' %}" method="POST">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="favorite_true_url" value="{% url 'add_favorite' %}"/>
+                                         <form class="form-favorite" action="{% url 'add_favorite' %}" method="POST">
                                             <button type="submit" name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><p><i class="far fa-save fa-3x"></i></p>{% trans "Add to favorites" %}</button>
                                         </form>
                                         {% comment %} <button name="product_barcode" value="{{ product.barcode }}" class="btn-favorite btn btn-primary save-button"><i class="far fa-save fa-2x"></i>{% trans "Add to favorites" %}</button> {% endcomment %}

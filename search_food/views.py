@@ -434,11 +434,13 @@ def delete_entries():  # pragma : no-cover
 
     return HttpResponseRedirect('/')
 
+@csrf_exempt
 def add_favorite(request):
     '''
     Add a substitute product in the database depend of the user.
     '''
-    barcode = request.POST.get('product_barcode')
+    byte_barcode = request.body.decode('utf-8')
+    barcode = int(byte_barcode.split('barcode=')[1])
     user = request.user
     add_favorite_database(int(barcode), user)
 
@@ -447,7 +449,7 @@ def add_favorite(request):
     data = {
         'message': message,
     }
-    return JsonResponse(data)
+    return JsonResponse(data, safe=False)
 
 def delete_all_entries():
     '''

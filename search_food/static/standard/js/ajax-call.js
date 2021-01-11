@@ -29,32 +29,30 @@ $(document).ready(function(){
         }
     });
 
-    $('.btn-favorite').on('click', function(event){
+    $('.form-favorite').on('submit', function(event){
         event.preventDefault();
-        var barcode = event.target.value;
-        var fav_url = $('input[name=favorite_true_url]').first().val();
-        console.log(fav_url);
-        console.log(barcode);
+        console.log($(this).find('button').val());
+        var barcode = $(this).find('button');
         $.ajax({
             method: "POST",
-            url: fav_url,
+            async: true,
+            url: $(this).attr('action'),
             contentType: "application/json",
+            cache: false,
             data: {
-                "barcode" : barcode,
-                "action": 'post'
+                "barcode" : barcode.val(),
             },
             dataType: 'json',
-            beforeSend: function(xhr, settings) {
-                console.log(settings);
-                console.log("Before Send");
-                $.ajaxSettings.beforeSend(xhr, settings);
+            success: function(success) {
+                $('button[type="submit"][value="'+barcode.val()+'"]').attr("disabled", "disabled");
+                $('button[type="submit"][value="'+barcode.val()+'"]').html('<i class="far fa-save fa-2x"></i> Déjà ajouté dans la base de donnée.');
             },
-        // when the data are posted and treated we done the following things
-        }).done(function (data) {
-            console.log(data);
-            $('button[type="submit"][value="'+barcode+'"]').attr("disabled", "disabled");
-            $('button[type="submit"][value="'+barcode+'"]').html('<i class="far fa-save fa-2x"></i> Déjà ajouté dans la base de donnée.')
-        })
+            error: function () {
+                console.log("error")
+            }
+        });
+        event.stopImmediatePropagation();
+        return false;
     });
     $('.install-language').on('click', function(event){
         $('#ajax-loader').show();
