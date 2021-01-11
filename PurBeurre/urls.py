@@ -19,17 +19,19 @@ from django.conf.urls import include, url
 from django.urls import path
 from search_food import views
 from django_email_verification import urls as mail_urls
+from django.conf.urls.i18n import i18n_patterns 
 
 def trigger_error(request):
     division_by_zero = 1 / 0
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^search_food/', include('search_food.urls')),
+    url(r'^rosetta/', include('rosetta.urls')),
     path('', views.index, name="index"),
     path('sentry-debug/', trigger_error),
     path('email/', include(mail_urls)),
-]
+)
 
 if settings.DEBUG:
     import debug_toolbar  # pragma : no-cover

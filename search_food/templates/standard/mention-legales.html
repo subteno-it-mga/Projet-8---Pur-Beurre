@@ -1,5 +1,5 @@
 {% extends 'standard/base.html' %}
-
+{% load i18n %}
 {% block content %}
 
   <!-- Masthead -->
@@ -9,16 +9,16 @@
           <div class="row align-items-center justify-content-center text-center" style="margin-top:70px;">
             <div class="col-lg-10 align-self-end">
               <h2 class="text-uppercase text-white font-weight-bold">
-                Mentions légales
+                {% trans "Legals mentions" %}%
               </h2>
               <div class="mentions">
-                <p>Template bootstrap utilisé : <a href="https://startbootstrap.com/themes/creative/" target="_blank">Créative</a></p>
-                <p> Les données (images, nom, informations) des aliments proviennent de l'API <a href="https://fr.openfoodfacts.org/" target="_blank">OpenFoodFact</a></p>
-                <p>Les autres images utilisées (la photo de Colette et Rémi) sont la propriété de Disney.</p>
-                <p>L'image de fond utilisée est disponible à cette adresse :</p>
+                <p>{% trans "Bootstrap template used :" %}%" <a href="https://startbootstrap.com/themes/creative/" target="_blank">Créative</a></p>
+                <p>{% trans "The data (images, names, information) of the foodstuffs come from the API." %} <a href="https://fr.openfoodfacts.org/" target="_blank">OpenFoodFact</a></p>
+                <p>{% trans "The other images used (the photo of Colette and Rémi) are the property of Disney." %}</p>
+                <p>{% trans "The background image used is available at this address:" %}</p>
                 <a href="https://unsplash.com/photos/eqsEZNCm4-c" target="_blank">Photo by Olenka Kotyk on Unplash</a>
-                <p>Toutes les autres ressources sont libres de droit</p>
-                Site hébergé sur <a href="http://www.heroku.com" target="_blank">Heroku</a>
+                <p>{% trans "All other resources are free of charge" %}</p>
+                {% trans "Site hosted on" %} <a href="http://www.heroku.com" target="_blank">Heroku</a>
               </div>
           </div>
         </div>

@@ -12,7 +12,7 @@ from django.contrib.auth import logout
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from unidecode import unidecode
-from .models import Product, SubstituteProduct, Favorite
+from .models import Product, SubstituteProduct, Favorite, PBLanguage
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from django_email_verification import sendConfirm
@@ -23,6 +23,10 @@ from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
+from django.utils.translation import gettext as _
+from .translation import translate_po
+import polib
+from django.core import management
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -53,7 +57,7 @@ def user_account(request):
         user.set_password(password)
         sendConfirm(user)
     else:
-        error_message = "Cet email est déjà pris !"
+        error_message = _("This email is already taken !")
 
     return render(
         request,
@@ -74,8 +78,8 @@ def login_user(request):
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
     return render(request, 'standard/index.html', {
         'login_message':
-        'Cet utilisateur n\'existe pas ou bien vous'
-        'n\'avez pas validé votre email.',
+        _('This user does not exists or you did not validate'
+        'your email.'),
         'anchor': 'account'})
 
 
@@ -102,7 +106,7 @@ def password_reset_request(request):
             associated_users = User.objects.filter(Q(email=data))
             if associated_users.exists():
                 for user in associated_users:
-                    subject = "Password Reset Requested"
+                    subject =_("Password Reset Requested")
                     email_template_name = "password/password_reset_email.txt"
                     c = {
                         "email": user.email,
@@ -118,7 +122,7 @@ def password_reset_request(request):
                         send_mail(subject, email, settings.EMAIL_HOST_USER, [
                                     user.email], fail_silently=False)
                     except BadHeaderError:
-                        return HttpResponse('Invalid header found.')
+                        return HttpResponse(_('Invalid header found.'))
                     return redirect("/search_food/password_reset/done/")
     password_reset_form = PasswordResetForm()
     return render(
@@ -257,17 +261,17 @@ def retrieve_substitute(product_category, original_product):
             category = product["compared_to_category"]
 
         except KeyError:
-            description = "Pas de description"
-            name = "Pas de nom"
+            description = _("No description")
+            name = _("No name")
             salt = 0.0
             fat = 0.0
             sugar = 0.0
-            nutriscore = "Pas de nutriscore"
+            nutriscore = _("No nutriscore")
             barcode = 100000
-            image = "No image"
+            image = _("No image")
 
-        if nutriscore == "Pas de nutriscore" or \
-            name == "Pas de nom" or \
+        if nutriscore == _("No nutriscore") or \
+            name == _("No name") or \
                 name == "":
             pass
         else:
@@ -304,7 +308,7 @@ def change_nutriscore(nutriscore):
     elif nutriscore == "e":
         nutriscore = 5
     else:
-        message_nutriscore = "Pas de Nutriscore."
+        message_nutriscore = _("No nutriscore.")
         return message_nutriscore
     return nutriscore
 
@@ -338,19 +342,19 @@ def create_entries(informations, final_term_string):
             search = final_term_string.lower()
 
         except KeyError:
-            description = "Pas de description"
-            name = "Pas de nom"
+            description = _("No description")
+            name = _("No name")
             salt = 0.0
             fat = 0.0
             sugar = 0.0
-            nutriscore = "Pas de nutriscore"
+            nutriscore = _("No nutriscore")
             barcode = 100000
-            image = "No image"
-            search = "Pas de recherche"
+            image = _("No image")
+            search = _("No research")
 
         else:
-            if nutriscore == "Pas de nutriscore" or \
-                name == "Pas de nom" or \
+            if nutriscore == _("No nutriscore") or \
+                name == _("No name") or \
                     name == "":
                 pass  # pragma : no-cover
             else:
@@ -430,23 +434,20 @@ def delete_entries():  # pragma : no-cover
 
     return HttpResponseRedirect('/')
 
-
-@csrf_exempt
 def add_favorite(request):
     '''
     Add a substitute product in the database depend of the user.
     '''
-    barcode = request.POST.get('barcode')
+    barcode = request.POST.get('product_barcode')
     user = request.user
     add_favorite_database(int(barcode), user)
 
-    message = "bien ajouté aux favoris"
+    message = _("Well added to favorites")
 
     data = {
         'message': message,
     }
     return JsonResponse(data)
-
 
 def delete_all_entries():
     '''
@@ -491,8 +492,7 @@ def search_categories(barcode):
         product_categories = Product.objects.get(barcode=barcode)
         return product_categories.category
     except Product.DoesNotExist:
-        message_information = "Ce produit n'est pas ou plus présent dans la "\
-            "base."
+        message_information = _("This product is not in database anymore ")
         return message_information
 
 
@@ -525,3 +525,97 @@ def cron_database_fill(request):
     data = serialize('json', new_entry, cls=LazyEncoder)
 
     return JsonResponse(data, safe=False)
+
+##########################################
+#             LANGUAGES                  #
+##########################################
+
+def manage_languages(request):
+    '''
+    Display the installed languages and languages to install.
+    '''
+    language_model = PBLanguage.objects.all()
+    all_languages = dict(settings.LANGUAGES)
+    language_installed = []
+    code = []
+
+    for key, item in all_languages.items():
+        check_exist = language_model.filter(language_code=key)
+        if check_exist:
+            language_installed.append(item)
+            code.append(key)
+
+    return render(request, 'standard/manage_languages.html', {'installed': language_model, 'code': code})
+
+def install_language(request):
+    '''
+    Install the desire language for the website
+    '''
+    language_code = request.POST.get('language')
+    all_languages = dict(settings.LANGUAGES)
+    language_name = all_languages[language_code]
+
+    try:
+        translate_po(language_code)
+        PBLanguage.objects.create(language_code=language_code, language_name=language_name)
+        message = _("The translation is a success. You can swap language clicking the languages icon.")
+    except:
+        message = _("There was a problem during the translation please try again or contact the developer.")
+    
+    return redirect('/' + language_code)
+
+def modify_language_display(request):
+    '''
+    Manage the language to modify some translations.
+    '''
+    language_code = request.POST.get('language_code')
+    if language_code == "zh-hans":
+        language_code = "zh"
+    path = 'locale/' + language_code + '/LC_MESSAGES/django.po'
+    po = polib.pofile(path)
+    po_file_dict = {}
+
+    for entry in po:
+        po_file_dict[entry.msgid] = entry.msgstr
+
+    return render(request, 'standard/modify_language.html', {'po': po_file_dict, 'language_code': language_code})
+    
+def modify_language(request):
+    '''
+    Modify and save translations in po file.
+    '''
+    create_dict = {}
+    for k,v in request.POST.items():
+        if k != 'csrfmiddlewaretoken' and k != 'language_code' and v:
+            create_dict[k] = v
+    
+    language_code = request.POST.get('language_code')
+    if language_code == "zh-hans":
+        language_code = "zh"
+    path = 'locale/' + language_code + '/LC_MESSAGES/django.po'
+    po = polib.pofile(path)
+
+    for entry in po:
+        if entry.msgid in create_dict:
+            entry.msgstr = create_dict[entry.msgid]
+            
+    po.save(path)
+    management.call_command('compilemessages')
+    
+    return render(request, 'standard/modify_translate_done.html', {'message': _('Traductions are modified and saved.')})
+
+def uninstall_language(request, code):
+    import os
+    import shutil
+
+    if code == "zh":
+        current_language = PBLanguage.objects.filter(language_code="zh-hans")
+    else:
+        current_language = PBLanguage.objects.filter(language_code=code)
+    
+    current_language.delete()
+    cwd = os.getcwd()
+    path = cwd +'/locale/'+ code
+    shutil.rmtree(path)
+    
+    return redirect('/en')

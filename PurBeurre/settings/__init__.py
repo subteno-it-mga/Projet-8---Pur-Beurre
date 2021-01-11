@@ -17,6 +17,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 import os
 from decouple import config
 
+from django.utils.translation import ugettext_lazy as _
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,11 +50,21 @@ INSTALLED_APPS = [
     'search_food.apps.SearchFoodConfig',
     'django_email_verification',
     'crispy_forms',
+    'rosetta',
+]
+OPTIONS = [
+    {
+        'loaders': [
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+        ]
+    }
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -115,8 +126,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -151,3 +160,19 @@ EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 CRISPY_TEMPLATE_PACK = 'uni_form'
 SERVER_EMAIL = 'django@my-domain.com'
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, '../locale')]
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('fr', _('French')),
+    ('ru', _('Russian')),
+    ('zh-hans', _('Chinese')),
+    ('es', _('Spanish')),
+    ('it', _('Italian')),
+    ('tr', _('Turquish')),
+    ('id', _('Indonesian')),
+)
+
+SUPPORTED_LANGUAGES = ['en', 'zh-hans', 'ru', 'fr', 'es', 'it', 'tr', 'vi', 'id']

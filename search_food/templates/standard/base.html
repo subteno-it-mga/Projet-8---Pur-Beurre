@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,13 +6,14 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Pur Beurre ! Une appli pour bien manger ;)">
+  <meta name="description" content="{% trans "Pur Beurre ! An app to eat well ;)"%}">
   <meta name="author" content="Martin Gaucher">
   
   {% load static %}
+  {% load available_languages %}
 
   <title>Pur Beurre</title>
-  <link rel="icon" href=" {% static 'standard/img/favicon.png' %} " />
+  <link rel="shortcut icon" href=" {% static 'standard/img/favicon.ico' %} " />
   <!-- Font Awesome Icons -->
   <link href="{% static 'standard/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
@@ -24,11 +26,45 @@
 
   <!-- Theme CSS - Includes Bootstrap -->
   <link href="{% static 'standard/css/creative.css' %}" rel="stylesheet">
+  <link href="{% static 'standard/css/sidebar.css' %}" rel="stylesheet">
 
 </head>
-
+<div id="mySidebar" class="sidebar">
+<button class="btn btn-primary" id="close-language-sidebar">{% trans 'Close' %}</button>
+<form action="{% url 'set_language' %}" method="POST">
+{% csrf_token %}
+<input name="next" type="hidden" value="{{ request.get_full_path }}" />
+    {% get_current_language as LANGUAGE_CODE %}
+    {% get_available_languages as LANGUAGES %}
+    {% get_language_info_list for LANGUAGES as languages %}
+    {% get_translated_languages as available %}
+    <div class="language-sidebar-side">
+          <button type="submit"
+                  name="language"
+                  value="en"
+                  class="{% if language.code == en %}selected{% endif %}"
+                  style="background:transparent; border:none;">
+                  <img style="max-height:30px;" src="/static/standard/icon/country/en.png"/>
+                  <span>{% trans 'English'%}</span>
+          </button>
+    </div>
+    {% for language in languages %}
+      {% if language.code in available %}
+        <div class="language-sidebar-side">
+              <button type="submit"
+                      name="language"
+                      value="{{ language.code }}"
+                      class="{% if language.code == LANGUAGE_CODE %}selected{% endif %}"
+                      style="background:transparent; border:none;">
+                      <img style="max-height:30px;" src="/static/standard/icon/country/{{ language.code }}.png"/>
+                      <span>{% trans language.name %}</span>
+              </button>
+        </div>
+      {% endif %}
+    {% endfor %}
+</form>
+</div>
 <body id="page-top">
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
@@ -43,31 +79,37 @@
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <form method="POST" action="{% url 'search_and_stock' %}" class="form-inline my-2 my-lg-0">
             {% csrf_token %}
-            <input class="form-control mr-sm-2" placeholder="Chercher un produit" name="search_term">
-            <button class="btn btn-primary" type="submit">Chercher</button>
+            <input class="form-control mr-sm-2" placeholder="{% trans "Search a product" %}" name="search_term">
+            <button class="btn btn-primary" type="submit">{% trans "Search" %}</button>
           </form>
           {% if user.is_authenticated %}
             <li class="nav-item">
-                <a id="welcome-to" title="Bienvenue {{ user.username }}" class="nav-link"><i class="fas fa-user-circle fa-3x"></i></a>
+                <a id="welcome-to" title="{% trans "Welcome" %} {{ user.username }}" class="nav-link"><i class="fas fa-user-circle fa-3x"></i></a>
             </li>
             <li class="nav-item">
-                <a id="menu-favorite" title="Afficher les favoris" class="nav-link" href="{% url 'display_favorite' %}"><i class="fas fa-carrot fa-3x"></i></a>
+                <a id="menu-favorite" title="{% trans "Display favorites" %}" class="nav-link" href="{% url 'display_favorite' %}"><i class="fas fa-carrot fa-3x"></i></a>
             </li>
               {% if user.username == "admin" %}
                 <li class="nav-item">
-                    <a title="Purger la base de donnée" class="nav-link" href="{% url 'delete_entries' %}"><i class="fas fa-air-freshener fa-3x"></i></a>
+                    <a title="{% trans "Purge database" %}" class="nav-link" href="{% url 'delete_entries' %}"><i class="fas fa-air-freshener fa-3x"></i></a>
+                </li>
+                 <li class="nav-item">
+                    <a title="{% trans "Manage languages" %}" class="nav-link" href="{% url 'manage_languages' %}"><i class="fas fa-globe fa-3x"></i></a>
                 </li>
               {% endif %}
           {% else %}
             <li class="nav-item">
-                <a id="connect-user" title="Se connecter" class="nav-link js-scroll-trigger" href="{% url 'index' %}#account"><i class="fas fa-users fa-3x"></i></a>
+                <a id="connect-user" title="{% trans "Sign in"%}" class="nav-link js-scroll-trigger" href="{% url 'index' %}#account"><i class="fas fa-users fa-3x"></i></a>
             </li>
           {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">
-              <a id="disconnect_user" title="Se déconnecter" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
+              <a id="disconnect_user" title="{% trans "Log out" %}" class="nav-link" href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
           </li>
           {% endif %}
+          <li class="nav-item">
+              <a id="language-sidebar" title="{% trans "Change language" %}" class="nav-link"><i class="fas fa-language fa-3x"></i></a>
+          </li>
         </ul>
       </div>
     </div>
@@ -95,7 +137,10 @@
         <script src="{% static 'standard/js/ajax-call.js' %}"></script>
         <script src="{% static 'standard/js/creative.min.js' %}"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
-        
+        <script src="{% static 'standard/js/sidebar.js' %}"></script>
+        <script src="{% static 'standard/js/script.js' %}"></script>
+        <script src="{% static 'standard/js/highlight.js' %}"></script>
+
         {% if anchor %}
           <script type='text/javascript'>
             $(document).ready(function(){

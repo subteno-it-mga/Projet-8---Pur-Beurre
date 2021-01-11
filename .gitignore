@@ -114,3 +114,10 @@ secret.txt
 
 # Ignore for production
 staticfiles/
+
+# vs code
+.vscode
+
+#google cloud sdk
+google-cloud-sdk
+service_account.json

@@ -4,6 +4,7 @@ This file contains all models necessary for the search food app.
 '''
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import pgettext_lazy
 
 
 class Product(models.Model):
@@ -75,3 +76,17 @@ class Favorite(models.Model):
 
     class Meta:
         verbose_name_plural = 'Favorites'
+
+
+class PBLanguage(models.Model):
+    '''
+    This model is used to determinate languages installed on website
+    '''
+    language_code = models.CharField(max_length=200)
+    language_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        '''
+        Return the name of the favorite in backend.
+        '''
+        return self.language_name
