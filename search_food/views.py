@@ -439,8 +439,11 @@ def add_favorite(request):
     '''
     Add a substitute product in the database depend of the user.
     '''
-    byte_barcode = request.body.decode('utf-8')
-    barcode = int(byte_barcode.split('barcode=')[1])
+    if not request.POST:
+        byte_barcode = request.body.decode('utf-8')
+        barcode = int(byte_barcode.split('barcode=')[1])
+    else:
+        barcode = request.POST.get('barcode')
     user = request.user
     add_favorite_database(int(barcode), user)
 
