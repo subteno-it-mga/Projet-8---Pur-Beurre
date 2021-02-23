@@ -102,7 +102,7 @@ def signup(request):
     return render(request, 'standard/signup.html')
 
 
-def password_reset_request(request):
+def password_reset_request(request): # pragma : no-cover
     if request.method == "POST":
         password_reset_form = PasswordResetForm(request.POST)
         if password_reset_form.is_valid():
@@ -214,11 +214,16 @@ def search_and_stock(request):
     call.
     '''
     term = request.POST.get('search_term')
-
-    final_information = treat_input_term(term)
-    original_search = final_information[0].search
-    return render(request, 'standard/product.html', {
-        'products': final_information, 'original': original_search})
+    if term:
+        final_information = treat_input_term(term)
+        if not final_information:
+            return render(request, 'standard/product_not_found.html')
+        else:
+            original_search = final_information[0].search
+            return render(request, 'standard/product.html', {
+                'products': final_information, 'original': original_search})
+    else:
+        return render(request, 'standard/product_not_found.html')
 
 
 def search_substitute(request):
@@ -528,7 +533,7 @@ def mention(request):
 ##########################################
 
 
-def cron_database_fill(request):
+def cron_database_fill(request): # pragma : no-cover
     keyword = "Nutella"
     new_entry = list(treat_input_term(keyword))
     data = serialize('json', new_entry, cls=LazyEncoder)
@@ -539,7 +544,7 @@ def cron_database_fill(request):
 #             LANGUAGES                  #
 ##########################################
 
-def manage_languages(request):
+def manage_languages(request): # pragma : no-cover
     '''
     Display the installed languages and languages to install.
     '''
@@ -556,7 +561,7 @@ def manage_languages(request):
 
     return render(request, 'standard/manage_languages.html', {'installed': language_model, 'code': code})
 
-def install_language(request):
+def install_language(request): # pragma : no-cover
     '''
     Install the desire language for the website
     '''
@@ -573,7 +578,7 @@ def install_language(request):
     
     return redirect('/' + language_code)
 
-def modify_language_display(request):
+def modify_language_display(request): # pragma : no-cover
     '''
     Manage the language to modify some translations.
     '''
@@ -589,7 +594,7 @@ def modify_language_display(request):
 
     return render(request, 'standard/modify_language.html', {'po': po_file_dict, 'language_code': language_code})
     
-def modify_language(request):
+def modify_language(request): # pragma : no-cover
     '''
     Modify and save translations in po file.
     '''
@@ -613,7 +618,7 @@ def modify_language(request):
     
     return render(request, 'standard/modify_translate_done.html', {'message': _('Traductions are modified and saved.')})
 
-def uninstall_language(request, code):
+def uninstall_language(request, code): # pragma : no-cover
     import os
     import shutil
 

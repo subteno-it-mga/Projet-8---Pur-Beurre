@@ -1,6 +1,5 @@
-{% load i18n %}
 {% extends 'standard/base.html' %}
-
+{% load i18n %}
 {% block content %}
 
   <!-- Masthead -->
@@ -13,6 +12,9 @@
                 {% for message in messages %}
                   {{ message }}
                 {% endfor %}
+                {% if not message %}
+                  {% trans 'Please confirm your email address.' %}
+                {% endif %}
               </h1>
               <hr class="divider my-4">
             </div>
