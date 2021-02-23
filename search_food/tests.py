@@ -12,17 +12,30 @@ import httpretty
 import requests
 from unidecode import unidecode
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 from .models import Product, User, Favorite, SubstituteProduct
 from .views import call_api_for_product, create_entries, \
     display_informations, delete_all_entries, change_nutriscore, \
     display_substitutes, search_categories, add_substitute_products, \
-    add_favorite_database
+    add_favorite_database, install_language, manage_languages, \
+    uninstall_language, modify_language, modify_language_display
 
 import random
 import string
 import os
 from .factory import UserFactory, ProductGenericFactory, \
-    ProductSubstituteFactory, FavoriteFactory
+    ProductSubstituteFactory, FavoriteFactory, UserMailFactory, \
+    PBLanguageFactory, UserAdminFactory
+from django.contrib.auth.hashers import make_password
+from django.core.validators import RegexValidator
+import re
+from django.core import mail
+from django_email_verification.Confirm import sendConfirm, verifyToken
+from django.contrib.auth.tokens import default_token_generator
+from base64 import urlsafe_b64decode, urlsafe_b64encode
+import polib
+from google.cloud import translate_v2 as translate
+from django.utils import timezone
 
 
 TRAVIS_PROD = os.environ.get('TRAVIS_PROD')
@@ -140,10 +153,10 @@ class TestCallAPI(TestCase):
         This function tests if the keyword(s) are split and if the api call is
         successful.
         '''
-        test_keyword = unidecode("pains au chocôlat")
+        test_keyword = unidecode("prince de lû")
 
         # Check if the accentutation is removed or not
-        self.assertEqual(test_keyword, 'pains au chocolat')
+        self.assertEqual(test_keyword, 'prince de lu')
 
         test_list_term = test_keyword.split(" ")
         test_final_term_list = []
@@ -157,7 +170,6 @@ class TestCallAPI(TestCase):
                 test_final_term_list.append(new_item)
 
         test_final_term_string = ''.join(test_final_term_list)
-
         test_product = call_api_for_product(test_final_term_string)
 
         create_entries(test_product, test_final_term_string)
@@ -165,14 +177,15 @@ class TestCallAPI(TestCase):
         # informations_displayed = display_informations(final_term_string)
 
         # Test if the loop assemblate the term to search a product in the API.
-        self.assertEqual(test_final_term_string, 'pains%20au%20chocolat')
+        self.assertEqual(test_final_term_string, 'prince%20de%20lu')
 
         # Test if the value return the good data
-        self.assertEqual(test_product[0]['product_name'], "Pains au chocolat")
+        self.assertEqual(test_product[0]['product_name'],
+            "Prince petit Déj")
 
         # Test if the product is in the database
         self.assertEqual(Product.objects.get(
-            barcode=test_product[0]['code']).barcode, 3256540001008)
+            barcode=test_product[0]['code']).barcode, 3017760306492)
 
     def test_search_and_stock(self):
         '''
@@ -195,16 +208,7 @@ class DatabaseTestCase(TestCase):
         Setting up all objects for the test. All datas will be erase after the
         test
         '''
-        # Create a test user in the database
-        # self.user_test = UserValidFactory.create(
-        #     username="testuser61700",
-        #     email="gaucher_martin@yahoo.fr"
-        # )
-        # self.user_test.save()
-
         self.user_test = UserFactory()
-        # self.user_test = User.objects.create_user(username='testuser61700', password='testpassword61700')
-
         # Create a product in the database
         self.product_test_generic = ProductGenericFactory()
 
@@ -269,7 +273,8 @@ class DatabaseTestCase(TestCase):
         self.assertTrue(Product.objects.all().count(),
                         Product.objects.all().count() > 5)
         self.assertEqual(Product.objects.get(
-            barcode=test_json_file[0]['code']).name, "Nutella")
+            barcode=test_json_file[0]['code']).name,
+            "Nutella pate a tartiner aux noisettes et au cacao")
 
         # Check if the entries in database are all unique by their barcodes.
         for product in Product.objects.all():
@@ -510,35 +515,13 @@ class TestUserAccount(TestCase):
         '''
         Setting up the class with some useful variables.
         '''
-        # self.login_user = UserLoginFactory.create(
-        #     username="jacques",
-        #     email="ja@ja.fr"
-        # )
-        # self.login_user.set_password('jaja61700')
         self.login_user = UserFactory()
         self.client = Client()
         self.client1 = Client()
         self.client2 = Client()
         self.client3 = Client()
         self.client4 = Client()
-
-        # self.user_form = {
-        #     'username': 'jacques',
-        #     'password1': 'jaja61700',
-        #     'password2': 'jaja61700'
-        # }
-        # self.user = UserCreationForm(self.user_form)
-        # self.user.save()
         self.factory = RequestFactory()
-        # import pdb; pdb.set_trace()
-        # self.response_true = self.client1.post(
-        #     reverse('user_account'),
-        #     {'id':12, 'username': self.login_user.username, 'password': self.login_user.password})
-
-        # self.response_false = self.client2.post(
-        #     reverse('user_account'),
-        #     {'username': 'jacques', 'password': 'jaja'})
-
         self.test_form2 = UserCreationForm({
             'username': "martinbg61",
             'password1': "calvadosdedans61",
@@ -558,9 +541,6 @@ class TestUserAccount(TestCase):
         '''
         Test few case where the user logged in.
         '''
-        # self.assertEqual(self.response_true.status_code, 200)
-
-        # self.assertEqual(self.response_false.status_code, 200)
 
         self.assertTrue(self.test_form2.is_valid())
         if self.test_form2.is_valid():
@@ -620,17 +600,10 @@ class TestUserAccount(TestCase):
         Test if the user login works.
         '''
         client1 = Client()
-        # client2 = Client()
-
         response_true = client1.post(
             reverse('login_user'),
             {'username': 'jeff', 'password': 'testuserpassword61'})
         self.assertEqual(response_true.status_code, 302)
-
-        # response_false = client2.post(
-        #     reverse('login_user'),
-        #     {'username': 'ja', 'password': 'jaja61700'})
-        # self.assertTrue(response_false.status_code, 200)
 
     def test_signup(self):
         '''
@@ -753,53 +726,6 @@ class TestSeleniumBrowser(LiveServerTestCase):
         self.assertEqual(self.driver.current_url,
                          test_url + "search_food/user_account/")
 
-        # time.sleep(3)
-
-        # check_if_user_is_logged = self.driver.find_element_by_id('welcome-to')
-        # self.assertEqual(check_if_user_is_logged.get_attribute(
-        #     'title'), 'Bienvenue %s' % (self.username))
-
-        # click_on_disconnect = self.driver.find_element_by_xpath(
-        #     '//a[@id="disconnect_user"]')
-        # self.driver.execute_script(
-        #     "arguments[0].click();", click_on_disconnect)
-
-        # time.sleep(3)
-
-        # self.assertEqual(self.driver.find_element_by_id(
-        #     'connect-user').get_attribute('title'), 'Se connecter')
-
-    # def test_login_user(self):
-    #     '''
-    #     Simulate a user logging in. In this case it's a success.
-    #     '''
-    #     print("-------------Simulate a login------------------")
-
-    #     self.driver.get(test_url)
-
-    #     self.driver.find_element_by_name('username').send_keys('testuser61700')
-    #     time.sleep(3)
-
-    #     self.driver.find_element_by_name(
-    #         'password').send_keys('dedansletest61')
-    #     time.sleep(3)
-
-    #     target_form = self.driver.find_element_by_css_selector(
-    #         'form.signin-form')
-    #     submit_button = self.driver.find_element_by_id('signin-id')
-
-    #     self.assertTrue(submit_button)
-
-    #     target_form.submit()
-    #     time.sleep(3)
-    #     click_on_carrot = self.driver.find_element_by_id('menu-favorite')
-    #     self.driver.execute_script("arguments[0].click();", click_on_carrot)
-
-    #     time.sleep(3)
-
-    #     self.assertEqual(self.driver.current_url,
-    #                      test_url + "/search_food/favorite/")
-
     def test_simulate_research(self):
         '''
         Simulate an entire research in the web browser.
@@ -835,3 +761,314 @@ class TestSeleniumBrowser(LiveServerTestCase):
         time.sleep(2)
         check_h2 = self.driver.find_element_by_css_selector('h2')
         self.assertTrue(check_h2)
+
+
+class TestEmail(TestCase):
+    '''
+    Test if the mail server is configured and work well
+    '''
+    def setUp(self):
+        '''
+        Setting up email address with user account
+        '''
+        # self.driver = webdriver.Firefox()
+        # Define two users :
+        # One with a valid mail address
+        # An other with an invalid mail address
+        self.user_valid_address = UserMailFactory.create(
+            username="valid_user",
+            password = "validpassword61700",
+            email = "mga@subteno-it.com",
+            is_active = False,
+            is_superuser = False,
+        )
+
+        self.user_invalid_address = UserMailFactory.create(
+            username="invalid_user",
+            password = "invalidpassword61700",
+            email = "mga.subteno-it.com",
+            is_active = False,
+            is_superuser = False,
+        )
+
+        self.regex = '[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
+
+    def test_valid_email_regex(self):
+        '''
+        Test email regex to validate email address to fill in the signup form
+        '''
+
+        self.validator_true = bool(
+            re.search(self.regex,
+            self.user_valid_address.email)
+        )
+
+        self.validator_false = bool(
+            re.search(self.regex,
+            self.user_invalid_address.email)
+        )
+
+        self.assertTrue(self.validator_true, True)
+        self.assertFalse(self.validator_false, False)
+
+    def test_valid_email_content(self):
+        '''
+        Test to send an email with a valid mail address.
+        We will check response status, content and template.
+        '''
+        self.token = default_token_generator.make_token(self.user_valid_address)
+        self.token_invalid = default_token_generator.make_token(self.user_invalid_address)
+        try:
+            self.confirm_email = sendConfirm(self.user_valid_address)
+            self.error = True
+            self.assertTrue(self.error, True)
+        except:
+            print("There is a problem with the email or email server")
+
+
+class TestTranslations(TestCase):
+    '''
+    Test the translations :
+        - Install_language case
+            - If the language_code exists (case True or False)
+            - Cehck template after installation
+        - Manage language case
+            - Check the template after installation
+        - Modify Language Display case
+            - Check the template of the language display
+        - Modify Language case
+            - Search a term to modify (case true or false)
+            - Check on template if the term has changed (True or False)
+        - Uninstall language case
+            - Check if the language is uninstall (true or false)
+            - Try to uninstall an inexisting language (False)
+    '''
+    def setUp(self):
+        '''
+        Setting up the language code
+        '''
+        self.language_code = 'fr'
+        self.language_name = 'French'
+        self.user_admin =  UserAdminFactory()
+
+        self.language_code_wrong = 'jeff'
+        self.url_translation = 'localhost:8000/fr'
+        self.driver = webdriver.Firefox()
+        self.pb_language = PBLanguageFactory.build(language_name="French", language_code="fr")
+
+    def tearDown(self):
+        '''
+        Function to close the navigator
+        '''
+        self.driver.close()
+
+    def test_install_languages(self):
+        '''
+        To fill after tests
+        '''
+        def convertTuple(tup): 
+            str =  ''.join(tup) 
+            return str
+
+        client = Client()
+        wrong_client = Client()
+
+        with self.assertRaises(KeyError) as cm:
+            wrong_client.post(
+                reverse('install_language'),
+                {'language': self.language_code_wrong}
+            )
+        the_exception = cm.exception
+        self.assertEqual(convertTuple(the_exception.args), self.language_code_wrong)
+        response = client.post(
+            reverse('install_language'),
+            {'language': self.language_code}
+        )
+        path = 'locale/'+ self.language_code +'/LC_MESSAGES/django.po'
+        wrong_path = 'locale/'+ self.language_code_wrong +'/LC_MESSAGES/django.po'
+        current_path = os.getcwd()
+
+        pofile_exists = os.path.exists(current_path+ '/' + path)
+        self.assertTrue(pofile_exists)
+        self.assertFalse(os.path.exists(current_path+ '/' + wrong_path))
+
+        # Now we wiil find in the po file if the translation are right
+
+        pofile_path = current_path+ '/' + path
+        po = polib.pofile(pofile_path)
+
+        for entry in po:
+            if entry.msgid == "Fat yes, but of quality !":
+                self.assertTrue(entry.msgstr, 'Gras oui, mais de qualité!')
+                self.assertNotEqual(entry.msgstr, 'Le gras c\'est la vie')
+
+        # We will also check the template. If we go to french endpoint /fr,
+        # We must find the h1 with the title in French
+
+        self.driver.get(self.url_translation)
+        check_h1 = self.driver.find_element_by_css_selector('h1')
+
+        # Check if h1 exists
+        self.assertTrue(check_h1)
+
+        # Cehck if h1 has two classes name text-white and font-weight-bold
+        self.assertEqual(check_h1.get_attribute('class'),
+                         'text-white font-weight-bold')
+
+        # Check if the slogan does not change
+        self.assertEqual(check_h1.text, 'Gras oui, mais de qualité!')
+
+    def test_manage_language(self):
+        '''
+        Check if the admin user have access to language management.
+        '''
+        self.driver.get(test_url)
+
+        self.driver.find_element_by_name('username').send_keys(self.user_admin.username)
+        time.sleep(3)
+
+        self.driver.find_element_by_name(
+            'password').send_keys('admin')
+        time.sleep(3)
+
+        target_form = self.driver.find_element_by_css_selector(
+            'form.signin-form')
+        target_form.submit()
+        time.sleep(3)
+
+        base_url = self.driver.current_url
+
+        manage_icon = self.driver.find_element_by_class_name('fa-globe')
+        manage_icon.click()
+
+        time.sleep(2)
+        self.assertEqual(self.driver.current_url,
+                        base_url + "search_food/languages/")
+
+        h1_manage = self.driver.find_element_by_tag_name('h1')
+
+        self.assertTrue(h1_manage)
+
+        french_btn = self.driver.find_element_by_xpath("//button[@value='fr']")
+        french_flag = self.driver.find_element_by_xpath("//img[@src='/static/standard/icon/country/fr.png']")
+
+        self.assertTrue(french_btn)
+        self.assertTrue(french_flag)
+
+    def test_modify_language_display(self):
+        '''
+        To fill after tests
+        '''
+        self.driver.get(test_url)
+        language_icon = self.driver.find_element_by_class_name('fa-language')
+        mask_panel = self.driver.find_element_by_id('djHideToolBarButton')
+        mask_panel.click()
+        self.assertTrue(language_icon)
+        language_icon.click()
+        time.sleep(1)
+
+        french_btn = self.driver.find_element_by_xpath("//button[@value='fr']")
+        self.assertTrue(french_btn)
+        french_btn.click()
+        time.sleep(1)
+
+        french_h1 = self.driver.find_element_by_tag_name('h1')
+        self.assertEqual(french_h1.text, 'Du gras oui, mais de qualité !')
+
+
+    def test_modify_language(self):
+        '''
+        To fill after tests
+        '''
+        self.driver.get(test_url)
+
+        self.driver.find_element_by_name('username').send_keys(self.user_admin.username)
+        time.sleep(3)
+
+        self.driver.find_element_by_name(
+            'password').send_keys('admin')
+        time.sleep(3)
+
+        target_form = self.driver.find_element_by_css_selector(
+            'form.signin-form')
+        target_form.submit()
+        time.sleep(3)
+
+        manage_icon = self.driver.find_element_by_class_name('fa-globe')
+        manage_icon.click()
+
+        time.sleep(2)
+
+        french_btn = self.driver.find_element_by_xpath("//form[@action='/fr/search_food/page_modify_language']")
+        french_btn.submit()
+
+        time.sleep(2)
+
+        input_search = self.driver.find_element_by_id('input_search_translation')
+        input_search.send_keys('gras oui')
+
+        time.sleep(1)
+
+        text_area = self.driver.find_element_by_xpath("//textarea[@name='Fat yes, but of quality !']")
+        text_area.send_keys('Du gras oui, mais de qualité !')
+
+        btn_submit = self.driver.find_element_by_xpath("//form[@action='/fr/search_food/modify_language']")
+        btn_submit.submit()
+
+        time.sleep(3)
+
+        homepage = self.driver.find_element_by_class_name('js-scroll-trigger')
+        homepage.click()
+
+        time.sleep(2)
+
+        home_h1 = self.driver.find_element_by_tag_name('h1')
+        self.assertEqual(home_h1.text, 'Du gras oui, mais de qualité !')
+
+    def test_uninstall_language(self):
+        '''
+        To fill after tests
+        '''
+        self.driver.get(test_url)
+
+        self.driver.find_element_by_name('username').send_keys(self.user_admin.username)
+        time.sleep(3)
+
+        self.driver.find_element_by_name(
+            'password').send_keys('admin')
+        time.sleep(3)
+
+        target_form = self.driver.find_element_by_css_selector(
+            'form.signin-form')
+        target_form.submit()
+        time.sleep(3)
+
+        manage_icon = self.driver.find_element_by_class_name('fa-globe')
+        manage_icon.click()
+
+        time.sleep(2)
+
+        french_btn = self.driver.find_element_by_xpath("//form[@action='/fr/search_food/page_modify_language']")
+        french_btn.submit()
+
+        time.sleep(2)
+
+        mask_panel = self.driver.find_element_by_id('djHideToolBarButton')
+        mask_panel.click()
+
+        time.sleep(1)
+
+        uninstall_btn = self.driver.find_element_by_id("uninstall-btn-language")
+        uninstall_btn.click()
+
+        import os
+        import shutil
+
+        cwd = os.getcwd()
+        path = cwd +'/locale/'+ self.code
+        self.assertFalse(path)
+
+        time.sleep(3)
+
+        h1_en = self.driver.find_element_by_tag_name('h1')
+        self.assertEqual(h1_en.text, 'Fat yes, but of quality !')

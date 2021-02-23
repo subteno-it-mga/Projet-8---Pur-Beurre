@@ -60,7 +60,7 @@ class SubstituteProduct(models.Model):
 
 class Favorite(models.Model):
     '''
-    This model save the data of products save by the user.
+    This model save data products of the user.
     '''
     product_name = models.CharField(max_length=200)
     barcode = models.BigIntegerField()

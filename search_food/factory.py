@@ -5,29 +5,6 @@ from django.contrib.auth.hashers import make_password
 User = get_user_model()
 
 
-# class UserValidFactory(factory.django.DjangoModelFactory):
-#     '''
-#     Create a user model to fill in the test database
-#     '''
-#     class Meta:
-#         model = User
-    
-#     username = "testuser61700"
-#     password = 'testpassword61700'
-#     email = "gaucher_martin@yahoo.fr"
-
-
-# class UserLoginFactory(factory.django.DjangoModelFactory):
-#     '''
-#     Create a user model to fill in the test database
-#     '''
-#     class Meta:
-#         model = User
-    
-#     username = "jacques"
-#     password = 'jaja61700'
-#     email = "ja@ja.fr"
-
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
@@ -38,20 +15,30 @@ class UserFactory(factory.django.DjangoModelFactory):
     email = "jeff@bezos.fr"
     is_superuser = False
     is_active = True
-    
 
-    # username = factory.Sequence(lambda n: 'somename%s' % n)
-    # password = factory.Sequence(lambda p: 'mysuperpass%s' % p)
+class UserAdminFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = User
+        django_get_or_create = ('username', 'password')
 
-    # @classmethod
-    # def _create(cls, model_class, *args, **kwargs):
-    #     """Override the default ``_create`` with our custom call."""
-    #     kwargs['password'] = make_password(kwargs['password'])
-    #     return super(UserFactory, cls)._create(model_class, *args, **kwargs)
+    username = 'admin'
+    password = make_password('admin')
+    email = "admin@admin.fr"
+    is_superuser = True
+    is_active = True
+
+
+class UserMailFactory(factory.django.DjangoModelFactory):
+    '''
+    This model will be use to tests email feature.
+    '''
+    class Meta:
+        model = User
+
 
 class ProductGenericFactory(factory.django.DjangoModelFactory):
     '''
-    Create a product to fill in the test database
+    Create a generic product to fill in the test database
     '''
     class Meta:
         model = 'search_food.Product'
@@ -69,36 +56,28 @@ class ProductGenericFactory(factory.django.DjangoModelFactory):
     barcode=123456789
     search='nutella'
 
+
 class ProductSubstituteFactory(factory.django.DjangoModelFactory):
     '''
-    Create a product to fill in the test database
+    Create a product substitute to fill in the test database
     '''
     class Meta:
         model = 'search_food.SubstituteProduct'
-        # django_get_or_create = ('name', 'description', 'nutriscore', 'category',
-        # 'fat', 'sugar', 'salt', 'barcode', 'image', 'original')
-    
-    # name='gerblé'
-    # category='pâte à tartiner'
-    # description='testdescriptionsub'
-    # nutriscore=1
-    # fat=1
-    # sugar=1
-    # salt=1
-    # image='sub.jpg'
-    # barcode=12345678910
-    # original= factory.RelatedFactory(ProductGenericFactory)
+
 
 class FavoriteFactory(factory.django.DjangoModelFactory):
     '''
-    Create a product to fill in the test database
+    Create a favorite to fill in the test database
     '''
     class Meta:
         model = 'search_food.Favorite'
-        # django_get_or_create = ('product_name', 'barcode', 'product_associate',
-        # 'user_associate')
 
-    # product_name='gerblé_fav'
-    # barcode=1234567891011
-    # product_associate=ProductGenericFactory()
-    # user_associate=factory.RelatedFactory(UserFactory)
+
+class PBLanguageFactory(factory.django.DjangoModelFactory):
+    '''
+    Factory of the model PBLanguage to tests languages installation and
+    mangement
+    '''
+    class Meta:
+        model = 'search_food.PBLanguage'
+

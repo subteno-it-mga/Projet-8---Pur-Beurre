@@ -58,10 +58,14 @@ def user_account(request):
         sendConfirm(user)
     else:
         error_message = _("This email is already taken !")
+        render(
+        request,
+        'standard/index.html', {'error_message': error_message}
+        )
 
     return render(
         request,
-        'standard/index.html', {'error_message': error_message}
+        'standard/mail_confirmation.html', {'error_message': error_message}
         )
 
 
