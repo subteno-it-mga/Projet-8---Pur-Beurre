@@ -10,7 +10,7 @@ dj-database-url==0.5.0
 dj-static==0.0.6
 Django==2.2.7
 django-crispy-forms==1.9.2
-django-debug-toolbar==2.1
+django-debug-toolbar==2.2.1
 django-email-verification==0.0.7
 django-heroku==0.3.1
 django-rosetta==0.9.4
