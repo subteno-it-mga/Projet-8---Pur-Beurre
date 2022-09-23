@@ -39,7 +39,7 @@ lxml==4.6.1
 mccabe==0.6.1
 polib==1.1.0
 popy==0.3.0
-protobuf==3.14.0
+protobuf==3.18.3
 psycopg2==2.8.5
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
